@@ -8,41 +8,10 @@
         ShowMaxRestoreButton="False"
         TitleForeground="Black"
         WindowCloseButtonStyle="{DynamicResource CleanCloseWindowButtonStyle}"
-        WindowMinButtonStyle="{DynamicResource CleanMinWindowButtonStyle}"
+        WindowMinButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
         ShowTitleBar="True"
-        Background="Black"
-                      >
-    <controls:MetroWindow.Resources>
-        <Style x:Key="CleanCloseWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
-           <Setter Property="Foreground" Value="Black"></Setter>
-            <Style.Triggers>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#EB2F2F" />
-                    <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#7C0000" />
-                </Trigger>
-
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="CleanMinWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Style.Triggers>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#DFDFDFFF" />
-                    <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#AFAFAFFF" />
-                </Trigger>
-
-            </Style.Triggers>
-        </Style>
-    </controls:MetroWindow.Resources>
-    <Grid>
-        
+        Background="Black">
+    <Grid MouseDown="UIElement_OnMouseDown">
+        <Label></Label>
     </Grid>
 </controls:MetroWindow>

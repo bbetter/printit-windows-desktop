@@ -13,21 +13,21 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
-namespace PrintIt_Desktop_4
+namespace PrintIt_Desktop_4.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoadAndLoagin.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class LoadAndLoagin : MetroWindow
     {
-        public MainWindow()
+        public LoadAndLoagin()
         {
             InitializeComponent();
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void LoadAndLoagin_OnLoaded(object sender, RoutedEventArgs e)
         {
-            ShowTitleBar = !ShowTitleBar;
+            SplashScreen.StartAnimation();
         }
     }
 }

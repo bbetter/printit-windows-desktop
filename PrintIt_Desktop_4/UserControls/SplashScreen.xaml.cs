@@ -11,23 +11,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
-namespace PrintIt_Desktop_4
+namespace PrintIt_Desktop_4.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class SplashScreen : UserControl
     {
-        public MainWindow()
+        public SplashScreen()
         {
             InitializeComponent();
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        public void StartAnimation()
         {
-            ShowTitleBar = !ShowTitleBar;
+            LoadingRing1.StartAnimation();
+        }
+
+        public void StopAnimation()
+        {
+            LoadingRing1.StopAnimation();
         }
     }
 }
