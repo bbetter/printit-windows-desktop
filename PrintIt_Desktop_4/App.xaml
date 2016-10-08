@@ -14,8 +14,8 @@
 
                 <ResourceDictionary Source="Views/Styles/WindowControls.xaml"/>
                 <ResourceDictionary Source="Views/Styles/WhiteAccent.xaml"/>
-                
-                <!--<ResourceDictionary Source="/Resources/Icons.xaml" />-->
+                <ResourceDictionary Source="Views/Styles/HyperlinkLabel.xaml"/>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

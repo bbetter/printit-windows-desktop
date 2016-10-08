@@ -14,7 +14,7 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Source="../Images/logo_RGBA.png" Margin="40,10" Grid.Row="0"></Image>
-        <Label Grid.Row="2" Margin="10" HorizontalContentAlignment="Center">Copyright &#169; 2016 PrintIT. All rights reserved. </Label>
+        <Label Grid.Row="2" Margin="10" HorizontalContentAlignment="Center">Copyright &#169; 2016 PrintIT. Всі права захищені. </Label>
         <!--<controls:ProgressRing Grid.Row="1" MinHeight="{Binding ElementName=Row2, Path=ActualHeight}" MinWidth="{Binding ElementName=Row2, Path=ActualHeight}"
                                Foreground="#00B9E6"></controls:ProgressRing>-->
         <myControls:LoadingRing Grid.Row="1" x:Name="LoadingRing1" Margin="10"></myControls:LoadingRing>
