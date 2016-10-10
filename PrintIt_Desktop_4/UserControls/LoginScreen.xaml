@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="600">
     <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -32,7 +32,7 @@
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_lock}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18" Margin="0,0,5,0"></PasswordBox>
+                    <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18" Margin="0,0,5,0" HorizontalAlignment="Stretch"></PasswordBox>
         </DockPanel>
         </Border>
             <Label x:Name="ForgotPassword" Margin="5,5,5,15" HorizontalAlignment="Center"  >
