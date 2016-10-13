@@ -67,6 +67,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="netfx\System\Guard.cs" />
+    <Compile Include="netfx\System\Windows\Input\DelegateCommand.cs" />
     <Compile Include="UserControls\LoadingRing.xaml.cs">
       <DependentUpon>LoadingRing.xaml</DependentUpon>
     </Compile>
