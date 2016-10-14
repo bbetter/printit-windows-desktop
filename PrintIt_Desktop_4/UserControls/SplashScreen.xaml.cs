@@ -22,16 +22,18 @@ namespace PrintIt_Desktop_4.UserControls
         public SplashScreen()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
-        public void StartAnimation()
+
+        public bool ProgressRingActive
         {
-            LoadingRing1.StartAnimation();
+            get { return (bool)GetValue(ProgressRingActiveProperty); }
+            set { SetValue(ProgressRingActiveProperty, value); }
         }
 
-        public void StopAnimation()
-        {
-            LoadingRing1.StopAnimation();
-        }
+        // Using a DependencyProperty as the backing store for Active.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProgressRingActiveProperty =
+            DependencyProperty.Register("ProgressRingActive", typeof(bool), typeof(SplashScreen), new PropertyMetadata(false));
     }
 }

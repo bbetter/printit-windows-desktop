@@ -26,7 +26,7 @@ namespace PrintIt_Desktop_4.UserControls
             InitializeComponent();
         }
 
-        public void StartAnimation()
+        private void StartAnimation()
         {
             Ring.RenderTransform = new RotateTransform(0, Ring.ActualHeight / 2, Ring.ActualHeight / 2);
             var timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 0, 50)};
@@ -39,9 +39,32 @@ namespace PrintIt_Desktop_4.UserControls
             timer.Start();
         }
 
-        public void StopAnimation()
+        private void StopAnimation()
         {
             Ring.RenderTransform = null;
         }
+
+
+
+        public bool Active
+        {
+            get { return (bool)GetValue(ActiveProperty); }
+            set { SetValue(ActiveProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Active.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ActiveProperty =
+            DependencyProperty.Register("Active", typeof(bool), typeof(LoadingRing), new PropertyMetadata(false, ActiveChangedCallback));
+
+        private static void ActiveChangedCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                (o as LoadingRing).StartAnimation();
+            }
+            else (o as LoadingRing).StopAnimation();
+        }
+
+
     }
 }

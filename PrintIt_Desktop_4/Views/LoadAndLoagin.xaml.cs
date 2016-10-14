@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,18 +18,23 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using PrintIt_Desktop_4.Other;
 
 namespace PrintIt_Desktop_4.Views
 {
     /// <summary>
     /// Interaction logic for LoadAndLoagin.xaml
     /// </summary>
+
+    [Magic]
     public partial class LoadAndLoagin : MetroWindow
     {
         public double ToLeft { get; set; }
         public double ToTop { get; set; }
         public double LoginHeight { get; set; }
         public double LoginWidth { get; set; }
+
+        public bool RingActive { get; set; }
 
         DispatcherTimer timer = new DispatcherTimer(){Interval = new TimeSpan(0,0,0,3), IsEnabled = false};
         private Storyboard transformStoryboard;
@@ -37,14 +44,13 @@ namespace PrintIt_Desktop_4.Views
         public LoadAndLoagin()
         {
             InitializeComponent();
+            DataContext = this;
             LoginWidth = 800;
-            LoginHeight = 500;
+            LoginHeight = 470;
             ToTop = System.Windows.SystemParameters.WorkArea.Height-LoginHeight;
             ToLeft = System.Windows.SystemParameters.WorkArea.Width-LoginWidth;
             ToTop /= 2;
             ToLeft /= 2;
-            this.DataContext = this;
-
             timer.Tick += ((sender, args) =>
             {
                 
@@ -55,13 +61,15 @@ namespace PrintIt_Desktop_4.Views
                 timer.Stop();
             });
             moveStoryboard = ((Storyboard) FindResource("StoryboardMove"));
-            moveStoryboard.Completed += (sender, args) => { transformStoryboard.Begin(); showLoginStoryboard.Begin(); };
+            moveStoryboard.Completed += (sender, args) => { transformStoryboard.Begin(); showLoginStoryboard.Begin(); AnimateTitle();};
             transformStoryboard = (Storyboard)FindResource("StoryboardResize");
             transformStoryboard.Completed += (sender, args) =>  SplashToLoginAnimationEnd();
             showLoginStoryboard = (Storyboard)FindResource("StoryboardShowLogin");
             hideSplashStoryboard = (Storyboard)FindResource("StoryboardHideSplash");
             hideSplashStoryboard.Completed += (sender, args) => { SplashScreen.Visibility = Visibility.Collapsed;
-                                                                SplashScreen.StopAnimation();
+                                                                    SplashScreen.ProgressRingActive = false;
+                                                                    //RingActive = false;
+                                                                //SplashScreen.StopAnimation();
                                                                 LoginScreen.Visibility = Visibility.Visible;
                                                                 moveStoryboard.Begin();
             };
@@ -69,17 +77,32 @@ namespace PrintIt_Desktop_4.Views
 
         }
 
+        private void AnimateTitle()
+        {
+            Int32Animation a = new Int32Animation();
+            a.From = 0;
+            a.To = 30;
+            a.Duration = new TimeSpan(0, 0, 0, 1);
+            this.BeginAnimation(TitlebarHeightProperty,a);
+        }
+
+
         private void LoadAndLoagin_OnLoaded(object sender, RoutedEventArgs e)
         {
-            SplashScreen.StartAnimation();
+            SplashScreen.ProgressRingActive = true;
+            //RingActive = true;
+            //SplashScreen.StartAnimation();
             timer.IsEnabled = true;
             timer.Start();
         }
 
         private void SplashToLoginAnimationEnd()
         {
+            //TitlebarHeight = 30;
             Height = LoginHeight+1;
             Width = LoginWidth+1;
+            Top++;
+            Left++;
             UpdateLayout();
             ShowMinButton = true;
             ShowCloseButton = true;
@@ -120,6 +143,5 @@ namespace PrintIt_Desktop_4.Views
                 MessageBox.Show(responseString);
             }
         }
-
     }
 }

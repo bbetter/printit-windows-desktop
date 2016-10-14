@@ -3,13 +3,16 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:myControls="clr-namespace:PrintIt_Desktop_4.UserControls"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
                       Title="PrintIT-Login"
                       Height="350"
                       Width="525"
                       WindowStartupLocation="CenterScreen"
                       Background="Black"
                       ShowMaxRestoreButton="False"
-                      ShowTitleBar="False"
+                      ShowMinButton="False"
+                      ShowCloseButton="False"
                       TitleForeground="Black"
                       GlowBrush="DarkGray"
                       BorderThickness="0"
@@ -19,7 +22,15 @@
         WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"           
                       Loaded="LoadAndLoagin_OnLoaded"
                       x:Name="SplashAndLoginWindow" 
-> 
+                      WindowStyle="None"
+                      WindowTitleBrush="Black"
+                TitlebarHeight="0"
+>                     
+    <i:Interaction.Triggers>
+        <ei:DataTrigger Binding="{Binding AnimationMoveStrat}" Value="True">
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardMove}" ControlStoryboardOption="Play"/>
+        </ei:DataTrigger>
+    </i:Interaction.Triggers>
     <controls:MetroWindow.Resources>
         <Storyboard x:Key="StoryboardResize" x:Name="StoryboardResize" RepeatBehavior="1x" AutoReverse="False">
             <DoubleAnimation x:Name="Animation1"  Storyboard.TargetName="MainGrid"
@@ -45,7 +56,6 @@
             </Storyboard>
         </Storyboard>
         <Storyboard x:Key="StoryboardHideSplash" RepeatBehavior="1x"  AutoReverse="False">
-
             <DoubleAnimation  Storyboard.TargetName="SplashScreen"
                                       Storyboard.TargetProperty = "Opacity"
                                         From="1"  To="0" Duration="0:0:1"/>
@@ -59,8 +69,8 @@
     </controls:MetroWindow.Resources>
     <Grid x:Name="MainGrid" Width="525" Height="350">
         
-  <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen"></myControls:SplashScreen>
-  <myControls:LoginScreen Margin="10" Opacity="0" Visibility="Collapsed" x:Name="LoginScreen"></myControls:LoginScreen>
-  <myControls:SignUpScreen Margin="10" Opacity="0" Visibility="Collapsed" x:Name="SignUpScreen"></myControls:SignUpScreen>
+  <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen" ></myControls:SplashScreen>
+  <myControls:LoginScreen Margin="10,-20,10,10" Opacity="0" Visibility="Collapsed" x:Name="LoginScreen"></myControls:LoginScreen>
+  <myControls:SignUpScreen Margin="10,-20,10,10" Opacity="0" Visibility="Collapsed" x:Name="SignUpScreen"></myControls:SignUpScreen>
     </Grid>
 </controls:MetroWindow>
