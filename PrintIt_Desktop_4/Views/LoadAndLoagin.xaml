@@ -1,0 +1,66 @@
+﻿<controls:MetroWindow x:Class="PrintIt_Desktop_4.Views.LoadAndLoagin"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:myControls="clr-namespace:PrintIt_Desktop_4.UserControls"
+                      Title="PrintIT-Login"
+                      Height="350"
+                      Width="525"
+                      WindowStartupLocation="CenterScreen"
+                      Background="Black"
+                      ShowMaxRestoreButton="False"
+                      ShowTitleBar="False"
+                      TitleForeground="Black"
+                      GlowBrush="DarkGray"
+                      BorderThickness="0"
+                      ResizeMode="NoResize"
+        WindowCloseButtonStyle="{DynamicResource CleanCloseWindowButtonStyle}"
+        WindowMinButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
+        WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"           
+                      Loaded="LoadAndLoagin_OnLoaded"
+                      x:Name="SplashAndLoginWindow" 
+> 
+    <controls:MetroWindow.Resources>
+        <Storyboard x:Key="StoryboardResize" x:Name="StoryboardResize" RepeatBehavior="1x" AutoReverse="False">
+            <DoubleAnimation x:Name="Animation1"  Storyboard.TargetName="MainGrid"
+                                      Storyboard.TargetProperty = "Height"
+                                        To="{Binding LoginHeight}" Duration="0:0:1"/>
+            <Storyboard RepeatBehavior="1x"  AutoReverse="False">
+
+                <DoubleAnimation  Storyboard.TargetName="MainGrid"
+                                      Storyboard.TargetProperty = "Width"
+                                        To="{Binding LoginWidth}" Duration="0:0:1"/>
+            </Storyboard>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardMove" RepeatBehavior="1x"  AutoReverse="False">
+
+            <DoubleAnimation  Storyboard.TargetName="SplashAndLoginWindow"
+                                      Storyboard.TargetProperty = "Left"
+                                        To="{Binding ToLeft}" Duration="0:0:1"/>
+            <Storyboard RepeatBehavior="1x"  AutoReverse="False">
+
+                <DoubleAnimation  Storyboard.TargetName="SplashAndLoginWindow"
+                                      Storyboard.TargetProperty = "Top"
+                                        To="{Binding ToTop}" Duration="0:0:1"/>
+            </Storyboard>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardHideSplash" RepeatBehavior="1x"  AutoReverse="False">
+
+            <DoubleAnimation  Storyboard.TargetName="SplashScreen"
+                                      Storyboard.TargetProperty = "Opacity"
+                                        From="1"  To="0" Duration="0:0:1"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardShowLogin" RepeatBehavior="1x"  AutoReverse="False">
+
+            <DoubleAnimation  Storyboard.TargetName="LoginScreen"
+                                      Storyboard.TargetProperty = "Opacity"
+                                        From="0"  To="1" Duration="0:0:2"/>
+        </Storyboard>
+    </controls:MetroWindow.Resources>
+    <Grid x:Name="MainGrid" Width="525" Height="350">
+        
+  <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen"></myControls:SplashScreen>
+  <myControls:LoginScreen Margin="10" Opacity="0" Visibility="Collapsed" x:Name="LoginScreen"></myControls:LoginScreen>
+  <myControls:SignUpScreen Margin="10" Opacity="0" Visibility="Collapsed" x:Name="SignUpScreen"></myControls:SignUpScreen>
+    </Grid>
+</controls:MetroWindow>
