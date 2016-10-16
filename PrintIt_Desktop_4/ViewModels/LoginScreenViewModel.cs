@@ -33,7 +33,7 @@ namespace PrintIt_Desktop_4.ViewModels
         public String Login { get; set; }
         
         public ICommand LoginCommand { get; set; }
-        public ICommand SignUpCommand { get; set; }
+        public ICommand ShowSignUpCommand { get; set; }
         public ICommand ForgotPasswordCommand { get; set; }
         public ICommand ShowPasswordCommand { get; set; }
         public ICommand StopShowPasswordCommand { get; set; }

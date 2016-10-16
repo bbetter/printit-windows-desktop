@@ -5,6 +5,7 @@
                       xmlns:myControls="clr-namespace:PrintIt_Desktop_4.UserControls"
                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+                      xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
                       Title="PrintIT-Login"
                       Height="350"
                       Width="525"
@@ -21,17 +22,14 @@
         WindowMinButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
         WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"           
                       Loaded="LoadAndLoagin_OnLoaded"
-                      x:Name="SplashAndLoginWindow" 
+                      x:Name="ThisWindow" 
                       WindowStyle="None"
                       WindowTitleBrush="Black"
+                      NonActiveWindowTitleBrush="Black"
                 TitlebarHeight="0"
->                     
-    <i:Interaction.Triggers>
-        <ei:DataTrigger Binding="{Binding AnimationMoveStrat}" Value="True">
-            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardMove}" ControlStoryboardOption="Play"/>
-        </ei:DataTrigger>
-    </i:Interaction.Triggers>
+                      DataContext="{DynamicResource ViewModel}">                     
     <controls:MetroWindow.Resources>
+        <viewModels:LoadAndLoginViewModel x:Key="ViewModel"></viewModels:LoadAndLoginViewModel>
         <Storyboard x:Key="StoryboardResize" x:Name="StoryboardResize" RepeatBehavior="1x" AutoReverse="False">
             <DoubleAnimation x:Name="Animation1"  Storyboard.TargetName="MainGrid"
                                       Storyboard.TargetProperty = "Height"
@@ -45,12 +43,12 @@
         </Storyboard>
         <Storyboard x:Key="StoryboardMove" RepeatBehavior="1x"  AutoReverse="False">
 
-            <DoubleAnimation  Storyboard.TargetName="SplashAndLoginWindow"
+            <DoubleAnimation  Storyboard.TargetName="ThisWindow"
                                       Storyboard.TargetProperty = "Left"
                                         To="{Binding ToLeft}" Duration="0:0:1"/>
             <Storyboard RepeatBehavior="1x"  AutoReverse="False">
 
-                <DoubleAnimation  Storyboard.TargetName="SplashAndLoginWindow"
+                <DoubleAnimation  Storyboard.TargetName="ThisWindow"
                                       Storyboard.TargetProperty = "Top"
                                         To="{Binding ToTop}" Duration="0:0:1"/>
             </Storyboard>
@@ -67,10 +65,16 @@
                                         From="0"  To="1" Duration="0:0:2"/>
         </Storyboard>
     </controls:MetroWindow.Resources>
+    <i:Interaction.Triggers>
+        <ei:DataTrigger Binding="{Binding AnimationMoveStrat}" Value="True">
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardMove}" ControlStoryboardOption="Play"/>
+        </ei:DataTrigger>
+    </i:Interaction.Triggers>
     <Grid x:Name="MainGrid" Width="525" Height="350">
-        
   <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen" ></myControls:SplashScreen>
-  <myControls:LoginScreen Margin="10,-20,10,10" Opacity="0" Visibility="Collapsed" x:Name="LoginScreen"></myControls:LoginScreen>
-  <myControls:SignUpScreen Margin="10,-20,10,10" Opacity="0" Visibility="Collapsed" x:Name="SignUpScreen"></myControls:SignUpScreen>
+  <myControls:LoginScreen Margin="10,-20,10,10" Opacity="0" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.LoginVisibility}" x:Name="LoginScreen"
+                          ShowSignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpShowCommand}"></myControls:LoginScreen>
+            <myControls:SignUpScreen Margin="10,-20,10,10" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.SignUpVisibility}" x:Name="SignUpScreen" 
+                           CancelCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCancelCommand}"></myControls:SignUpScreen>
     </Grid>
 </controls:MetroWindow>

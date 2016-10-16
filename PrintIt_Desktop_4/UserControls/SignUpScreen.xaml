@@ -4,8 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converters="clr-namespace:PrintIt_Desktop_4.Converters"
+             xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600"
+             x:Name="ThisControl"
+             DataContext="{DynamicResource ViewModel}">
+    <UserControl.Resources>
+        <converters:MultiParameterConverter x:Key="Multi"></converters:MultiParameterConverter>
+        <viewModels:SignUpScreenViewModel x:Key="ViewModel"></viewModels:SignUpScreenViewModel>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -16,21 +24,32 @@
         <StackPanel Grid.Column="0" Orientation="Vertical" Margin="40,25,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Image Source="../Images/logo_RGBA.png" Margin="5,10,5,30"></Image>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="Login" controls:TextBoxHelper.Watermark="Логін" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0"></TextBox>
+                <TextBox x:Name="Login" controls:TextBoxHelper.Watermark="Логін" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Login}"></TextBox>
              </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="Назва" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0"></TextBox>
+                <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="Назва" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Name}"></TextBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
                 <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0"></PasswordBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <PasswordBox x:Name="PasswordConfirm" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0"></PasswordBox>
+                <PasswordBox x:Name="PasswordConfirm" controls:TextBoxHelper.Watermark="Повтор паролю" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0"></PasswordBox>
             </Border>
-            <StackPanel Orientation="Horizontal">
-            <Button x:Name="Cancel" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18">Відміна</Button>
-            <Button x:Name="SingUp" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18">Зареєструватися</Button>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Cancel" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18"  Command="{Binding ElementName=ThisControl,Path=DataContext.CancelCommand}" Grid.Column="0">Відміна</Button>
+                <Button x:Name="SingUp" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Content="Реєстрація" Command="{Binding ElementName=ThisControl,Path=DataContext.SignUpCommand}" Grid.Column="1"> 
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource Multi}">
+                            <Binding ElementName="Password"/>
+                            <Binding ElementName="PasswordConfirm"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </Grid>
         </StackPanel>
         <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintIT. Всі права захищені.</Label>
     </Grid>

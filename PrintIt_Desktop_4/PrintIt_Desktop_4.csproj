@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\MultiParameterConverter.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="netfx\System\Windows\Input\DelegateCommand.cs" />
     <Compile Include="Other\Attributes.cs" />
@@ -85,7 +86,9 @@
     <Compile Include="UserControls\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\LoadAndLoginViewModel.cs" />
     <Compile Include="ViewModels\LoginScreenViewModel.cs" />
+    <Compile Include="ViewModels\SignUpScreenViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\LoadAndLoagin.xaml.cs">
       <DependentUpon>LoadAndLoagin.xaml</DependentUpon>

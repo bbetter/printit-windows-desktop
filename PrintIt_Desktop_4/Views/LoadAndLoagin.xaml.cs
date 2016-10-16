@@ -18,7 +18,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using Microsoft.Expression.Prototyping.Data;
 using PrintIt_Desktop_4.Other;
+using PrintIt_Desktop_4.ViewModels;
 
 namespace PrintIt_Desktop_4.Views
 {
@@ -29,11 +31,6 @@ namespace PrintIt_Desktop_4.Views
     [Magic]
     public partial class LoadAndLoagin : MetroWindow
     {
-        public double ToLeft { get; set; }
-        public double ToTop { get; set; }
-        public double LoginHeight { get; set; }
-        public double LoginWidth { get; set; }
-
         public bool RingActive { get; set; }
 
         DispatcherTimer timer = new DispatcherTimer(){Interval = new TimeSpan(0,0,0,3), IsEnabled = false};
@@ -41,16 +38,18 @@ namespace PrintIt_Desktop_4.Views
         private Storyboard showLoginStoryboard;
         private Storyboard hideSplashStoryboard;
         private Storyboard moveStoryboard;
+
+        private LoadAndLoginViewModel vm;
         public LoadAndLoagin()
         {
             InitializeComponent();
-            DataContext = this;
-            LoginWidth = 800;
-            LoginHeight = 470;
-            ToTop = System.Windows.SystemParameters.WorkArea.Height-LoginHeight;
-            ToLeft = System.Windows.SystemParameters.WorkArea.Width-LoginWidth;
-            ToTop /= 2;
-            ToLeft /= 2;
+            vm = (LoadAndLoginViewModel) DataContext;
+            vm.LoginWidth = 800;
+            vm.LoginHeight = 470;
+            vm.ToTop = System.Windows.SystemParameters.WorkArea.Height - vm.LoginHeight;
+            vm.ToLeft = System.Windows.SystemParameters.WorkArea.Width - vm.LoginWidth;
+            vm.ToTop /= 2;
+            vm.ToLeft /= 2;
             timer.Tick += ((sender, args) =>
             {
                 
@@ -66,11 +65,11 @@ namespace PrintIt_Desktop_4.Views
             transformStoryboard.Completed += (sender, args) =>  SplashToLoginAnimationEnd();
             showLoginStoryboard = (Storyboard)FindResource("StoryboardShowLogin");
             hideSplashStoryboard = (Storyboard)FindResource("StoryboardHideSplash");
-            hideSplashStoryboard.Completed += (sender, args) => { SplashScreen.Visibility = Visibility.Collapsed;
+            hideSplashStoryboard.Completed += (sender, args) => {SplashScreen.Visibility = Visibility.Collapsed;
                                                                     SplashScreen.ProgressRingActive = false;
                                                                     //RingActive = false;
                                                                 //SplashScreen.StopAnimation();
-                                                                LoginScreen.Visibility = Visibility.Visible;
+                                                                (DataContext as LoadAndLoginViewModel).LoginVisibility = Visibility.Visible;
                                                                 moveStoryboard.Begin();
             };
             
@@ -99,8 +98,8 @@ namespace PrintIt_Desktop_4.Views
         private void SplashToLoginAnimationEnd()
         {
             //TitlebarHeight = 30;
-            Height = LoginHeight+1;
-            Width = LoginWidth+1;
+            Height = vm.LoginHeight + 1;
+            Width = vm.LoginWidth + 1;
             Top++;
             Left++;
             UpdateLayout();
