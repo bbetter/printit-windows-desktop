@@ -4,14 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             xmlns:utils="clr-namespace:PrintIt_Desktop_4.Other"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="800"
+             x:Name="ThisControl">
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Image Stretch="Uniform" Grid.Column="1" Margin="25" Source="../Images/printer_RGBA.png"></Image>
         <StackPanel Grid.Column="0" Orientation="Vertical" Margin="40,25,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Image Source="../Images/logo_RGBA.png" Margin="5,10,5,30"></Image>
@@ -22,23 +25,50 @@
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox x:Name="Login" controls:TextBoxHelper.Watermark="Логін" FontSize="18" BorderThickness="0" Margin="0,0,5,0" HorizontalAlignment="Stretch"></TextBox>
+                    <TextBox x:Name="LoginBox" controls:TextBoxHelper.Watermark="Логін" FontSize="18" BorderThickness="0" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding ElementName=ThisControl, Path=DataContext.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
+ 
                 <DockPanel LastChildFill="True">
                     <Rectangle Height="20" Width="20" Margin="5" DockPanel.Dock="Left">
                         <Rectangle.Fill>
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_lock}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18" Margin="0,0,5,0" HorizontalAlignment="Stretch"></PasswordBox>
-        </DockPanel>
+                    <Grid MinWidth="260" Margin="0,0,5,0">
+                    <PasswordBox x:Name="PasswordBox" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18"   HorizontalAlignment="Stretch" Visibility="{Binding ElementName=ThisControl, Path=DataContext.PasswordVisibility}"></PasswordBox>
+                        <TextBox x:Name="PasswordBoxValue" Visibility="{Binding ElementName=ThisControl,Path=DataContext.ShowPasswordVisibility , Mode=TwoWay}" BorderThickness="0" IsReadOnly="True" IsTabStop="False" FontSize="18" Text="{Binding ElementName=ThisControl, Path=DataContext.PasswordText}"></TextBox>
+                    </Grid>
+                    <Button Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource InvisibleButtonStyle}" IsTabStop="False" Command="{Binding ElementName=ThisControl, Path=DataContext.StopShowPasswordCommand}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeave" >
+                                <i:InvokeCommandAction Command="{Binding ElementName=ThisControl, Path=DataContext.StopShowPasswordCommand, Mode=TwoWay}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+
+                        </i:Interaction.Triggers>
+
+                        <Rectangle Width="20" Height="15" x:Name="EyeRectangle">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown" >
+                                    <i:InvokeCommandAction Command="{Binding ElementName=ThisControl, Path=DataContext.ShowPasswordCommand, Mode=TwoWay}"  CommandParameter="{Binding ElementName=PasswordBox}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                              
+                            </i:Interaction.Triggers>
+                            <Rectangle.Fill>
+                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_eye}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Button>
+                </DockPanel>
+                
         </Border>
-            <Label x:Name="ForgotPassword" Margin="5,5,5,15" HorizontalAlignment="Center"  >
+            <Button Margin="5,5,5,15" BorderThickness="0" Background="#00000000" Style="{DynamicResource InvisibleButtonStyle}" HorizontalAlignment="Center" Command="{Binding ForgotPasswordCommand}" IsTabStop="False">
+            <Label x:Name="ForgotPassword"  HorizontalAlignment="Center"  IsTabStop="False">
                 <TextBlock Style="{DynamicResource HyperlinkStyleTextBlock}">Забули пароль</TextBlock></Label>
-            <Button x:Name="SingIn" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18">Увійти</Button>
-            <Button x:Name="SingUpOpen" Margin="5,5,5,15" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18">Зареєструватися</Button>
+            </Button>
+            <Button x:Name="SingIn" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}">Увійти</Button>
+            <Button x:Name="SingUpOpen" Margin="5,5,5,15" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding ShowSignUpCommand}">Зареєструватися</Button>
             
         </StackPanel>
         <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintIT. Всі права захищені.</Label>

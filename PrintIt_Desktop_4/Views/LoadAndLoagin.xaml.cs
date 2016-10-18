@@ -31,88 +31,12 @@ namespace PrintIt_Desktop_4.Views
     [Magic]
     public partial class LoadAndLoagin : MetroWindow
     {
-        public bool RingActive { get; set; }
-
-        DispatcherTimer timer = new DispatcherTimer(){Interval = new TimeSpan(0,0,0,3), IsEnabled = false};
-        private Storyboard transformStoryboard;
-        private Storyboard showLoginStoryboard;
-        private Storyboard hideSplashStoryboard;
-        private Storyboard moveStoryboard;
-
-        private LoadAndLoginViewModel vm;
         public LoadAndLoagin()
         {
             InitializeComponent();
-            vm = (LoadAndLoginViewModel) DataContext;
-            vm.LoginWidth = 800;
-            vm.LoginHeight = 470;
-            vm.ToTop = System.Windows.SystemParameters.WorkArea.Height - vm.LoginHeight;
-            vm.ToLeft = System.Windows.SystemParameters.WorkArea.Width - vm.LoginWidth;
-            vm.ToTop /= 2;
-            vm.ToLeft /= 2;
-            timer.Tick += ((sender, args) =>
-            {
-                
-                hideSplashStoryboard.Begin();
-                this.SizeToContent = SizeToContent.WidthAndHeight;
-                
-                //moveStoryboard.Begin();
-                timer.Stop();
-            });
-            moveStoryboard = ((Storyboard) FindResource("StoryboardMove"));
-            moveStoryboard.Completed += (sender, args) => { transformStoryboard.Begin(); showLoginStoryboard.Begin(); AnimateTitle();};
-            transformStoryboard = (Storyboard)FindResource("StoryboardResize");
-            transformStoryboard.Completed += (sender, args) =>  SplashToLoginAnimationEnd();
-            showLoginStoryboard = (Storyboard)FindResource("StoryboardShowLogin");
-            hideSplashStoryboard = (Storyboard)FindResource("StoryboardHideSplash");
-            hideSplashStoryboard.Completed += (sender, args) => {SplashScreen.Visibility = Visibility.Collapsed;
-                                                                    SplashScreen.ProgressRingActive = false;
-                                                                    //RingActive = false;
-                                                                //SplashScreen.StopAnimation();
-                                                                (DataContext as LoadAndLoginViewModel).LoginVisibility = Visibility.Visible;
-                                                                moveStoryboard.Begin();
-            };
-            
-
         }
 
-        private void AnimateTitle()
-        {
-            Int32Animation a = new Int32Animation();
-            a.From = 0;
-            a.To = 30;
-            a.Duration = new TimeSpan(0, 0, 0, 1);
-            this.BeginAnimation(TitlebarHeightProperty,a);
-        }
-
-
-        private void LoadAndLoagin_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            SplashScreen.ProgressRingActive = true;
-            //RingActive = true;
-            //SplashScreen.StartAnimation();
-            timer.IsEnabled = true;
-            timer.Start();
-        }
-
-        private void SplashToLoginAnimationEnd()
-        {
-            //TitlebarHeight = 30;
-            Height = vm.LoginHeight + 1;
-            Width = vm.LoginWidth + 1;
-            Top++;
-            Left++;
-            UpdateLayout();
-            ShowMinButton = true;
-            ShowCloseButton = true;
-            ResizeMode = ResizeMode.CanMinimize;
-            WindowCloseButtonStyle = Application.Current.FindResource("DarkCloseWindowButtonStyle") as Style;
-            WindowMinButtonStyle = Application.Current.FindResource("DarkMinMaxWindowButtonStyle") as Style;
-
-            //SendTestRequest();
-            //SendTestRequest2();
-        }
-
+      /*
         private void SendTestRequest()
         {
             using (var client = new WebClient())
@@ -142,5 +66,6 @@ namespace PrintIt_Desktop_4.Views
                 MessageBox.Show(responseString);
             }
         }
+        */
     }
 }

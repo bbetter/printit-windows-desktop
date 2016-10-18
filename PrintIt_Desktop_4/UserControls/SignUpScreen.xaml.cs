@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Expression.Prototyping.Data;
 using PrintIt_Desktop_4.ViewModels;
 
 namespace PrintIt_Desktop_4.UserControls
@@ -23,6 +24,7 @@ namespace PrintIt_Desktop_4.UserControls
         public SignUpScreen()
         {
             InitializeComponent();
+            DataContext = new SignUpScreenViewModel(this);
         }
 
 
@@ -35,9 +37,13 @@ namespace PrintIt_Desktop_4.UserControls
 
         // Using a DependencyProperty as the backing store for SignUpCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SignUpCommandProperty =
-            DependencyProperty.Register("SignUpCommand", typeof(ICommand), typeof(SignUpScreen), new PropertyMetadata(null));
+            DependencyProperty.Register("SignUpCommand", typeof(ICommand), typeof(SignUpScreen), new PropertyMetadata(null,SignUpCommandChanged));
 
-
+        private static void SignUpCommandChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
+        {
+            var vm = (SignUpScreenViewModel)(o as SignUpScreen).DataContext;
+            vm.SignUpCommand = (ICommand)args.NewValue;
+        }
 
         public ICommand CancelCommand
         {
@@ -64,7 +70,7 @@ namespace PrintIt_Desktop_4.UserControls
 
         // Using a DependencyProperty as the backing store for LoginValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LoginValueProperty =
-            DependencyProperty.Register("LoginValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(null));
+            DependencyProperty.Register("LoginValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(""));
 
 
 
@@ -76,7 +82,7 @@ namespace PrintIt_Desktop_4.UserControls
 
         // Using a DependencyProperty as the backing store for NameValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NameValueProperty =
-            DependencyProperty.Register("NameValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(null));
+            DependencyProperty.Register("NameValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(""));
 
         
         

@@ -8,11 +8,9 @@
              xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
-             x:Name="ThisControl"
-             DataContext="{DynamicResource ViewModel}">
+             x:Name="ThisControl">
     <UserControl.Resources>
         <converters:MultiParameterConverter x:Key="Multi"></converters:MultiParameterConverter>
-        <viewModels:SignUpScreenViewModel x:Key="ViewModel"></viewModels:SignUpScreenViewModel>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

@@ -23,17 +23,18 @@ namespace PrintIt_Desktop_4.UserControls
         public LoginScreen()
         {
             InitializeComponent();
+            DataContext = new LoginScreenViewModel(this);
         }
-
+       
         public String Login
         {
-            get { return (String)GetValue(LoginPropertyProperty); }
-            set { SetValue(LoginPropertyProperty, value); }
+            get { return (String)GetValue(LoginProperty); }
+            set { SetValue(LoginProperty, value);}
         }
 
         // Using a DependencyProperty as the backing store for LoginProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LoginPropertyProperty =
-            DependencyProperty.Register("Login", typeof(String), typeof(LoginScreen), new PropertyMetadata(null));
+        public static readonly DependencyProperty LoginProperty =
+            DependencyProperty.Register("Login", typeof(String), typeof(LoginScreen), new PropertyMetadata(""));
 
         public ICommand ForgotPasswordCommand
         {
@@ -43,7 +44,13 @@ namespace PrintIt_Desktop_4.UserControls
 
         // Using a DependencyProperty as the backing store for ShowPasswordCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ForgotPasswordCommandProperty =
-            DependencyProperty.Register("ForgotPasswordCommand", typeof(ICommand), typeof(LoginScreen), new PropertyMetadata(null));
+            DependencyProperty.Register("ForgotPasswordCommand", typeof(ICommand), typeof(LoginScreen), new PropertyMetadata(null,ForgotPasswordCommandChanged));
+
+        private static void ForgotPasswordCommandChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
+        {
+            var vm = (LoginScreenViewModel)(o as LoginScreen).DataContext;
+            vm.ForgotPasswordCommand = (ICommand)args.NewValue;
+        }
 
         public ICommand LoginCommand
         {
@@ -53,8 +60,13 @@ namespace PrintIt_Desktop_4.UserControls
 
         // Using a DependencyProperty as the backing store for ShowPasswordCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LoginCommandProperty =
-            DependencyProperty.Register("LoginCommand", typeof(ICommand), typeof(LoginScreen), new PropertyMetadata(null));
+            DependencyProperty.Register("LoginCommand", typeof(ICommand), typeof(LoginScreen), new PropertyMetadata(null,LoginCommandChanged));
 
+        private static void LoginCommandChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
+        {
+            var vm = (LoginScreenViewModel)(o as LoginScreen).DataContext;
+            vm.LoginCommand = (ICommand)args.NewValue;
+        }
 
         public ICommand ShowSignUpCommand
         {

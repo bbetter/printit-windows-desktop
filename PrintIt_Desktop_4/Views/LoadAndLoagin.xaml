@@ -3,34 +3,42 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:myControls="clr-namespace:PrintIt_Desktop_4.UserControls"
+                      xmlns:utils="clr-namespace:PrintIt_Desktop_4.Other"
                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
                       xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+                      xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       Title="PrintIT-Login"
-                      Height="350"
-                      Width="525"
+                      Height="{Binding ElementName=ThisWindow, Path=DataContext.Height}"
+                      Width="{Binding ElementName=ThisWindow, Path=DataContext.Width}"
                       WindowStartupLocation="CenterScreen"
                       Background="Black"
                       ShowMaxRestoreButton="False"
-                      ShowMinButton="False"
-                      ShowCloseButton="False"
+                      ShowMinButton="{Binding ElementName=ThisWindow, Path=DataContext.ButtonsEnabled}"
+                      ShowCloseButton="{Binding ElementName=ThisWindow, Path=DataContext.ButtonsEnabled}"
                       TitleForeground="Black"
                       GlowBrush="DarkGray"
                       BorderThickness="0"
-                      ResizeMode="NoResize"
-        WindowCloseButtonStyle="{DynamicResource CleanCloseWindowButtonStyle}"
-        WindowMinButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
-        WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"           
-                      Loaded="LoadAndLoagin_OnLoaded"
+                      ResizeMode="{Binding ElementName=ThisWindow, Path=DataContext.WindowResizeMode}"
+        WindowCloseButtonStyle="{DynamicResource DarkCloseWindowButtonStyle}"
+        WindowMinButtonStyle="{DynamicResource DarkMinMaxWindowButtonStyle}"
+        WindowMaxButtonStyle="{DynamicResource DarkMinMaxWindowButtonStyle}"           
                       x:Name="ThisWindow" 
                       WindowStyle="None"
                       WindowTitleBrush="Black"
                       NonActiveWindowTitleBrush="Black"
-                TitlebarHeight="0"
-                      DataContext="{DynamicResource ViewModel}">                     
+                      TitlebarHeight="{Binding ElementName=ThisWindow, Path=DataContext.HeaderHeight}"
+                      DataContext="{DynamicResource ViewModel}"
+                      dialog:DialogParticipation.Register="{Binding ElementName=ThisWindow, Path=DataContext}"
+                      SizeToContent="{Binding ElementName=ThisWindow, Path=DataContext.SizeMode}">
+    <!--<controls:MetroWindow.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard Storyboard="{DynamicResource StoryboardMove}"></BeginStoryboard>
+        </EventTrigger>
+    </controls:MetroWindow.Triggers>-->
     <controls:MetroWindow.Resources>
         <viewModels:LoadAndLoginViewModel x:Key="ViewModel"></viewModels:LoadAndLoginViewModel>
-        <Storyboard x:Key="StoryboardResize" x:Name="StoryboardResize" RepeatBehavior="1x" AutoReverse="False">
+        <Storyboard x:Key="StoryboardResize" x:Name="StoryboardResize" RepeatBehavior="1x" AutoReverse="False" utils:StoryboardHelper.CompletedCommand="{Binding ElementName=ThisWindow, Path=DataContext.TransformCompleated}">
             <DoubleAnimation x:Name="Animation1"  Storyboard.TargetName="MainGrid"
                                       Storyboard.TargetProperty = "Height"
                                         To="{Binding LoginHeight}" Duration="0:0:1"/>
@@ -41,7 +49,7 @@
                                         To="{Binding LoginWidth}" Duration="0:0:1"/>
             </Storyboard>
         </Storyboard>
-        <Storyboard x:Key="StoryboardMove" RepeatBehavior="1x"  AutoReverse="False">
+        <Storyboard x:Key="StoryboardMove" RepeatBehavior="1x"  AutoReverse="False" utils:StoryboardHelper.CompletedCommand="{Binding ElementName=ThisWindow, Path=DataContext.MoveCompleated}">
 
             <DoubleAnimation  Storyboard.TargetName="ThisWindow"
                                       Storyboard.TargetProperty = "Left"
@@ -53,7 +61,7 @@
                                         To="{Binding ToTop}" Duration="0:0:1"/>
             </Storyboard>
         </Storyboard>
-        <Storyboard x:Key="StoryboardHideSplash" RepeatBehavior="1x"  AutoReverse="False">
+        <Storyboard x:Key="StoryboardHideSplash" RepeatBehavior="1x"  AutoReverse="False" utils:StoryboardHelper.CompletedCommand="{Binding ElementName=ThisWindow, Path=DataContext.HideCompleated}">
             <DoubleAnimation  Storyboard.TargetName="SplashScreen"
                                       Storyboard.TargetProperty = "Opacity"
                                         From="1"  To="0" Duration="0:0:1"/>
@@ -64,17 +72,39 @@
                                       Storyboard.TargetProperty = "Opacity"
                                         From="0"  To="1" Duration="0:0:2"/>
         </Storyboard>
+        <Storyboard x:Key="StoryboardTitle" RepeatBehavior="1x"  AutoReverse="False">
+
+            <Int32Animation  Storyboard.TargetName="ThisWindow"
+                                      Storyboard.TargetProperty = "TitlebarHeight"
+                                        From="0"  To="30" Duration="0:0:1"/>
+        </Storyboard>
     </controls:MetroWindow.Resources>
     <i:Interaction.Triggers>
-        <ei:DataTrigger Binding="{Binding AnimationMoveStrat}" Value="True">
+        <ei:DataTrigger Binding="{Binding ElementName=ThisWindow, Path=DataContext.State}" Value="HideSplash">
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardHideSplash}" ControlStoryboardOption="Play"/>
+        </ei:DataTrigger>
+        <ei:DataTrigger Binding="{Binding ElementName=ThisWindow, Path=DataContext.State}" Value="MoveBegin">
             <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardMove}" ControlStoryboardOption="Play"/>
         </ei:DataTrigger>
+        <ei:DataTrigger Binding="{Binding ElementName=ThisWindow, Path=DataContext.State}" Value="FinalTransform">
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardResize}" ControlStoryboardOption="Play"/>
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardShowLogin}" ControlStoryboardOption="Play"/>
+            <ei:ControlStoryboardAction Storyboard="{DynamicResource StoryboardTitle}" ControlStoryboardOption="Play"/>
+        </ei:DataTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ElementName=ThisWindow, Path=DataContext.Loaded}" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid x:Name="MainGrid" Width="525" Height="350">
-  <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen" ></myControls:SplashScreen>
+  <myControls:SplashScreen Margin="0,20,0,0" x:Name="SplashScreen" ProgressRingActive="{Binding ElementName=ThisWindow, Path=DataContext.ProgressRingActive}"></myControls:SplashScreen>
   <myControls:LoginScreen Margin="10,-20,10,10" Opacity="0" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.LoginVisibility}" x:Name="LoginScreen"
-                          ShowSignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpShowCommand}"></myControls:LoginScreen>
-            <myControls:SignUpScreen Margin="10,-20,10,10" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.SignUpVisibility}" x:Name="SignUpScreen" 
-                           CancelCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCancelCommand}"></myControls:SignUpScreen>
+                          ShowSignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpShowCommand}"
+                          LoginCommand="{Binding ElementName=ThisWindow, Path=DataContext.LoginCommand}"
+                          Login="{Binding ElementName=ThisWindow, Path=DataContext.SignInLogin, Mode=TwoWay}"></myControls:LoginScreen>
+  <myControls:SignUpScreen Margin="10,-20,10,10" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.SignUpVisibility}" x:Name="SignUpScreen" 
+                          CancelCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCancelCommand}"
+                          SignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCommand}"
+                          LoginValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpLogin, Mode=TwoWay}"
+                          NameValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpName, Mode=TwoWay}"></myControls:SignUpScreen>
     </Grid>
 </controls:MetroWindow>
