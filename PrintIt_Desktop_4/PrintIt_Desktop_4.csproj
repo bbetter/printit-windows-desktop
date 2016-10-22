@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -100,6 +101,8 @@
     <Compile Include="Model\Configuration\Config.cs" />
     <Compile Include="Model\Configuration\Constants.cs" />
     <Compile Include="Model\Configuration\Localizer.cs" />
+    <Compile Include="Model\Core\Networking\NetworkManager.cs" />
+    <Compile Include="Model\Core\Printing\PrinterManager.cs" />
     <Compile Include="Model\DataValidation\EmailLoginValidator.cs" />
     <Compile Include="Model\DataValidation\SimplePasswordValidator.cs" />
     <Compile Include="Model\Enums\ValidationStates.cs" />

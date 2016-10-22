@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using PrintIt_Desktop_4.Other;
 
 namespace PrintIt_Desktop_4.ViewModels
 {
-
     [Magic]
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

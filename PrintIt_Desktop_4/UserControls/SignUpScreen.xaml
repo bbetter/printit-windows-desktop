@@ -49,6 +49,6 @@
                 </Button>
             </Grid>
         </StackPanel>
-        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintIT. Всі права захищені.</Label>
+        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintZ. Всі права захищені.</Label>
     </Grid>
 </UserControl>

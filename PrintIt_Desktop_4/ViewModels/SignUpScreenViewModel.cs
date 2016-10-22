@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Other;

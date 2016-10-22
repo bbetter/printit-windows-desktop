@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.RightsManagement;
+using System.Collections.Specialized;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +9,7 @@ using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using PrintIt_Desktop_4.Model.Abstractions;
 using PrintIt_Desktop_4.Model.Configuration;
+using PrintIt_Desktop_4.Model.Core.Networking;
 using PrintIt_Desktop_4.Model.Enums;
 using PrintIt_Desktop_4.Other;
 
@@ -18,8 +18,12 @@ namespace PrintIt_Desktop_4.ViewModels
     [Magic]
     class LoadAndLoginViewModel:ViewModelBase
     {
+        #region private members
         private IDialogCoordinator _dialogCoordinator;
         private DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 3), IsEnabled = false };
+        #endregion
+
+        #region constructors
         public LoadAndLoginViewModel()
         {
             SignUpShowCommand = new DelegateCommand(ShowSignUp);
@@ -34,7 +38,6 @@ namespace PrintIt_Desktop_4.ViewModels
             SignUpLogin = "";
             SignInLogin = "";
 
-
             HeaderHeight = 0;
             ButtonsEnabled = false;
             WindowResizeMode = ResizeMode.NoResize;
@@ -43,8 +46,8 @@ namespace PrintIt_Desktop_4.ViewModels
             LoginHeight = 470;
             Width = 525;
             Height = 350;
-            ToTop = System.Windows.SystemParameters.WorkArea.Height - LoginHeight;
-            ToLeft = System.Windows.SystemParameters.WorkArea.Width - LoginWidth;
+            ToTop = SystemParameters.WorkArea.Height - LoginHeight;
+            ToLeft = SystemParameters.WorkArea.Width - LoginWidth;
             ToTop /= 2;
             ToLeft /= 2;
             _timer.Tick += ((sender, args) =>
@@ -62,44 +65,38 @@ namespace PrintIt_Desktop_4.ViewModels
             Loaded = new DelegateCommand(LoadEnd);
             TransformCompleated = new DelegateCommand(TransformEnd);
         }
+        #endregion
 
+        #region properties
         public int HeaderHeight { get; set; }
         public bool ButtonsEnabled { get; set; }
         public ResizeMode WindowResizeMode { get; set; }
-
         public ICommand LoginCommand { get; set; }
         public ICommand SignUpShowCommand { get; set; }
         public ICommand SignUpCommand { get; set; }
         public ICommand SignUpCancelCommand { get; set; }
-
         public Visibility LoginVisibility { get; set; }
         public Visibility SignUpVisibility { get; set; }
         public Visibility SplashScreenVisibility { get; set; }
-
         public double ToLeft { get; set; }
         public double ToTop { get; set; }
         public double LoginHeight { get; set; }
         public double LoginWidth { get; set; }
-
         public double Height { get; set; }
         public double Width { get; set; }
-
-        private void ShowSignUp()
-        {
-            LoginVisibility = Visibility.Collapsed;
-            SignUpVisibility = Visibility.Visible;
-        }
-
-        private void HideSignUp()
-        {
-            SignUpVisibility = Visibility.Collapsed;
-            LoginVisibility = Visibility.Visible;
-        }
-
         public String SignInLogin { get; set; }
         public String SignUpLogin { get; set; }
         public String SignUpName { get; set; }
+        public String State { get; set; }
+        public SizeToContent SizeMode { get; set; }
+        public bool ProgressRingActive { get; set; }
+        public ICommand Loaded { get; set; }
+        public ICommand MoveCompleated { get; set; }
+        public ICommand HideCompleated { get; set; }
+        public ICommand TransformCompleated { get; set; }
+        #endregion
 
+        #region interactions
         private void SingUp(object param)
         {
             var passwords = (Object[]) param;
@@ -165,7 +162,19 @@ namespace PrintIt_Desktop_4.ViewModels
             if (errorMessages.Count > 0) ShowErrorMessage(errorMessages);
             else
             {
-                //todo send SingIn request to server
+                var data = new NameValueCollection();
+                try
+                {
+                    data.Add(Config.GetSignInLoginParamName(), SignInLogin);
+                    data.Add(Config.GetSignInPasswordParamName(), password);
+                    var response = NetworkManager.SendPostRequest(data, Config.GetSignIn());
+                    MessageBox.Show(response);
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером "});
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -182,11 +191,20 @@ namespace PrintIt_Desktop_4.ViewModels
             };
             await _dialogCoordinator.ShowMessageAsync(this, errors.Count>1?"Помилки":"Помилка", sb.ToString(),MessageDialogStyle.Affirmative,dialogSettings);
         }
+        #endregion
 
-        public String State { get; set; }
-        public SizeToContent SizeMode { get; set; }
-        public bool ProgressRingActive { get; set; }
-        public ICommand Loaded { get; set; }
+        #region animation finish behaviour
+        private void ShowSignUp()
+        {
+            LoginVisibility = Visibility.Collapsed;
+            SignUpVisibility = Visibility.Visible;
+        }
+
+        private void HideSignUp()
+        {
+            SignUpVisibility = Visibility.Collapsed;
+            LoginVisibility = Visibility.Visible;
+        }
 
         private void LoadEnd()
         {
@@ -195,14 +213,10 @@ namespace PrintIt_Desktop_4.ViewModels
             _timer.Start();
         }
 
-        public ICommand MoveCompleated { get; set; }
-
         private void MoveEnd()
         {
             State = "FinalTransform";
         }
-
-        public ICommand HideCompleated { get; set; }
 
         private void HideEnd()
         {
@@ -212,8 +226,6 @@ namespace PrintIt_Desktop_4.ViewModels
             State = "MoveBegin";
         }
 
-        public ICommand TransformCompleated { get; set; }
-
         private void TransformEnd()
         {
             SizeMode = SizeToContent.Manual;
@@ -222,7 +234,9 @@ namespace PrintIt_Desktop_4.ViewModels
             ButtonsEnabled = true;
             WindowResizeMode = ResizeMode.CanMinimize;
 
-            
+            if (!NetworkManager.CanStartSession(Config.GetServerName()))
+            ShowErrorMessage(new List<string>(){"Неможливо зв'язатися з сервером"});
         }
+        #endregion
     }
 }
