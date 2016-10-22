@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
-using System.Windows;
 using PrintIt_Desktop_4.Model.Configuration;
 
 namespace PrintIt_Desktop_4.Model.Core.Networking
@@ -16,8 +13,8 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
 
         static NetworkManager()
         {
-            _client = new WebClient();
-            //_client.Headers.Add(@"Accept: application/json");     
+            //_client = new WebClient();
+            //_client.Headers.Add(@"Accept: */*");
         }
 
         public static bool CanStartSession(string serverAddressOrName)
@@ -38,9 +35,13 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
 
         public static string SendPostRequest(NameValueCollection data, string page)
         {
-            var response = _client.UploadValues(Config.GetServerAddress()+page,"POST", data);
-            var responseString = Encoding.Default.GetString(response);
-            return responseString;
+            using (_client = new WebClient())
+            {
+                _client.Headers.Add(@"Accept: */*");   
+                var response = _client.UploadValues(Config.GetServerAddress() + page, "POST", data);
+                var responseString = Encoding.Default.GetString(response);
+                return responseString;
+            }
         }
     }
 }

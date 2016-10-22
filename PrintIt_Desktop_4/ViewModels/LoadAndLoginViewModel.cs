@@ -233,9 +233,11 @@ namespace PrintIt_Desktop_4.ViewModels
             Height=LoginHeight;
             ButtonsEnabled = true;
             WindowResizeMode = ResizeMode.CanMinimize;
-
+            //todo deal with ping or check server availability
+            /*
             if (!NetworkManager.CanStartSession(Config.GetServerName()))
             ShowErrorMessage(new List<string>(){"Неможливо зв'язатися з сервером"});
+             * */
         }
         #endregion
     }
