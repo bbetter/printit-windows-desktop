@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using PrintIt_Desktop_4.Model.Abstractions;
+using PrintIt_Desktop_4.Model.Configuration;
+using PrintIt_Desktop_4.Model.Enums;
 using PrintIt_Desktop_4.Other;
 
 namespace PrintIt_Desktop_4.ViewModels
@@ -110,15 +112,20 @@ namespace PrintIt_Desktop_4.ViewModels
                 errorMessages.Add("Заповніть всі поля");
             else
             {
-                //todo link to model
-                /*
-            pVal = Core.GetPasswordValidator();
-            lVal = Core.GetLoginValidator();
+            pVal = Config.GetPasswordValidator();
+            lVal = Config.GetLoginValidator();
             var pValRes = pVal.Validate(password);
-            val lValRes = lVal.Validate(SignUpLogin);
-             * for each error add it to err list
-             * 
-            */
+            var lValRes = lVal.Validate(SignUpLogin);
+            foreach (var loginValidationState in lValRes)
+            {
+                if(loginValidationState!=LoginValidationState.Valid)
+                errorMessages.Add(Localizer.GetString(loginValidationState));
+            }
+            foreach (var passwordValidationState in pValRes)
+            {
+                if(passwordValidationState!=PasswordValidationState.Valid)
+                errorMessages.Add(Localizer.GetString(passwordValidationState));
+            }
                 if(!password.Equals(passwordRepeat)) errorMessages.Add("Паролі відрізняються");
             }
             if(errorMessages.Count>0) ShowErrorMessage(errorMessages);
@@ -138,15 +145,22 @@ namespace PrintIt_Desktop_4.ViewModels
                 errorMessages.Add("Заповніть всі поля");
             else
             {
-                //todo link to model
-                /*
-            pVal = Core.GetPasswordValidator();
-            lVal = Core.GetLoginValidator();
+
+            pVal = Config.GetPasswordValidator();
+            lVal = Config.GetLoginValidator();
             var pValRes = pVal.Validate(password);
-            val lValRes = lVal.Validate(SignInLogin);
-             * for each error add it to err list
-             * 
-            */
+            var lValRes = lVal.Validate(SignInLogin);
+            foreach (var loginValidationState in lValRes)
+            {
+                if (loginValidationState != LoginValidationState.Valid)
+                errorMessages.Add(Localizer.GetString(loginValidationState));
+            }
+            foreach (var passwordValidationState in pValRes)
+            {
+                if (passwordValidationState != PasswordValidationState.Valid)
+                errorMessages.Add(Localizer.GetString(passwordValidationState));
+            }
+
             }
             if (errorMessages.Count > 0) ShowErrorMessage(errorMessages);
             else

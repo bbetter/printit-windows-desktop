@@ -97,13 +97,18 @@
     <Compile Include="Converters\MultiParameterConverter.cs" />
     <Compile Include="Model\Abstractions\LoginValidator.cs" />
     <Compile Include="Model\Abstractions\PasswordValidator.cs" />
+    <Compile Include="Model\Configuration\Config.cs" />
+    <Compile Include="Model\Configuration\Constants.cs" />
+    <Compile Include="Model\Configuration\Localizer.cs" />
+    <Compile Include="Model\DataValidation\EmailLoginValidator.cs" />
+    <Compile Include="Model\DataValidation\SimplePasswordValidator.cs" />
     <Compile Include="Model\Enums\ValidationStates.cs" />
     <Compile Include="Model\Interfaces\IStringValidator.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="netfx\System\Windows\Input\DelegateCommand.cs" />
     <Compile Include="Other\Attributes.cs" />
     <Compile Include="Other\MouseBehaviour.cs" />
-    <Compile Include="Other\StoryboardHElper.cs" />
+    <Compile Include="Other\StoryboardHelper.cs" />
     <Compile Include="UserControls\LoadingRing.xaml.cs">
       <DependentUpon>LoadingRing.xaml</DependentUpon>
     </Compile>

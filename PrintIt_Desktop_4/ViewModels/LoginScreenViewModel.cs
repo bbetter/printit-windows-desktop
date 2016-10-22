@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Other;
 using PrintIt_Desktop_4.UserControls;
 
@@ -56,5 +57,7 @@ namespace PrintIt_Desktop_4.ViewModels
 
         public Visibility PasswordVisibility { get; set; }
         public Visibility ShowPasswordVisibility { get; set; }
+
+        public int PasswordLength { get { return Constants.MaxPasswordLength; } }
     }
 }

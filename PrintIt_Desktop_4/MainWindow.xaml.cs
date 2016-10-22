@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,11 +24,21 @@ namespace PrintIt_Desktop_4
         public MainWindow()
         {
             InitializeComponent();
+            MapBrowser.Navigate("http://maps.google.com.ua");
+            //MapBrowser.Navigate("http://Google.com/maps");
         }
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            ShowTitleBar = !ShowTitleBar;
+            dynamic doc = MapBrowser.Document;
+            dynamic htmlText = doc.documentElement.InnerHtml;
+            string htmlstring = htmlText;
+            Regex pattern = new Regex(@"<meta content=""(.*?)"" itemprop=""description"" property=""og:description"">");
+            Match match = pattern.Match(htmlstring);
+            string location = match.Groups[1].Value;
+            MessageBox.Show(location);
+            MessageBox.Show(pattern.ToString());
         }
     }
 }

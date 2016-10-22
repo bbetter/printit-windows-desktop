@@ -37,7 +37,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                     <Grid MinWidth="260" Margin="0,0,5,0">
-                    <PasswordBox x:Name="PasswordBox" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18"   HorizontalAlignment="Stretch" Visibility="{Binding ElementName=ThisControl, Path=DataContext.PasswordVisibility}"></PasswordBox>
+                        <PasswordBox x:Name="PasswordBox" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18"   HorizontalAlignment="Stretch" Visibility="{Binding ElementName=ThisControl, Path=DataContext.PasswordVisibility}" MaxLength="{Binding ElementName=ThisControl, Path=DataContext.PasswordLength}"></PasswordBox>
                         <TextBox x:Name="PasswordBoxValue" Visibility="{Binding ElementName=ThisControl,Path=DataContext.ShowPasswordVisibility , Mode=TwoWay}" BorderThickness="0" IsReadOnly="True" IsTabStop="False" FontSize="18" Text="{Binding ElementName=ThisControl, Path=DataContext.PasswordText}"></TextBox>
                     </Grid>
                     <Button Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource InvisibleButtonStyle}" IsTabStop="False" Command="{Binding ElementName=ThisControl, Path=DataContext.StopShowPasswordCommand}">
