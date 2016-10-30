@@ -84,6 +84,16 @@ namespace PrintIt_Desktop_4.UserControls
         public static readonly DependencyProperty NameValueProperty =
             DependencyProperty.Register("NameValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(""));
 
+        public String AddressValue
+        {
+            get { return (String)GetValue(AddressValueProperty); }
+            set { SetValue(AddressValueProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for AddressValue.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AddressValueProperty =
+            DependencyProperty.Register("AddressValue", typeof(String), typeof(SignUpScreen), new PropertyMetadata(""));
+
         
         
     }

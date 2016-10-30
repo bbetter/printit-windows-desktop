@@ -28,6 +28,18 @@
                 <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="Назва" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Name}"></TextBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
+                <TextBox x:Name="AddressBox" controls:TextBoxHelper.Watermark="Адреса" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Address}"
+                         controls:TextBoxHelper.TextButton="True" Style="{DynamicResource ButtonCommandMetroTextBox}">
+                    <controls:TextBoxHelper.ButtonContent>
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{DynamicResource appbar_map}"></VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </controls:TextBoxHelper.ButtonContent>
+                </TextBox>
+            </Border>
+            <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
                 <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" MaxLength="{Binding ElementName=ThisControl,Path=DataContext.PasswordLength}"></PasswordBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">

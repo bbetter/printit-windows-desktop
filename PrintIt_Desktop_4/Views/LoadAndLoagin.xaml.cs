@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using Microsoft.Expression.Prototyping.Data;
+using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Other;
 using PrintIt_Desktop_4.ViewModels;
 

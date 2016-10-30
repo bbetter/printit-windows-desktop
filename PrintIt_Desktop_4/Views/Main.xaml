@@ -1,0 +1,118 @@
+﻿<controls:MetroWindow x:Class="PrintIt_Desktop_4.Views.Main"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      Title="{Binding PrintSpotName}"
+                      Height="600"
+                      Width="900"
+                      TitleForeground="Black"    
+                      WindowCloseButtonStyle="{DynamicResource CleanCloseWindowButtonStyle}"
+                      WindowMinButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
+                      WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
+                      GlowBrush="DarkGray"
+                      BorderThickness="0"
+                      >
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Foreground="{StaticResource ControlBackgroundBrush}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20"
+                   Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_information_circle}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text="" />
+                </StackPanel>
+
+            </Button>
+        </controls:WindowCommands>
+
+    </controls:MetroWindow.RightWindowCommands>
+    <Grid>
+        <DockPanel>
+            <controls:MetroAnimatedTabControl Background="{StaticResource ControlBackgroundBrush}" DockPanel.Dock="Top">
+                <controls:MetroAnimatedTabControl.Resources>
+                    <Style TargetType="{x:Type TabPanel}">
+                        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"></Setter>
+                    </Style>
+                </controls:MetroAnimatedTabControl.Resources>
+                <controls:MetroTabItem>
+                    <controls:MetroTabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Images/logo_RGBA.png" Height="30" Margin="5,5,20,5"></Image>
+                            <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_printer}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Text="ДРУКУВАТИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                        </StackPanel>
+                    </controls:MetroTabItem.Header>
+                    <TextBlock Text="DOCUMENT LIST"></TextBlock>
+                </controls:MetroTabItem>
+                <controls:MetroTabItem>
+                    <controls:MetroTabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cancel}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Text="ЗУПИНИТИ ДРУК" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                        </StackPanel>
+                    </controls:MetroTabItem.Header>
+                    <TextBlock Text="STOP PRINT"></TextBlock>
+                </controls:MetroTabItem>
+                <controls:MetroTabItem>
+                    <controls:MetroTabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Text="НАЛАШТУВАННЯ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                        </StackPanel>
+                    </controls:MetroTabItem.Header>
+                    <controls:MetroAnimatedTabControl>
+                        <controls:MetroAnimatedTabControl.Resources>
+                            <Style TargetType="{x:Type TabPanel}">
+                                <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"></Setter>
+                            </Style>
+                        </controls:MetroAnimatedTabControl.Resources>
+                        <controls:MetroTabItem>
+                            <controls:MetroTabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="ОБЛІКОВИЙ ЗАПИС" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                                </StackPanel>
+                            </controls:MetroTabItem.Header>
+                            <TextBlock Text="ACCOUNT"></TextBlock>
+                        </controls:MetroTabItem>
+                        <controls:MetroTabItem>
+                            <controls:MetroTabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_printer_blank}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="ПРИНТЕРИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                                </StackPanel>
+                            </controls:MetroTabItem.Header>
+                            <TextBlock Text="PRINTERS"></TextBlock>
+                        </controls:MetroTabItem>
+                    </controls:MetroAnimatedTabControl>
+                </controls:MetroTabItem>
+            </controls:MetroAnimatedTabControl>
+        </DockPanel>
+    </Grid>
+</controls:MetroWindow>

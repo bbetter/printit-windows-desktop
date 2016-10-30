@@ -105,6 +105,7 @@
                           CancelCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCancelCommand}"
                           SignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCommand}"
                           LoginValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpLogin, Mode=TwoWay}"
-                          NameValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpName, Mode=TwoWay}"></myControls:SignUpScreen>
+                          NameValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpName, Mode=TwoWay}"
+                          AddressValue="{Binding ElementName=ThisWindow, Path=DataContext.SignUpAddress, Mode=TwoWay}"></myControls:SignUpScreen>
     </Grid>
 </controls:MetroWindow>

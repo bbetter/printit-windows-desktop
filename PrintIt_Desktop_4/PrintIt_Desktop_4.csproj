@@ -103,6 +103,7 @@
     <Compile Include="Model\Configuration\Localizer.cs" />
     <Compile Include="Model\Core\Networking\NetworkManager.cs" />
     <Compile Include="Model\Core\Printing\PrinterManager.cs" />
+    <Compile Include="Model\Core\WindowManager.cs" />
     <Compile Include="Model\DataValidation\EmailLoginValidator.cs" />
     <Compile Include="Model\DataValidation\SimplePasswordValidator.cs" />
     <Compile Include="Model\Enums\ValidationStates.cs" />
@@ -130,6 +131,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\LoadAndLoagin.xaml.cs">
       <DependentUpon>LoadAndLoagin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadAndLoagin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using PrintIt_Desktop_4.Model.Abstractions;
 using PrintIt_Desktop_4.Model.Configuration;
+using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Model.Core.Networking;
 using PrintIt_Desktop_4.Model.Enums;
 using PrintIt_Desktop_4.Other;
@@ -87,6 +88,7 @@ namespace PrintIt_Desktop_4.ViewModels
         public String SignInLogin { get; set; }
         public String SignUpLogin { get; set; }
         public String SignUpName { get; set; }
+        public String SignUpAddress { get; set; }
         public String State { get; set; }
         public SizeToContent SizeMode { get; set; }
         public bool ProgressRingActive { get; set; }
@@ -128,7 +130,17 @@ namespace PrintIt_Desktop_4.ViewModels
             if(errorMessages.Count>0) ShowErrorMessage(errorMessages);
             else
             {
-                //todo send SingUp request to server
+                var data = new NameValueCollection();
+                try
+                {
+                    //todo send request
+                    HideSignUp();
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером " });
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -169,6 +181,8 @@ namespace PrintIt_Desktop_4.ViewModels
                     data.Add(Config.GetSignInPasswordParamName(), password);
                     var response = NetworkManager.SendPostRequest(data, Config.GetSignIn());
                     MessageBox.Show(response);
+                    //todo deal with response
+                    WindowManager.ShowMainWindow();
                 }
                 catch (Exception ex)
                 {

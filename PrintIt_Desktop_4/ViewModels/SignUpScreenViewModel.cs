@@ -21,6 +21,17 @@ namespace PrintIt_Desktop_4.ViewModels
         private SignUpScreen _view;
         private String _name;
         private String _login;
+        private String _address;
+
+        public String Address
+        {
+            get { return _address; }
+            set
+            {
+                _address = value;
+                _view.AddressValue = value;
+            }
+        }
 
         public String Login
         {
