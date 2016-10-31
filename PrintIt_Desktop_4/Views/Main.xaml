@@ -11,10 +11,19 @@
                       WindowMaxButtonStyle="{DynamicResource CleanMinMaxWindowButtonStyle}"
                       GlowBrush="DarkGray"
                       BorderThickness="0"
+                      WindowStartupLocation="CenterScreen"
+                      x:Name="ThisWindow"
                       >
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout Theme="Dark" Position="Top" x:Name="FlyoutInfo" Header="Інформація">
+                <TextBlock FontSize="40"> INFO</TextBlock>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Foreground="{StaticResource ControlBackgroundBrush}">
+            <Button Foreground="{StaticResource ControlBackgroundBrush}" Command="{Binding InfoCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20"
                    Height="20"

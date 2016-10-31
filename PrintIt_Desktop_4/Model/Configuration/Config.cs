@@ -43,5 +43,15 @@ namespace PrintIt_Desktop_4.Model.Configuration
         {
             return @"password";
         }
+
+        public static String GetWebSocketAddress()
+        {
+            return @"ws://localhost:8080/cable";
+        }
+
+        public static String GetStopMessage()
+        {
+            return @"WRAPPER_CMD_STOP";
+        }
     }
 }

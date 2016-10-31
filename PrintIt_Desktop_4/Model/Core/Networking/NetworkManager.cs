@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using PrintIt_Desktop_4.Model.Configuration;
 
@@ -15,16 +16,29 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
         {
             //_client = new WebClient();
             //_client.Headers.Add(@"Accept: */*");
+            //WebClient c = new WebClient();
+            //var socet = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.IP);
+            //socet.Bind(new DnsEndPoint("localhost",3000));
+            //socet.Listen(128);
+            //socet.BeginAccept(null, 0, OnAccept, null);
+            //    //c.OpenReadAsync();
+        }
+
+        private static void OnAccept(IAsyncResult res)
+        {
+
         }
 
         public static bool CanStartSession(string serverAddressOrName)
         {
-            bool pingable;
+            var pingable = true;
             var pinger = new Ping();
             try
             {
                 PingReply reply = pinger.Send(serverAddressOrName);
+                if(reply!=null)
                 pingable = reply.Status == IPStatus.Success;
+                else pingable = false;
             }
             catch (Exception)
             {
