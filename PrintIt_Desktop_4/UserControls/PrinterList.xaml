@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="PrintIt_Desktop_4.UserControls.PrinterList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             xmlns:converters="clr-namespace:PrintIt_Desktop_4.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="ThisControl"
+             DataContext="{DynamicResource ViewModel}">
+    <UserControl.Resources>
+        <vm:PrinterListViewModel x:Key="ViewModel"></vm:PrinterListViewModel>
+        <converters:BoolToVisibilityConverter x:Key="VisibilityConverter"></converters:BoolToVisibilityConverter>
+        <converters:InvertedBoolToVisibilityConverter x:Key="InvertedVisibilityConverter"></converters:InvertedBoolToVisibilityConverter>
+    </UserControl.Resources>
+    <Grid>
+        <ListView ItemsSource="{Binding ElementName=ThisControl, Path=DataContext.Printers}" DataContext="{Binding ElementName=ThisControl, Path=DataContext.Printers}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Width="200">
+                            <Grid>
+                                <Image Source="../Images/printer_RGBA.png" Width="100" Height="100"></Image>
+                                <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource VisibilityConverter}}" Fill ="Red">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{DynamicResource appbar_disconnect}" Stretch="Fill"></VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource InvertedVisibilityConverter}}" Fill ="Green">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Visual="{DynamicResource appbar_check}" Stretch="Fill"></VisualBrush>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Grid>
+                            <Label FontSize="18" HorizontalContentAlignment="Center">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Name}" TextAlignment="Center">
+                                
+                            </TextBlock>
+                        </Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+    </Grid>
+</UserControl>

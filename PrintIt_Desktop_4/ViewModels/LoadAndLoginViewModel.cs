@@ -35,6 +35,7 @@ namespace PrintIt_Desktop_4.ViewModels
             _dialogCoordinator = DialogCoordinator.Instance;
             LoginCommand = new DelegateCommand<object>(SingIn);
             SignUpCommand = new DelegateCommand<object>(SingUp);
+            SignInForgotCommand = new DelegateCommand(ForgotPassword);
             SignUpName = "";
             SignUpLogin = "";
             SignInLogin = "";
@@ -76,6 +77,7 @@ namespace PrintIt_Desktop_4.ViewModels
         public ICommand SignUpShowCommand { get; set; }
         public ICommand SignUpCommand { get; set; }
         public ICommand SignUpCancelCommand { get; set; }
+        public ICommand SignInForgotCommand { get; set; }
         public Visibility LoginVisibility { get; set; }
         public Visibility SignUpVisibility { get; set; }
         public Visibility SplashScreenVisibility { get; set; }
@@ -205,6 +207,13 @@ namespace PrintIt_Desktop_4.ViewModels
             };
             await _dialogCoordinator.ShowMessageAsync(this, errors.Count>1?"Помилки":"Помилка", sb.ToString(),MessageDialogStyle.Affirmative,dialogSettings);
         }
+
+        private void ForgotPassword()
+        {
+            //todo:redirect to correct website page;
+            System.Diagnostics.Process.Start(Config.GetServerAddress());
+        }
+
         #endregion
 
         #region animation finish behaviour

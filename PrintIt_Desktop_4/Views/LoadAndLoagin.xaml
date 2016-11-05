@@ -100,7 +100,8 @@
   <myControls:LoginScreen Margin="10,-20,10,10" Opacity="0" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.LoginVisibility}" x:Name="LoginScreen"
                           ShowSignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpShowCommand}"
                           LoginCommand="{Binding ElementName=ThisWindow, Path=DataContext.LoginCommand}"
-                          Login="{Binding ElementName=ThisWindow, Path=DataContext.SignInLogin, Mode=TwoWay}"></myControls:LoginScreen>
+                          Login="{Binding ElementName=ThisWindow, Path=DataContext.SignInLogin, Mode=TwoWay}"
+                          ForgotPasswordCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignInForgotCommand}"></myControls:LoginScreen>
   <myControls:SignUpScreen Margin="10,-20,10,10" Visibility="{Binding ElementName=ThisWindow, Path=DataContext.SignUpVisibility}" x:Name="SignUpScreen" 
                           CancelCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCancelCommand}"
                           SignUpCommand="{Binding ElementName=ThisWindow, Path=DataContext.SignUpCommand}"

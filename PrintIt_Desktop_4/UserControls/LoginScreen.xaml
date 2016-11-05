@@ -65,7 +65,7 @@
         </Border>
             <Button Margin="5,5,5,15" BorderThickness="0" Background="#00000000" Style="{DynamicResource InvisibleButtonStyle}" HorizontalAlignment="Center" Command="{Binding ForgotPasswordCommand}" IsTabStop="False">
             <Label x:Name="ForgotPassword"  HorizontalAlignment="Center"  IsTabStop="False">
-                <TextBlock Style="{DynamicResource HyperlinkStyleTextBlock}">Забули пароль</TextBlock></Label>
+                <TextBlock Style="{DynamicResource HyperlinkStyleTextBlock}">Забули пароль?</TextBlock></Label>
             </Button>
             <Button x:Name="SingIn" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}">Увійти</Button>
             <Button x:Name="SingUpOpen" Margin="5,5,5,15" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding ShowSignUpCommand}">Зареєструватися</Button>

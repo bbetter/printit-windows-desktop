@@ -65,6 +65,7 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.IO.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -99,6 +100,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\MultiParameterConverter.cs" />
     <Compile Include="Model\Abstractions\LoginValidator.cs" />
     <Compile Include="Model\Abstractions\PasswordValidator.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Model\Configuration\Localizer.cs" />
     <Compile Include="Model\Core\Networking\NetworkManager.cs" />
     <Compile Include="Model\Core\Networking\WebSocketWrapper.cs" />
+    <Compile Include="Model\Core\Printing\Printer.cs" />
     <Compile Include="Model\Core\Printing\PrinterManager.cs" />
     <Compile Include="Model\Core\WindowManager.cs" />
     <Compile Include="Model\DataValidation\EmailLoginValidator.cs" />
@@ -124,6 +128,9 @@
     <Compile Include="UserControls\LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PrinterList.xaml.cs">
+      <DependentUpon>PrinterList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SignUpScreen.xaml.cs">
       <DependentUpon>SignUpScreen.xaml</DependentUpon>
     </Compile>
@@ -132,6 +139,7 @@
     </Compile>
     <Compile Include="ViewModels\LoadAndLoginViewModel.cs" />
     <Compile Include="ViewModels\LoginScreenViewModel.cs" />
+    <Compile Include="ViewModels\PrinterListViewModel.cs" />
     <Compile Include="ViewModels\SignUpScreenViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\LoadAndLoagin.xaml.cs">
@@ -165,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\LoginScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PrinterList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

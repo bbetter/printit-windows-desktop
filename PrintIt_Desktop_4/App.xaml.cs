@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using PrintIt_Desktop_4.Model.Core;
@@ -15,6 +16,9 @@ namespace PrintIt_Desktop_4
     {
         void App_Startup(object sender, StartupEventArgs e)
         {
+            //PresentationTraceSources.Refresh();
+            //PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
+            //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
             WindowManager.ShowLoginWindow();
         }
     }
