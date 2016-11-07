@@ -72,7 +72,10 @@
                             <TextBlock Text="ДОКУМЕНТИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
-                    <TextBlock Text="DOCUMENT LIST"></TextBlock>
+                    <StackPanel>
+                        <userControls:DocumentList></userControls:DocumentList>
+                        <TextBlock Text="DOCUMENT LIST"></TextBlock>
+                    </StackPanel>    
                 </controls:MetroTabItem>
                 <controls:MetroTabItem>
                     <controls:MetroTabItem.Header>

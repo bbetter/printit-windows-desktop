@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
 using System.Windows.Input;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Other;
@@ -11,6 +13,7 @@ namespace PrintIt_Desktop_4.ViewModels
     {
         public SignUpScreenViewModel()
         {
+            AddressAutoComplete = new List<string>() { "place 1", "place 2", "place 3"};
         }
 
         public SignUpScreenViewModel(SignUpScreen view) : this()
@@ -56,5 +59,7 @@ namespace PrintIt_Desktop_4.ViewModels
         public ICommand SignUpCommand { get; set; }
 
         public int PasswordLength { get { return Constants.MaxPasswordLength; } }
+
+        public List<String> AddressAutoComplete { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
+using Newtonsoft.Json.Linq;
 using PrintIt_Desktop_4.Model.Abstractions;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Model.Core;
@@ -135,13 +136,23 @@ namespace PrintIt_Desktop_4.ViewModels
                 var data = new NameValueCollection();
                 try
                 {
-                    //todo send request
+                    data.Add(Config.GetSignUpLoginParamName(), SignUpLogin);
+                    data.Add(Config.GetSignUpPasswordParamName(), password);
+                    data.Add(Config.GetSignUpPasswordConfirmParamName(),passwordRepeat);
+                    data.Add(Config.GetSignUpFirstNameParamName(),@"Ім'я");
+                    data.Add(Config.GetSignUpLastNameParamName(), @"Прізвище");
+                    data.Add(Config.GetSignUpRoleParamName(), @"print_spot_owner");
+                    data.Add(Config.GetSignUpPrintSpotNameParamName(),SignUpName);
+                    data.Add(Config.GetSignUpPrintSpotAddressParamName(), SignUpAddress);
+                    var response = NetworkManager.SendPostRequest(data, Config.GetSignUp());
+                    MessageBox.Show(response);
                     HideSignUp();
                 }
                 catch (Exception ex)
                 {
-                    ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером " });
-                    MessageBox.Show(ex.Message);
+                    //ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером " });
+                    ShowErrorMessage(new List<string>() { ex.Message });
+                    //MessageBox.Show(ex.Message); //todo delete
                 }
             }
         }
@@ -183,13 +194,23 @@ namespace PrintIt_Desktop_4.ViewModels
                     data.Add(Config.GetSignInPasswordParamName(), password);
                     var response = NetworkManager.SendPostRequest(data, Config.GetSignIn());
                     MessageBox.Show(response);
-                    //todo deal with response
+                    var responseJObject = JObject.Parse(response);
+                    if (responseJObject.HasValues)
+                    {
+                        JToken res;
+                        if (responseJObject.TryGetValue("auth_token",out res))
+                        {
+                            NetworkManager.SetAccessToken(res.Value<string>());
+                            MessageBox.Show(NetworkManager.GetAccessToken());
+                        }
+                    }
                     WindowManager.ShowMainWindow();
                 }
                 catch (Exception ex)
                 {
-                    ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером "});
-                    MessageBox.Show(ex.Message);
+                    //ShowErrorMessage(new List<string>() { "Неможливо зв'язатися з сервером "});
+                    ShowErrorMessage(new List<string>() { ex.Message });
+                    //MessageBox.Show(ex.Message); //todo delete
                 }
             }
         }

@@ -67,6 +67,7 @@
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.Runtime.dll</HintPath>
@@ -94,6 +95,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTextBoxAutoComplete, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.2\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -108,6 +113,7 @@
     <Compile Include="Model\Configuration\Config.cs" />
     <Compile Include="Model\Configuration\Constants.cs" />
     <Compile Include="Model\Configuration\Localizer.cs" />
+    <Compile Include="Model\Core\Document.cs" />
     <Compile Include="Model\Core\Networking\NetworkManager.cs" />
     <Compile Include="Model\Core\Networking\WebSocketWrapper.cs" />
     <Compile Include="Model\Core\Printing\Printer.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Model\Core\WindowManager.cs" />
     <Compile Include="Model\DataValidation\EmailLoginValidator.cs" />
     <Compile Include="Model\DataValidation\SimplePasswordValidator.cs" />
+    <Compile Include="Model\Enums\DocumentStates.cs" />
     <Compile Include="Model\Enums\ValidationStates.cs" />
     <Compile Include="Model\Interfaces\IStringValidator.cs" />
     <Compile Include="netfx\System\Guard.cs" />
@@ -122,6 +129,9 @@
     <Compile Include="Other\Attributes.cs" />
     <Compile Include="Other\MouseBehaviour.cs" />
     <Compile Include="Other\StoryboardHelper.cs" />
+    <Compile Include="UserControls\DocumentList.xaml.cs">
+      <DependentUpon>DocumentList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\LoadingRing.xaml.cs">
       <DependentUpon>LoadingRing.xaml</DependentUpon>
     </Compile>
@@ -137,6 +147,7 @@
     <Compile Include="UserControls\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\DocumentListViewModel.cs" />
     <Compile Include="ViewModels\LoadAndLoginViewModel.cs" />
     <Compile Include="ViewModels\LoginScreenViewModel.cs" />
     <Compile Include="ViewModels\PrinterListViewModel.cs" />
@@ -167,6 +178,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DocumentList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\LoadingRing.xaml">
       <SubType>Designer</SubType>

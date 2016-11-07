@@ -11,7 +11,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
     public static class NetworkManager
     {
         private static WebClient _client;
-
+        private static string _token;
         static NetworkManager()
         {
             //_client = new WebClient();
@@ -22,6 +22,16 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             //socet.Listen(128);
             //socet.BeginAccept(null, 0, OnAccept, null);
             //    //c.OpenReadAsync();
+        }
+
+        public static void SetAccessToken(string token)
+        {
+            _token = token;
+        }
+
+        public static string GetAccessToken()
+        {
+            return _token;
         }
 
         private static void OnAccept(IAsyncResult res)
@@ -52,6 +62,21 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             using (_client = new WebClient())
             {
                 _client.Headers.Add(@"Accept: */*");   
+                var response = _client.UploadValues(Config.GetServerAddress() + page, "POST", data);
+                var responseString = Encoding.Default.GetString(response);
+                return responseString;
+            }
+        }
+
+        public static string SendPostRequest(NameValueCollection data, string page, string login, string password)
+        {
+            using (_client = new WebClient())
+            {
+                _client.Headers.Add(@"Accept: */*");
+                string credentials = Convert.ToBase64String(
+                Encoding.ASCII.GetBytes(login + ":" + password));
+                _client.Headers[HttpRequestHeader.Authorization] = string.Format(
+                    "Basic {0}", credentials);
                 var response = _client.UploadValues(Config.GetServerAddress() + page, "POST", data);
                 var responseString = Encoding.Default.GetString(response);
                 return responseString;

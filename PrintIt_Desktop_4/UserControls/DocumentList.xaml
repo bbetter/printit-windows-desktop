@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="PrintIt_Desktop_4.UserControls.DocumentList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name ="This"
+             DataContext="{DynamicResource ViewModel}">
+    <UserControl.Resources>
+        <viewModels:DocumentListViewModel x:Key="ViewModel"></viewModels:DocumentListViewModel>
+    </UserControl.Resources>
+    <Grid>
+            <DockPanel>
+                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding ElementName=This, Path=DataContext.Documents}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                        Value="True">
+                                <Setter Property="Background"
+                        Value="#33FFFFFF" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn IsReadOnly="False" x:Name="Selected">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=Selected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Id}" IsReadOnly="True" Header="ID"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Name}" IsReadOnly="True" Header="NAME"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding PageCount}" IsReadOnly="True" Header="PAGE COUNT"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Price}" IsReadOnly="True" Header="PRICE"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding CreatedAt}" IsReadOnly="True" Header="CREATED"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding State}" IsReadOnly="True" Header="STATE"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel DockPanel.Dock="Bottom" Height="40" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="5" Width="100">ДРУК</Button>
+                <Button Margin="5" Width="100"> ЗУПИНИТИ</Button>
+            </StackPanel>
+            </DockPanel>
+    </Grid>
+</UserControl>

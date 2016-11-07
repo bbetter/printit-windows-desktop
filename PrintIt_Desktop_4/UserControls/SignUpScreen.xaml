@@ -6,6 +6,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:PrintIt_Desktop_4.Converters"
              xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
              x:Name="ThisControl">
@@ -28,8 +29,10 @@
                 <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="Назва" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Name}"></TextBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="AddressBox" controls:TextBoxHelper.Watermark="Адреса" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Address}"
-                         controls:TextBoxHelper.TextButton="True" Style="{DynamicResource ButtonCommandMetroTextBox}">
+                <TextBox x:Name="AddressBox" controls:TextBoxHelper.Watermark="Адреса" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Address, UpdateSourceTrigger=PropertyChanged}"
+                         controls:TextBoxHelper.TextButton="True" 
+                         behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.AddressAutoComplete, ElementName=ThisControl}" 
+                         behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase">
                     <controls:TextBoxHelper.ButtonContent>
                         <Rectangle Width="20" Height="20">
                             <Rectangle.Fill>
