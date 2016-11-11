@@ -73,8 +73,8 @@
                         </StackPanel>
                     </controls:MetroTabItem.Header>
                     <StackPanel>
-                        <userControls:DocumentList></userControls:DocumentList>
-                        <TextBlock Text="DOCUMENT LIST"></TextBlock>
+                        <TextBlock Text="ДОКУМЕНТИ"></TextBlock>
+                        <userControls:DocumentList></userControls:DocumentList>            
                     </StackPanel>    
                 </controls:MetroTabItem>
                 <controls:MetroTabItem>

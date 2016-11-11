@@ -16,10 +16,13 @@ namespace PrintIt_Desktop_4
     {
         void App_Startup(object sender, StartupEventArgs e)
         {
-            //PresentationTraceSources.Refresh();
-            //PresentationTraceSources.DataBindingSource.Listeners.Add(new ConsoleTraceListener());
-            //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning | SourceLevels.Error;
-            WindowManager.ShowLoginWindow();
+            PreLoader.PerformPreLoad();
+            WindowManager.ShowLoginWindow();        
+        }
+
+        void App_Exit(object sender, ExitEventArgs e)
+        {
+            Finisher.FinishApplication();
         }
     }
 }

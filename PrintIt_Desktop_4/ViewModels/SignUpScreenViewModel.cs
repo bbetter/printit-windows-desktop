@@ -13,6 +13,7 @@ namespace PrintIt_Desktop_4.ViewModels
     {
         public SignUpScreenViewModel()
         {
+            //todo load from google
             AddressAutoComplete = new List<string>() { "place 1", "place 2", "place 3"};
         }
 

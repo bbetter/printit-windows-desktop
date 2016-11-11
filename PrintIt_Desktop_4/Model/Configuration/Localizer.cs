@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Newtonsoft.Json.Serialization;
+using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Model.Enums;
 
 namespace PrintIt_Desktop_4.Model.Configuration
 {
     public static class Localizer
     {
-        public static string GetLanguage()
+        public static void ChangeLocalization(String localeName)
         {
-            return "uk-UA";
+            //todo add values in config
+            var resourceName = @"Languages/" + localeName + @".xaml";
+            var languageDictionary = Application.LoadComponent(new Uri(resourceName,UriKind.Relative)) as ResourceDictionary;
+            App.Current.Resources.MergedDictionaries.Remove(CurrentState.LanguageResourceDictionary);
+            CurrentState.LanguageResourceDictionary = languageDictionary;
+            CurrentState.Configuration.Locale = localeName;
+            App.Current.Resources.MergedDictionaries.Add(languageDictionary);
         }
 
         public static string GetString(PasswordValidationState state)

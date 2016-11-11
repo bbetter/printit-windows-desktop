@@ -95,10 +95,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFTextBoxAutoComplete, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.2\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -108,6 +104,10 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\MultiParameterConverter.cs" />
+    <Compile Include="Model\Core\CurrentState.cs" />
+    <Compile Include="Model\Core\Finisher.cs" />
+    <Compile Include="Model\Core\PreLoader.cs" />
+    <Compile Include="Model\LocalStorage\UserConfiguration.cs" />
     <Compile Include="Model\Abstractions\LoginValidator.cs" />
     <Compile Include="Model\Abstractions\PasswordValidator.cs" />
     <Compile Include="Model\Configuration\Config.cs" />
@@ -159,6 +159,14 @@
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Page Include="Languages\en-US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Languages\uk-UA.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

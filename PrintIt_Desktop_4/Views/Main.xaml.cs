@@ -7,6 +7,7 @@ using MahApps.Metro.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PrintIt_Desktop_4.Model.Configuration;
+using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Model.Core.Networking;
 using WebSocketSharp.Net;
 
@@ -24,7 +25,6 @@ namespace PrintIt_Desktop_4.Views
             PrintSpotName = "PrintZ - PRINTSPOT NAME GOES HERE";
             InfoCommand = new DelegateCommand(() => { FlyoutInfo.IsOpen = true;});
             StateCommand = new DelegateCommand(() => { FlyoutState.IsOpen = true; });
-            
             //var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("user_id", "1"));
             var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("token", NetworkManager.GetAccessToken()));
 
@@ -47,7 +47,7 @@ namespace PrintIt_Desktop_4.Views
                 }
                 MessageBox.Show("Message: " + e.Data); });
 
-            Closed += (s, e) => wsw.SendMessage(Config.GetStopMessage());
+            CurrentState.WebSocketWrappers.Add(wsw);
 
             wsw.Start();
             wsw.SendMessage("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"DocsChannel\\\"}\"}");

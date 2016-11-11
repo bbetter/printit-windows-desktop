@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using PrintIt_Desktop_4.Model.Abstractions;
@@ -96,6 +97,22 @@ namespace PrintIt_Desktop_4.Model.Configuration
         public static String GetStopMessage()
         {
             return @"WRAPPER_CMD_STOP";
+        }
+
+        public static String GetConfigLocation()
+        {
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return Path.Combine(appDataPath, @"PrintZ\config.cfg");
+        }
+
+        public static String GetDirectoryLocation()
+        {
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return Path.Combine(appDataPath, @"PrintZ");
+        }
+        public static String GetDefaultLocale()
+        {
+            return @"uk-UA";
         }
     }
 }

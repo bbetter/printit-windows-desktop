@@ -43,7 +43,7 @@
             </DataGrid>
             <StackPanel DockPanel.Dock="Bottom" Height="40" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Margin="5" Width="100">ДРУК</Button>
-                <Button Margin="5" Width="100"> ЗУПИНИТИ</Button>
+                <Button Margin="5" Width="100"> ВІДХИЛИТИ</Button>
             </StackPanel>
             </DockPanel>
     </Grid>
