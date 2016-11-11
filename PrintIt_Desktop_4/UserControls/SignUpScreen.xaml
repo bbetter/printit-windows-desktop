@@ -22,13 +22,13 @@
         <StackPanel Grid.Column="0" Orientation="Vertical" Margin="40,25,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Image Source="../Images/logo_RGBA.png" Margin="5,10,5,30"></Image>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="Login" controls:TextBoxHelper.Watermark="Логін" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Login}"></TextBox>
+                <TextBox x:Name="Login" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignUp//Login}" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Login}"></TextBox>
              </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="Назва" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Name}"></TextBox>
+                <TextBox x:Name="PrintSpotName" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignUp//Name}" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Name}"></TextBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <TextBox x:Name="AddressBox" controls:TextBoxHelper.Watermark="Адреса" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Address, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="AddressBox" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignUp//Address}" FontSize="18"  Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" Text="{Binding ElementName=ThisControl,Path=DataContext.Address, UpdateSourceTrigger=PropertyChanged}"
                          controls:TextBoxHelper.TextButton="True" >
                     <controls:TextBoxHelper.ButtonContent>
                         <Rectangle Width="20" Height="20">
@@ -40,18 +40,18 @@
                 </TextBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" MaxLength="{Binding ElementName=ThisControl,Path=DataContext.PasswordLength}"></PasswordBox>
+                <PasswordBox x:Name="Password" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignUp//Password}" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" MaxLength="{Binding ElementName=ThisControl,Path=DataContext.PasswordLength}"></PasswordBox>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
-                <PasswordBox x:Name="PasswordConfirm" controls:TextBoxHelper.Watermark="Повтор паролю" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" MaxLength="{Binding ElementName=ThisControl,Path=DataContext.PasswordLength}"></PasswordBox>
+                <PasswordBox x:Name="PasswordConfirm" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignUp//PasswordConfirm}" PasswordChar="*" FontSize="18" Margin="5,0,5,0" HorizontalAlignment="Stretch" BorderThickness="0" MaxLength="{Binding ElementName=ThisControl,Path=DataContext.PasswordLength}"></PasswordBox>
             </Border>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="Cancel" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18"  Command="{Binding ElementName=ThisControl,Path=DataContext.CancelCommand}" Grid.Column="0">Назад</Button>
-                <Button x:Name="SingUp" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Content="Реєстрація" Command="{Binding ElementName=ThisControl,Path=DataContext.SignUpCommand}" Grid.Column="1"> 
+                <Button x:Name="Cancel" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18"  Command="{Binding ElementName=ThisControl,Path=DataContext.CancelCommand}" Grid.Column="0" Content="{DynamicResource Locale//SignUp//Back}"></Button>
+                <Button x:Name="SingUp" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Content="{DynamicResource Locale//SignUp//SignUp}" Command="{Binding ElementName=ThisControl,Path=DataContext.SignUpCommand}" Grid.Column="1"> 
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource Multi}">
                             <Binding ElementName="Password"/>
@@ -61,6 +61,6 @@
                 </Button>
             </Grid>
         </StackPanel>
-        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintZ. Всі права захищені.</Label>
+        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom" Content="{DynamicResource Locale//General//Copyright}"></Label>
     </Grid>
 </UserControl>

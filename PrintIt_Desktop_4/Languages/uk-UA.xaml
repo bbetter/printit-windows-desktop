@@ -2,5 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="LocaleName">uk-UA</system:String>
-    <system:String x:Key="Description">Українська локалізація</system:String>
+    <system:String x:Key="LocaleDescription">Українська локалізація</system:String>
+    <system:String x:Key="Locale//SignIn//Password">Пароль</system:String>
+    <system:String x:Key="Locale//SignIn//Login">Е-мейл</system:String>
+    <system:String x:Key="Locale//SignIn//ForgotPassword">Забули пароль?</system:String>
+    <system:String x:Key="Locale//SignIn//SignIn">Увійти</system:String>
+    <system:String x:Key="Locale//SignIn//Register">Зареєструватися</system:String>
+    <system:String x:Key="Locale//SignUp//Login">Е-мейл</system:String>
+    <system:String x:Key="Locale//SignUp//Name">Назва</system:String>
+    <system:String x:Key="Locale//SignUp//Password">Пароль</system:String>
+    <system:String x:Key="Locale//SignUp//PasswordConfirm">Повтор паролю</system:String>
+    <system:String x:Key="Locale//SignUp//Address">Адреса</system:String>
+    <system:String x:Key="Locale//SignUp//Back">Назад</system:String>
+    <system:String x:Key="Locale//SignUp//SignUp">Реєстрація</system:String>
+    <system:String x:Key="Locale//General//Copyright">Copyright &#169; 2016 PrintZ. Всі права захищені.</system:String>
 </ResourceDictionary>

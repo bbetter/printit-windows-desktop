@@ -2,5 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="LocaleName">en-US</system:String>
-    <system:String x:Key="Description">English localization (United States)</system:String>
+    <system:String x:Key="LocaleDescription">English localization (United States)</system:String>
+    <system:String x:Key="Locale//SignIn//Password">Password</system:String>
+    <system:String x:Key="Locale//SignIn//Login">E-mail</system:String>
+    <system:String x:Key="Locale//SignIn//ForgotPassword">Forgot password?</system:String>
+    <system:String x:Key="Locale//SignIn//SignIn">Sign in</system:String>
+    <system:String x:Key="Locale//SignIn//Register">Register</system:String>
+    <system:String x:Key="Locale//SignUp//Login">E-mail</system:String>
+    <system:String x:Key="Locale//SignUp//Name">Name</system:String>
+    <system:String x:Key="Locale//SignUp//Password">Password</system:String>
+    <system:String x:Key="Locale//SignUp//PasswordConfirm">Password repeat</system:String>
+    <system:String x:Key="Locale//SignUp//Address">Address</system:String>
+    <system:String x:Key="Locale//SignUp//Back">Back</system:String>
+    <system:String x:Key="Locale//SignUp//SignUp">Register</system:String>
+    <system:String x:Key="Locale//General//Copyright">Copyright &#169; 2016 PrintZ. All rights reserved.</system:String>
 </ResourceDictionary>

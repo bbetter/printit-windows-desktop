@@ -114,8 +114,8 @@ namespace PrintIt_Desktop_4.ViewModels
                 errorMessages.Add("Заповніть всі поля");
             else
             {
-            pVal = Config.GetPasswordValidator();
-            lVal = Config.GetLoginValidator();
+            pVal = Config.Validation.GetPasswordValidator();
+            lVal = Config.Validation.GetLoginValidator();
             var pValRes = pVal.Validate(password);
             var lValRes = lVal.Validate(SignUpLogin);
             foreach (var loginValidationState in lValRes)
@@ -136,15 +136,15 @@ namespace PrintIt_Desktop_4.ViewModels
                 var data = new NameValueCollection();
                 try
                 {
-                    data.Add(Config.GetSignUpLoginParamName(), SignUpLogin);
-                    data.Add(Config.GetSignUpPasswordParamName(), password);
-                    data.Add(Config.GetSignUpPasswordConfirmParamName(),passwordRepeat);
-                    data.Add(Config.GetSignUpFirstNameParamName(),@"Ім'я");
-                    data.Add(Config.GetSignUpLastNameParamName(), @"Прізвище");
-                    data.Add(Config.GetSignUpRoleParamName(), @"print_spot_owner");
-                    data.Add(Config.GetSignUpPrintSpotNameParamName(),SignUpName);
-                    data.Add(Config.GetSignUpPrintSpotAddressParamName(), SignUpAddress);
-                    var response = NetworkManager.SendPostRequest(data, Config.GetSignUp());
+                    data.Add(Config.Networking.API.SignUp.GetLoginParamName(), SignUpLogin);
+                    data.Add(Config.Networking.API.SignUp.GetPasswordParamName(), password);
+                    data.Add(Config.Networking.API.SignUp.GetPasswordConfirmParamName(), passwordRepeat);
+                    data.Add(Config.Networking.API.SignUp.GetFirstNameParamName(), @"Ім'я");
+                    data.Add(Config.Networking.API.SignUp.GetLastNameParamName(), @"Прізвище");
+                    data.Add(Config.Networking.API.SignUp.GetRoleParamName(), @"print_spot_owner");
+                    data.Add(Config.Networking.API.SignUp.GetPrintSpotNameParamName(), SignUpName);
+                    data.Add(Config.Networking.API.SignUp.GetPrintSpotAddressParamName(), SignUpAddress);
+                    var response = NetworkManager.SendPostRequest(data, Config.Networking.GetSignUp());
                     MessageBox.Show(response);
                     HideSignUp();
                 }
@@ -168,8 +168,8 @@ namespace PrintIt_Desktop_4.ViewModels
             else
             {
 
-            pVal = Config.GetPasswordValidator();
-            lVal = Config.GetLoginValidator();
+            pVal = Config.Validation.GetPasswordValidator();
+            lVal = Config.Validation.GetLoginValidator();
             var pValRes = pVal.Validate(password);
             var lValRes = lVal.Validate(SignInLogin);
             foreach (var loginValidationState in lValRes)
@@ -190,9 +190,9 @@ namespace PrintIt_Desktop_4.ViewModels
                 var data = new NameValueCollection();
                 try
                 {
-                    data.Add(Config.GetSignInLoginParamName(), SignInLogin);
-                    data.Add(Config.GetSignInPasswordParamName(), password);
-                    var response = NetworkManager.SendPostRequest(data, Config.GetSignIn());
+                    data.Add(Config.Networking.API.SignIn.GetLoginParamName(), SignInLogin);
+                    data.Add(Config.Networking.API.SignIn.GetPasswordParamName(), password);
+                    var response = NetworkManager.SendPostRequest(data, Config.Networking.GetSignIn());
                     MessageBox.Show(response);
                     var responseJObject = JObject.Parse(response);
                     if (responseJObject.HasValues)
@@ -232,7 +232,7 @@ namespace PrintIt_Desktop_4.ViewModels
         private void ForgotPassword()
         {
             //todo:redirect to correct website page;
-            System.Diagnostics.Process.Start(Config.GetServerAddress());
+            System.Diagnostics.Process.Start(Config.Networking.GetServerAddress());
         }
 
         #endregion

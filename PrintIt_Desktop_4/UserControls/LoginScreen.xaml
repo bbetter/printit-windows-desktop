@@ -25,7 +25,7 @@
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox x:Name="LoginBox" controls:TextBoxHelper.Watermark="Логін" FontSize="18" BorderThickness="0" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding ElementName=ThisControl, Path=DataContext.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="LoginBox" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignIn//Login}" FontSize="18" BorderThickness="0" Margin="0,0,5,0" HorizontalAlignment="Stretch" Text="{Binding ElementName=ThisControl, Path=DataContext.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
             </Border>
             <Border BorderThickness="1.5" BorderBrush="#FFCCCCCC" Background="#FF252525" Margin="5" CornerRadius="4">
@@ -37,7 +37,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                     <Grid MinWidth="260" Margin="0,0,5,0">
-                        <PasswordBox x:Name="PasswordBox" controls:TextBoxHelper.Watermark="Пароль" PasswordChar="*" BorderThickness="0" FontSize="18"   HorizontalAlignment="Stretch" Visibility="{Binding ElementName=ThisControl, Path=DataContext.PasswordVisibility}" MaxLength="{Binding ElementName=ThisControl, Path=DataContext.PasswordLength}"></PasswordBox>
+                        <PasswordBox x:Name="PasswordBox" controls:TextBoxHelper.Watermark="{DynamicResource Locale//SignIn//Password}" PasswordChar="*" BorderThickness="0" FontSize="18"   HorizontalAlignment="Stretch" Visibility="{Binding ElementName=ThisControl, Path=DataContext.PasswordVisibility}" MaxLength="{Binding ElementName=ThisControl, Path=DataContext.PasswordLength}"></PasswordBox>
                         <TextBox x:Name="PasswordBoxValue" Visibility="{Binding ElementName=ThisControl,Path=DataContext.ShowPasswordVisibility , Mode=TwoWay}" BorderThickness="0" IsReadOnly="True" IsTabStop="False" FontSize="18" Text="{Binding ElementName=ThisControl, Path=DataContext.PasswordText}"></TextBox>
                     </Grid>
                     <Button Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource InvisibleButtonStyle}" IsTabStop="False" Command="{Binding ElementName=ThisControl, Path=DataContext.StopShowPasswordCommand}">
@@ -65,12 +65,12 @@
         </Border>
             <Button Margin="5,5,5,15" BorderThickness="0" Background="#00000000" Style="{DynamicResource InvisibleButtonStyle}" HorizontalAlignment="Center" Command="{Binding ForgotPasswordCommand}" IsTabStop="False">
             <Label x:Name="ForgotPassword"  HorizontalAlignment="Center"  IsTabStop="False">
-                <TextBlock Style="{DynamicResource HyperlinkStyleTextBlock}">Забули пароль?</TextBlock></Label>
+                    <TextBlock Style="{DynamicResource HyperlinkStyleTextBlock}" Text="{DynamicResource Locale//SignIn//ForgotPassword}"></TextBlock></Label>
             </Button>
-            <Button x:Name="SingIn" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}">Увійти</Button>
-            <Button x:Name="SingUpOpen" Margin="5,5,5,15" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding ShowSignUpCommand}">Зареєструватися</Button>
+            <Button x:Name="SingIn" Margin="5" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}" Content="{DynamicResource Locale//SignIn//SignIn}"></Button>
+            <Button x:Name="SingUpOpen" Margin="5,5,5,15" Background="{DynamicResource AccentColorBrush}" Foreground="Black" FontSize="18" Command="{Binding ShowSignUpCommand}" Content="{DynamicResource Locale//SignIn//Register}"></Button>
             
         </StackPanel>
-        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom">Copyright &#169; 2016 PrintZ. Всі права захищені.</Label>
+        <Label Grid.Column="0" x:Name="Copyright" Margin="45,25" HorizontalAlignment="left" VerticalAlignment="Bottom" Content="{DynamicResource Locale//General//Copyright}"></Label>
     </Grid>
 </UserControl>

@@ -62,7 +62,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             using (_client = new WebClient())
             {
                 _client.Headers.Add(@"Accept: */*");   
-                var response = _client.UploadValues(Config.GetServerAddress() + page, "POST", data);
+                var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "POST", data);
                 var responseString = Encoding.Default.GetString(response);
                 return responseString;
             }
@@ -77,7 +77,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                 Encoding.ASCII.GetBytes(login + ":" + password));
                 _client.Headers[HttpRequestHeader.Authorization] = string.Format(
                     "Basic {0}", credentials);
-                var response = _client.UploadValues(Config.GetServerAddress() + page, "POST", data);
+                var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "POST", data);
                 var responseString = Encoding.Default.GetString(response);
                 return responseString;
             }

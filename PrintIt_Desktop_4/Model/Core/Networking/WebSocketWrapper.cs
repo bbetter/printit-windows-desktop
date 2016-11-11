@@ -63,7 +63,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                         if (_messages.Count > 0)
                         {
                             var cmd = _messages.Dequeue();
-                            if (cmd.Equals(Config.GetStopMessage())) break;
+                            if (cmd.Equals(Config.Wrappers.GetStopMessage())) break;
                             ws.Send(cmd);
                         }
                     }

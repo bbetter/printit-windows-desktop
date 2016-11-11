@@ -23,20 +23,20 @@ namespace PrintIt_Desktop_4.Model.Core
 
         private static void CreateDirectory()
         {
-            if (!Directory.Exists(Config.GetDirectoryLocation()))
+            if (!Directory.Exists(Config.Storage.GetDirectoryLocation()))
             {
-                Directory.CreateDirectory(Config.GetDirectoryLocation());
+                Directory.CreateDirectory(Config.Storage.GetDirectoryLocation());
             }
         }
 
         private static UserConfiguration LoadConfig()
         {
             var serializer = new XmlSerializer(typeof (UserConfiguration));
-            if (File.Exists(Config.GetConfigLocation()))
+            if (File.Exists(Config.Storage.GetConfigLocation()))
             {
-                if (serializer.CanDeserialize(new XmlTextReader(Config.GetConfigLocation())))
+                if (serializer.CanDeserialize(new XmlTextReader(Config.Storage.GetConfigLocation())))
                 {
-                   return (UserConfiguration) serializer.Deserialize(new StreamReader(Config.GetConfigLocation()));
+                    return (UserConfiguration)serializer.Deserialize(new StreamReader(Config.Storage.GetConfigLocation()));
                 }
             }
             return InitDefaultConfig();
@@ -44,7 +44,7 @@ namespace PrintIt_Desktop_4.Model.Core
 
         private static UserConfiguration InitDefaultConfig()
         {
-            return new UserConfiguration() { Locale = Config.GetDefaultLocale()};
+            return new UserConfiguration() { Locale = Config.Localization.GetDefaultLocale() };
         }
 
         private static void LoadLocalization(String localeName)

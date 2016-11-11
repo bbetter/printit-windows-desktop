@@ -26,7 +26,7 @@ namespace PrintIt_Desktop_4.Views
             InfoCommand = new DelegateCommand(() => { FlyoutInfo.IsOpen = true;});
             StateCommand = new DelegateCommand(() => { FlyoutState.IsOpen = true; });
             //var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("user_id", "1"));
-            var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("token", NetworkManager.GetAccessToken()));
+            var wsw = new WebSocketWrapper(Config.Networking.GetWebSocketAddress(), new Cookie("token", NetworkManager.GetAccessToken()));
 
             wsw.SetErrorHandler((o,e)=>MessageBox.Show(e.Message));
             wsw.SetMessageHandler((o,e)=>
