@@ -27,6 +27,10 @@ namespace PrintIt_Desktop_4.Model.Core
             {
                 Directory.CreateDirectory(Config.Storage.GetDirectoryLocation());
             }
+            if (!Directory.Exists(Config.Storage.GetDirectoryLocation()+@"\Docs"))
+            {
+                Directory.CreateDirectory(Config.Storage.GetDirectoryLocation()+@"\Docs");
+            }
         }
 
         private static UserConfiguration LoadConfig()

@@ -82,5 +82,16 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                 return responseString;
             }
         }
+
+        public static void DownloadFile(string address, string fileName, DownloadProgressChangedEventHandler handler)
+        {
+            _client = new WebClient();
+            _client.Headers.Add("Authorization", "Token token=" + _token);
+            _client.DownloadProgressChanged += handler;
+            _client.DownloadFileCompleted += (o, e) => _client = null;
+            _client.DownloadFileAsync(new Uri(address),fileName);
+           
+        }
+
     }
 }

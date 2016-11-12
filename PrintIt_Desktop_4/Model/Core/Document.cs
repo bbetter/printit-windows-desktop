@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PrintIt_Desktop_4.Model.Enums;
+using PrintIt_Desktop_4.Other;
+using PrintIt_Desktop_4.ViewModels;
 
 namespace PrintIt_Desktop_4.Model.Core
 {
-    public class Document
+    [Magic]
+    public class Document:ViewModelBase
     {
         public bool Selected { get; set; }
+        public int Progress { get; set; }
         public int Id { get; set; }
         public String Name { get; set; }
         public String Url { get; set; }

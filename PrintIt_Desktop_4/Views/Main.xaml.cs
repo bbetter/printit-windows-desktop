@@ -28,24 +28,26 @@ namespace PrintIt_Desktop_4.Views
             //var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("user_id", "1"));
             var wsw = new WebSocketWrapper(Config.Networking.GetWebSocketAddress(), new Cookie("token", NetworkManager.GetAccessToken()));
 
-            wsw.SetErrorHandler((o,e)=>MessageBox.Show(e.Message));
-            wsw.SetMessageHandler((o,e)=>
-            {
-                var resJson = JObject.Parse(e.Data);
+            //wsw.SetErrorHandler((o,e)=>MessageBox.Show(e.Message));
+            wsw.SetErrorHandler(MessageHandler.HandleWebsocketError);
+            wsw.SetMessageHandler(MessageHandler.HandleWebSocketMessage);
+            //wsw.SetMessageHandler((o,e)=>
+            //{
+            //    var resJson = JObject.Parse(e.Data);
 
-                if (resJson.HasValues)
-                {
-                    try
-                    {
-                        if ((string) resJson["type"] == "ping") return;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Json error");
-                        return;
-                    }
-                }
-                MessageBox.Show("Message: " + e.Data); });
+            //    if (resJson.HasValues)
+            //    {
+            //        try
+            //        {
+            //            if ((string) resJson["type"] == "ping") return;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show("Json error");
+            //            return;
+            //        }
+            //    }
+            //    MessageBox.Show("Message: " + e.Data); });
 
             CurrentState.WebSocketWrappers.Add(wsw);
 

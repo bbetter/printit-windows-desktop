@@ -106,6 +106,7 @@
     <Compile Include="Converters\MultiParameterConverter.cs" />
     <Compile Include="Model\Core\CurrentState.cs" />
     <Compile Include="Model\Core\Finisher.cs" />
+    <Compile Include="Model\Core\Networking\MessageHandler.cs" />
     <Compile Include="Model\Core\PreLoader.cs" />
     <Compile Include="Model\LocalStorage\UserConfiguration.cs" />
     <Compile Include="Model\Abstractions\LoginValidator.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Other\Attributes.cs" />
     <Compile Include="Other\MouseBehaviour.cs" />
     <Compile Include="Other\StoryboardHelper.cs" />
+    <Compile Include="Other\StringHelper.cs" />
     <Compile Include="UserControls\DocumentList.xaml.cs">
       <DependentUpon>DocumentList.xaml</DependentUpon>
     </Compile>

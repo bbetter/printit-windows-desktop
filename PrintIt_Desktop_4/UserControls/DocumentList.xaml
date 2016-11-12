@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name ="This"
@@ -13,7 +14,7 @@
     </UserControl.Resources>
     <Grid>
             <DockPanel>
-                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding ElementName=This, Path=DataContext.Documents}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding ElementName=This, Path=DataContext.Documents}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" >
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -39,6 +40,17 @@
                     <DataGridTextColumn Binding="{Binding Price}" IsReadOnly="True" Header="PRICE"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding CreatedAt}" IsReadOnly="True" Header="CREATED"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding State}" IsReadOnly="True" Header="STATE"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="PROGRESS" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DataTemplate.Resources>
+                                    <Style TargetType="{x:Type controls:MetroProgressBar}">
+                                    </Style>
+                                </DataTemplate.Resources>
+                                <controls:MetroProgressBar Value="{Binding Progress}" Width="145"></controls:MetroProgressBar>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel DockPanel.Dock="Bottom" Height="40" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
