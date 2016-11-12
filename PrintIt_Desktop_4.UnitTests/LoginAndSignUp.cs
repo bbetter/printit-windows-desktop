@@ -12,7 +12,7 @@ namespace PrintIt_Desktop_4.UnitTests
         [TestMethod]
         public void LoginValidation()
         {
-            var validator = Config.GetLoginValidator();
+            var validator = Config.Validation.GetLoginValidator();
             var valid = LoginValidationState.Valid;
             var invalid = LoginValidationState.NotEMail;
             Assert.AreEqual(validator.Validate(@"unnamed999999999@gmail.com")[0], valid);
@@ -27,7 +27,7 @@ namespace PrintIt_Desktop_4.UnitTests
         [TestMethod]
         public void PasswordValidation()
         {
-            var validator = Config.GetPasswordValidator();
+            var validator = Config.Validation.GetPasswordValidator();
             var tooLong = PasswordValidationState.TooLong;
             var tooShort = PasswordValidationState.TooShort;
             var valid = PasswordValidationState.Valid;
