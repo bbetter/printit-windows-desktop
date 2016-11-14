@@ -47,23 +47,24 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                         //handle doc
                         var docData = (string)resJson["message"];
                         docData = StringHelper.DeleteSlashes(docData);
-                        var docJson = JObject.Parse(docData);
-                        if ((string)docJson["price"] == null)
-                        {
-                            docJson["price"] = 0;
-                        }
-                        if ((string)docJson["page_count"] == null)
-                        {
-                            docJson["page_count"] = 0;
-                        }
-                        Document doc = new Document(){Id = (int)docJson["id"],Name = (string)docJson["name"],Url = (string)docJson["url"],PageCount = (int)docJson["page_count"],
-                            Price = (float)docJson["price"],State = HandleStateString((string)docJson["status"]),Selected = false, Progress = 0,OrientedDateMin = (string)docJson["oriented_date_min"],
-                        OrientedDateMax = (string)docJson["oriented_date_max"],CreatedAt = (string)docJson["created_at"]};
-                        OnDocumentAdd(doc);
-                        NetworkManager.DownloadFile(Config.Networking.GetServerAddress()+doc.Url,Config.Storage.GetDirectoryLocation()+@"\Docs\"+ doc.Name, (s,args) =>
-                        {
-                            OnDocumentProgressChange(doc.Id, args.ProgressPercentage);
-                        });
+                        HandleDocJson(docData);
+                        //var docJson = JObject.Parse(docData);
+                        //if ((string)docJson["price"] == null)
+                        //{
+                        //    docJson["price"] = 0;
+                        //}
+                        //if ((string)docJson["page_count"] == null)
+                        //{
+                        //    docJson["page_count"] = 0;
+                        //}
+                        //Document doc = new Document(){Id = (int)docJson["id"],Name = (string)docJson["name"],Url = (string)docJson["url"],PageCount = (int)docJson["page_count"],
+                        //    Price = (float)docJson["price"],State = HandleStateString((string)docJson["status"]),Selected = false, Progress = 0,OrientedDateMin = (string)docJson["oriented_date_min"],
+                        //OrientedDateMax = (string)docJson["oriented_date_max"],CreatedAt = (string)docJson["created_at"]};
+                        //OnDocumentAdd(doc);
+                        //NetworkManager.DownloadFile(Config.Networking.GetServerAddress()+doc.Url,Config.Storage.GetDirectoryLocation()+@"\Docs\"+ doc.Name, (s,args) =>
+                        //{
+                        //    OnDocumentProgressChange(doc.Id, args.ProgressPercentage);
+                        //});
                     }
                 }
                 catch (Exception ex)
@@ -72,7 +73,57 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                     return;
                 }
             }
-            MessageBox.Show("Message: " + e.Data);
+            //MessageBox.Show("Message: " + e.Data);
+        }
+
+        public static void HandleDocArray(string json)
+        {
+            var arr = JArray.Parse(json);
+            foreach (var item in arr)
+            {
+                HandleDocJson(item.ToString());
+            }
+        }
+
+        private static void HandleDocJson(string json)
+        {
+            try
+            {
+                var docJson = JObject.Parse(json);
+                if ((string) docJson["price"] == null)
+                {
+                    docJson["price"] = 0;
+                }
+                if ((string) docJson["page_count"] == null)
+                {
+                    docJson["page_count"] = 0;
+                }
+                Document doc = new Document()
+                {
+                    Id = (int) docJson["id"],
+                    Name = (string) docJson["name"],
+                    Url = (string) docJson["url"],
+                    PageCount = (int) docJson["page_count"],
+                    Price = (float) docJson["price"],
+                    State = HandleStateString((string) docJson["status"]),
+                    Selected = false,
+                    Progress = 0,
+                    OrientedDateMin = (string) docJson["oriented_date_min"],
+                    OrientedDateMax = (string) docJson["oriented_date_max"],
+                    CreatedAt = (string) docJson["created_at"]
+                };
+                OnDocumentAdd(doc);
+                NetworkManager.DownloadFile(Config.Networking.GetServerAddress() + doc.Url,
+                    Config.Storage.GetDirectoryLocation() + @"\Docs\" + doc.Name, (s, args) =>
+                    {
+                        OnDocumentProgressChange(doc.Id, args.ProgressPercentage);
+                    });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Json error: " + ex.Message);
+                return;
+            }
         }
 
         private static DocumentState HandleStateString(string data)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -50,7 +51,7 @@ namespace PrintIt_Desktop_4.Views
             //    MessageBox.Show("Message: " + e.Data); });
 
             CurrentState.WebSocketWrappers.Add(wsw);
-
+            WhoAmI();
             wsw.Start();
             wsw.SendMessage("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"DocsChannel\\\"}\"}");
             //Thread.Sleep(1000);
@@ -60,5 +61,27 @@ namespace PrintIt_Desktop_4.Views
         public String PrintSpotName { get; set; }
         public ICommand InfoCommand { get; set; }
         public ICommand StateCommand { get; set; }
+
+        private void WhoAmI()
+        {
+            var values = new NameValueCollection();
+            values.Add("token",NetworkManager.GetAccessToken());
+            try
+            {
+                var res = NetworkManager.SendGetRequest(values, @"/api/v1/users/me");
+                var json = JObject.Parse(res);
+                var id = (string)json["print_spot"]["id"];
+                //MessageBox.Show(id);
+                values = new NameValueCollection();
+                values.Add("print_spot_id",id);
+                var res2 = NetworkManager.SendGetRequest(values, @"/api/v1/docs");
+                MessageHandler.HandleDocArray(res2);
+                //MessageBox.Show(res2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message+ex.InnerException.Message);
+            }
+        }
     }
 }

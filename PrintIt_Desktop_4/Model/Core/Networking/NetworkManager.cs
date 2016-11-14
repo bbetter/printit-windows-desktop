@@ -57,6 +57,20 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             return pingable;
         }
 
+        public static string SendGetRequest(NameValueCollection data, string page)
+        {
+            using (_client = new WebClient())
+            {
+                _client.Headers.Add(@"Accept: */*");
+                if(data.Count>0)
+                    _client.QueryString.Add(data);
+                    _client.Headers.Add("Authorization", "Token token=" + _token);
+                var response = _client.DownloadData(Config.Networking.GetServerAddress() + page);
+                var responseString = Encoding.Default.GetString(response);
+                return responseString;
+            }
+        }
+
         public static string SendPostRequest(NameValueCollection data, string page)
         {
             using (_client = new WebClient())

@@ -16,11 +16,11 @@ namespace PrintIt_Desktop_4.ViewModels
             MessageHandler.OnDocumentAdd += AddDocument;
             MessageHandler.OnDocumentProgressChange += ChangeProgress;
             Documents = new ObservableCollection<Document>();
-            Documents.Add(new Document() { Name = "Doc1", Progress = 0});
-            Documents.Add(new Document() { Name = "Doc2", Progress = 25 });
-            Documents.Add(new Document() { Name = "Doc3", Progress = 50 });
-            Documents.Add(new Document() { Name = "Doc4", Progress = 75 });
-            Documents.Add(new Document() { Name = "Doc5", Progress = 100 });
+            //Documents.Add(new Document() { Name = "Doc1", Progress = 0});
+            //Documents.Add(new Document() { Name = "Doc2", Progress = 25 });
+            //Documents.Add(new Document() { Name = "Doc3", Progress = 50 });
+            //Documents.Add(new Document() { Name = "Doc4", Progress = 75 });
+            //Documents.Add(new Document() { Name = "Doc5", Progress = 100 });
         }
 
         public ObservableCollection<Document> Documents { get; set; }
