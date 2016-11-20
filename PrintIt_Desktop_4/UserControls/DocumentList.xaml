@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="600"
              x:Name ="This"
              DataContext="{DynamicResource ViewModel}">
     <UserControl.Resources>
@@ -54,7 +54,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel DockPanel.Dock="Bottom" Height="40" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Margin="5" Width="100">ДРУК</Button>
+                <Button Margin="5" Width="100" Command="{Binding ElementName=This, Path=DataContext.PrintCommand}">ДРУК</Button>
                 <Button Margin="5" Width="100"> ВІДХИЛИТИ</Button>
             </StackPanel>
             </DockPanel>

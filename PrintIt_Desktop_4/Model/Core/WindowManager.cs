@@ -39,5 +39,15 @@ namespace PrintIt_Desktop_4.Model.Core
             CreateLoginWindow();
             LoginWindow.Show();
         }
+
+        public static void ShowMainWindowTray()
+        {
+            MainWindow.Show();
+        }
+
+        public static void HideMainWindowTray()
+        {
+            MainWindow.Hide();
+        }
     }
 }

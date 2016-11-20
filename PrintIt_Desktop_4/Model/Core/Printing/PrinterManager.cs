@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Management;
@@ -13,35 +14,8 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
 {
     public static class PrinterManager
     {
-        //private static string msg;
-        //static void PrintProps(ManagementObject o, string prop)
-        //{
-        //    try { msg+=(prop + "|" + o[prop]+"\n"); }
-        //    catch (Exception e) { Console.Write(e.ToString()); }
-        //}
         static PrinterManager()
         {
-            //ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Printer");
-            //foreach (ManagementObject printer in searcher.Get())
-            //{
-            //    string printerName = printer["Name"].ToString().ToLower();
-            //    msg+=("Printer :" + printerName+"\n");
-
-            //    PrintProps(printer, "Caption");
-            //    PrintProps(printer, "ExtendedPrinterStatus");
-            //    PrintProps(printer, "Availability");
-            //    PrintProps(printer, "Default");
-            //    PrintProps(printer, "DetectedErrorState");
-            //    PrintProps(printer, "ExtendedDetectedErrorState");
-            //    PrintProps(printer, "ExtendedPrinterStatus");
-            //    PrintProps(printer, "LastErrorCode");
-            //    PrintProps(printer, "PrinterState");
-            //    PrintProps(printer, "PrinterStatus");
-            //    PrintProps(printer, "Status");
-            //    PrintProps(printer, "WorkOffline");
-            //    PrintProps(printer, "Local");
-            //}
-            //MessageBox.Show(msg);
             //setup printer lists
             int id = 0;
             foreach (string printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
@@ -50,11 +24,14 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
                 _printers.Add(ParsePrinter(printer));
                 id++;
             }
+            var settings = new PrinterSettings();
+            _defaultPrinter=settings.PrinterName;
 
         }
         private static LocalPrintServer _printServer = new LocalPrintServer();
         private static Dictionary<int,String> _printerNames = new Dictionary<int,string>();
-        private static List<Printer> _printers = new List<Printer>(); 
+        private static List<Printer> _printers = new List<Printer>();
+        private static String _defaultPrinter;
         public static int GetPrintersCount()
         {
             return _printers.Count;
@@ -63,6 +40,11 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
         public static Printer GetPrinter(int id)
         {
             return _printers[id];
+        }
+
+        public static String GetDefaultSystemPrinter()
+        {
+            return _defaultPrinter;
         }
 
         public static void UpdateInformation()
@@ -98,6 +80,36 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
             return new Printer(){Name = name,Queue = printQueue, Settings = new PrinterSettings(){PrinterName = name},WorkOffline = workOffline};
         }
 
+        public static void PrintDocument(String documentName, String location, String printerName)
+        {
+            try
+            {
+                //_printers.First(x => x.Name == printerName).Queue.AddJob(documentName, location, false);
+
+                //Process p = new Process();
+                //p.StartInfo = new ProcessStartInfo()
+                //{
+                //    CreateNoWindow = true,
+                //    Verb = "print",
+                //    FileName = location
+                //};
+                //p.Start();
+
+                Process p = new Process();
+                p.StartInfo = new ProcessStartInfo()
+                {
+                    CreateNoWindow = true,
+                    Verb = "print",
+                    //FileName = @"D:\testdoc.doc"
+                    FileName = location
+                };
+                p.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+            }
+        }
 
     }
 }

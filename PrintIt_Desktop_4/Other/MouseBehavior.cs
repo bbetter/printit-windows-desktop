@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace PrintIt_Desktop_4.Other
 {
-    public class MouseBehaviour
+    public class MouseBehavior
     {
         public static readonly DependencyProperty MouseUpCommandProperty =
         DependencyProperty.RegisterAttached("MouseUpCommand", typeof(ICommand),
-        typeof(MouseBehaviour), new FrameworkPropertyMetadata(MouseUpCommandChanged));
+        typeof(MouseBehavior), new FrameworkPropertyMetadata(MouseUpCommandChanged));
 
         private static void MouseUpCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -39,7 +39,7 @@ namespace PrintIt_Desktop_4.Other
 
          public static readonly DependencyProperty MouseDownCommandProperty =
         DependencyProperty.RegisterAttached("MouseDownCommand", typeof(ICommand),
-        typeof(MouseBehaviour), new FrameworkPropertyMetadata(MouseDownCommandChanged));
+        typeof(MouseBehavior), new FrameworkPropertyMetadata(MouseDownCommandChanged));
 
         private static void MouseDownCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

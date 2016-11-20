@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows;
 using PrintIt_Desktop_4.Model.Configuration;
 
 namespace PrintIt_Desktop_4.Model.Core.Networking
@@ -71,11 +72,23 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             }
         }
 
+        public static string SendPutRequest(NameValueCollection data, string page)
+        {
+            using (_client = new WebClient())
+            {
+                _client.Headers.Add(@"Accept: */*");
+                _client.Headers.Add("Authorization", "Token token=" + _token);
+                var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "PUT", data);
+                var responseString = Encoding.Default.GetString(response);
+                return responseString;
+            }
+        }
+
         public static string SendPostRequest(NameValueCollection data, string page)
         {
             using (_client = new WebClient())
             {
-                _client.Headers.Add(@"Accept: */*");   
+                _client.Headers.Add(@"Accept: */*");
                 var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "POST", data);
                 var responseString = Encoding.Default.GetString(response);
                 return responseString;
@@ -103,7 +116,8 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             _client.Headers.Add("Authorization", "Token token=" + _token);
             _client.DownloadProgressChanged += handler;
             _client.DownloadFileCompleted += (o, e) => _client = null;
-            _client.DownloadFileAsync(new Uri(address),fileName);
+            _client.DownloadFileAsync(new Uri(address), fileName);
+            //_client.DownloadFile(new Uri(address),fileName);
            
         }
 

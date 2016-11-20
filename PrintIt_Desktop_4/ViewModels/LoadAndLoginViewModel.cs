@@ -145,7 +145,7 @@ namespace PrintIt_Desktop_4.ViewModels
                     data.Add(Config.Networking.API.SignUp.GetPrintSpotNameParamName(), SignUpName);
                     data.Add(Config.Networking.API.SignUp.GetPrintSpotAddressParamName(), SignUpAddress);
                     var response = NetworkManager.SendPostRequest(data, Config.Networking.GetSignUp());
-                    MessageBox.Show(response);
+                    //MessageBox.Show(response);
                     HideSignUp();
                 }
                 catch (Exception ex)
@@ -193,7 +193,7 @@ namespace PrintIt_Desktop_4.ViewModels
                     data.Add(Config.Networking.API.SignIn.GetLoginParamName(), SignInLogin);
                     data.Add(Config.Networking.API.SignIn.GetPasswordParamName(), password);
                     var response = NetworkManager.SendPostRequest(data, Config.Networking.GetSignIn());
-                    MessageBox.Show(response);
+                   // MessageBox.Show(response);
                     var responseJObject = JObject.Parse(response);
                     if (responseJObject.HasValues)
                     {
@@ -201,7 +201,7 @@ namespace PrintIt_Desktop_4.ViewModels
                         if (responseJObject.TryGetValue("auth_token",out res))
                         {
                             NetworkManager.SetAccessToken(res.Value<string>());
-                            MessageBox.Show(NetworkManager.GetAccessToken());
+                            //MessageBox.Show(NetworkManager.GetAccessToken());
                         }
                     }
                     WindowManager.ShowMainWindow();

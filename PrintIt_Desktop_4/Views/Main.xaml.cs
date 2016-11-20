@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interactivity;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using MahApps.Metro.Controls;
 using Newtonsoft.Json;
@@ -26,42 +29,24 @@ namespace PrintIt_Desktop_4.Views
             PrintSpotName = "PrintZ - PRINTSPOT NAME GOES HERE";
             InfoCommand = new DelegateCommand(() => { FlyoutInfo.IsOpen = true;});
             StateCommand = new DelegateCommand(() => { FlyoutState.IsOpen = true; });
-            //var wsw = new WebSocketWrapper(Config.GetWebSocketAddress(), new Cookie("user_id", "1"));
+            CancelClose = false;
             var wsw = new WebSocketWrapper(Config.Networking.GetWebSocketAddress(), new Cookie("token", NetworkManager.GetAccessToken()));
-
-            //wsw.SetErrorHandler((o,e)=>MessageBox.Show(e.Message));
             wsw.SetErrorHandler(MessageHandler.HandleWebsocketError);
             wsw.SetMessageHandler(MessageHandler.HandleWebSocketMessage);
-            //wsw.SetMessageHandler((o,e)=>
-            //{
-            //    var resJson = JObject.Parse(e.Data);
-
-            //    if (resJson.HasValues)
-            //    {
-            //        try
-            //        {
-            //            if ((string) resJson["type"] == "ping") return;
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            MessageBox.Show("Json error");
-            //            return;
-            //        }
-            //    }
-            //    MessageBox.Show("Message: " + e.Data); });
 
             CurrentState.WebSocketWrappers.Add(wsw);
             WhoAmI();
             wsw.Start();
             wsw.SendMessage("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"DocsChannel\\\"}\"}");
-            //Thread.Sleep(1000);
-            //wsw.SendMessage(@"{""command"":""message"", ""identifier"": ""{\""channel\"":\""DocsChannel\""}"", ""data"":""{\""a\"":\""b\""}""}");
+            PrinterError = true;
         }
 
         public String PrintSpotName { get; set; }
         public ICommand InfoCommand { get; set; }
         public ICommand StateCommand { get; set; }
-
+        public ICommand ClosingCommand { get; set; }
+        public bool PrinterError { get; set; }
+        public bool CancelClose { get; set; }
         private void WhoAmI()
         {
             var values = new NameValueCollection();
@@ -71,6 +56,7 @@ namespace PrintIt_Desktop_4.Views
                 var res = NetworkManager.SendGetRequest(values, @"/api/v1/users/me");
                 var json = JObject.Parse(res);
                 var id = (string)json["print_spot"]["id"];
+                PrintSpotName = "PrintZ " + (string) json["print_spot"]["name"];
                 //MessageBox.Show(id);
                 values = new NameValueCollection();
                 values.Add("print_spot_id",id);
@@ -82,6 +68,25 @@ namespace PrintIt_Desktop_4.Views
             {
                 MessageBox.Show(ex.Message+ex.InnerException.Message);
             }
+        }
+
+        private void testlocale(object sender, RoutedEventArgs e)
+        {
+            if (CurrentState.Configuration.Locale == "uk-UA")
+            {
+                Localizer.ChangeLocalization("en-US");
+            }
+            else
+            {
+                Localizer.ChangeLocalization("uk-UA");
+            }
+        }
+
+        private void Main_OnClosing(object sender, CancelEventArgs e)
+        {
+            e.Cancel=true;
+            Hide();
+            (Application.Current as App).App_Exit(this, null);
         }
     }
 }

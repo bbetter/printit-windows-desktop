@@ -48,23 +48,6 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                         var docData = (string)resJson["message"];
                         docData = StringHelper.DeleteSlashes(docData);
                         HandleDocJson(docData);
-                        //var docJson = JObject.Parse(docData);
-                        //if ((string)docJson["price"] == null)
-                        //{
-                        //    docJson["price"] = 0;
-                        //}
-                        //if ((string)docJson["page_count"] == null)
-                        //{
-                        //    docJson["page_count"] = 0;
-                        //}
-                        //Document doc = new Document(){Id = (int)docJson["id"],Name = (string)docJson["name"],Url = (string)docJson["url"],PageCount = (int)docJson["page_count"],
-                        //    Price = (float)docJson["price"],State = HandleStateString((string)docJson["status"]),Selected = false, Progress = 0,OrientedDateMin = (string)docJson["oriented_date_min"],
-                        //OrientedDateMax = (string)docJson["oriented_date_max"],CreatedAt = (string)docJson["created_at"]};
-                        //OnDocumentAdd(doc);
-                        //NetworkManager.DownloadFile(Config.Networking.GetServerAddress()+doc.Url,Config.Storage.GetDirectoryLocation()+@"\Docs\"+ doc.Name, (s,args) =>
-                        //{
-                        //    OnDocumentProgressChange(doc.Id, args.ProgressPercentage);
-                        //});
                     }
                 }
                 catch (Exception ex)
@@ -87,6 +70,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
 
         private static void HandleDocJson(string json)
         {
+            //MessageBox.Show(json);
             try
             {
                 var docJson = JObject.Parse(json);
@@ -112,6 +96,11 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                     OrientedDateMax = (string) docJson["oriented_date_max"],
                     CreatedAt = (string) docJson["created_at"]
                 };
+                //quick fix for broken json
+                if (String.IsNullOrEmpty(doc.Url))
+                {
+                    doc.Url =(string) docJson["attachment"]["url"];
+                }
                 OnDocumentAdd(doc);
                 NetworkManager.DownloadFile(Config.Networking.GetServerAddress() + doc.Url,
                     Config.Storage.GetDirectoryLocation() + @"\Docs\" + doc.Name, (s, args) =>

@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:PrintIt_Desktop_4.ViewModels"
              xmlns:converters="clr-namespace:PrintIt_Desktop_4.Converters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="600"
              x:Name="ThisControl"
              DataContext="{DynamicResource ViewModel}">
     <UserControl.Resources>
@@ -15,23 +16,78 @@
         <converters:InvertedBoolToVisibilityConverter x:Key="InvertedVisibilityConverter"></converters:InvertedBoolToVisibilityConverter>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding ElementName=ThisControl, Path=DataContext.Printers}" DataContext="{Binding ElementName=ThisControl, Path=DataContext.Printers}">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListView.ItemTemplate>
+        <StackPanel>
+            <ListView ItemsSource="{Binding ElementName=ThisControl, Path=DataContext.Printers}" DataContext="{Binding ElementName=ThisControl, Path=DataContext.Printers}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Name="_Border"
+                                Padding="2"
+                                SnapsToDevicePixels="true">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter TargetName="_Border" Property="Background" Value="#33FFFFFF"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Width="200">
                             <Grid>
                                 <Image Source="../Images/printer_RGBA.png" Width="100" Height="100"></Image>
+                                <Rectangle Height="20" Width="21" HorizontalAlignment="Right" VerticalAlignment="Top" Fill ="OrangeRed">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{DynamicResource appbar_warning}" Stretch="Fill"></VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Style.Resources>
+                                                <Storyboard x:Key="flashAnimation" >
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" AutoReverse="True" Duration="0:0:0.5" RepeatBehavior="Forever" />
+                                                </Storyboard>
+                                            </Style.Resources>
+                                            <Setter Property="Visibility" Value="Hidden" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Queue.IsInError}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard Name="flash" Storyboard="{StaticResource flashAnimation}" />
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <StopStoryboard BeginStoryboardName="flash"/>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <Rectangle Height="20" Width="16" HorizontalAlignment="Right" VerticalAlignment="Center" Fill ="White">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{DynamicResource appbar_page_text}" Stretch="Fill"></VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <Label VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Margin="0,0,16,0" HorizontalContentAlignment="Right"
+                                        Content="{Binding Queue.NumberOfJobs}"></Label>
                                 <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource VisibilityConverter}}" Fill ="Red">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Visual="{DynamicResource appbar_disconnect}" Stretch="Fill"></VisualBrush>
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                            <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource InvertedVisibilityConverter}}" Fill ="Green">
+                            <Rectangle Height="16" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource InvertedVisibilityConverter}}" Fill ="Green">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Visual="{DynamicResource appbar_check}" Stretch="Fill"></VisualBrush>
                                 </Rectangle.OpacityMask>
@@ -46,5 +102,52 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Label Content="Принтер за замовчуванням:"></Label>
+        <ComboBox ItemsSource="{Binding ElementName=ThisControl, Path=DataContext.Printers}" DataContext="{Binding ElementName=ThisControl, Path=DataContext.Printers}"
+                  Width="250" HorizontalAlignment="Left" SelectedItem="{Binding ElementName=ThisControl, Path=DataContext.SelectedPrinter}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding Path=DataContext.PrinterChangedCommand, ElementName=ThisControl}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <ComboBox.Resources>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MetroComboBox}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                        Value="True">
+                                <Setter Property="Background"
+                        Value="#33FFFFFF" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Resources>
+            <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Name="_Border"
+                                Padding="2"
+                                SnapsToDevicePixels="true">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter TargetName="_Border" Property="Background" Value="#33FFFFFF"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+        </ComboBox>
+        </StackPanel>
+
     </Grid>
 </UserControl>

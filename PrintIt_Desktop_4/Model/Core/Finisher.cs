@@ -21,7 +21,10 @@ namespace PrintIt_Desktop_4.Model.Core
         private static void SaveConfig()
         {
             var serializer = new XmlSerializer(typeof(UserConfiguration));
-            serializer.Serialize(new StreamWriter(Config.Storage.GetConfigLocation()), CurrentState.Configuration);
+            using (var sr = new StreamWriter(Config.Storage.GetConfigLocation()))
+            {
+                serializer.Serialize(sr, CurrentState.Configuration);
+            }
         }
 
         private static void StopWrappers()

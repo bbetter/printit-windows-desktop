@@ -3,6 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:userControls="clr-namespace:PrintIt_Desktop_4.UserControls"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:other="clr-namespace:PrintIt_Desktop_4.Other"
                       Title="{Binding PrintSpotName}"
                       Height="600"
                       Width="900"
@@ -14,7 +16,20 @@
                       BorderThickness="0"
                       WindowStartupLocation="CenterScreen"
                       x:Name="ThisWindow"
+                      TitleCaps="False"
+                      Closing="Main_OnClosing"
                       >
+    <!--
+    <i:Interaction.Behaviors>
+        <other:CancelCloseWindowBehavior CancelClose="{Binding CancelClose}" />
+    </i:Interaction.Behaviors> 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:EventTrigger.Actions>
+                <i:InvokeCommandAction Command="{Binding ClosingCommand}"></i:InvokeCommandAction>
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Theme="Dark" Position="Top" x:Name="FlyoutInfo" Header="Інформація" Height="{Binding ElementName=ThisWindow, Path=Height}">
@@ -72,24 +87,24 @@
                             <TextBlock Text="ДОКУМЕНТИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
-                    <StackPanel>
+                    <StackPanel Margin="10,0,0,0">
                         <TextBlock Text="ДОКУМЕНТИ"></TextBlock>
                         <userControls:DocumentList></userControls:DocumentList>            
                     </StackPanel>    
                 </controls:MetroTabItem>
                 <controls:MetroTabItem>
                     <controls:MetroTabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" >
                             <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
                                 <Rectangle.Fill>
-                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_tools}" />
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_printer_blank}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="УПРАВЛІННЯ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                            <TextBlock Text="ПРИНТЕРИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                    <TextBlock Text="MANAGE PRINTERS"></TextBlock>
+                    <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                    <TextBlock Text="УПРАВЛІННЯ ПРИНТЕРАМИ"></TextBlock>
                     <userControls:PrinterList></userControls:PrinterList>
                     </StackPanel>
 
@@ -105,7 +120,7 @@
                             <TextBlock Text="НАЛАШТУВАННЯ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
-                    <controls:MetroAnimatedTabControl >
+                    <controls:MetroAnimatedTabControl Margin="10,0,0,0" >
                         <controls:MetroAnimatedTabControl.Resources>
                             <Style TargetType="{x:Type TabPanel}">
                                 <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"></Setter>
@@ -140,13 +155,17 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Height="30" Width="30" Margin="5" DockPanel.Dock="Left">
                                         <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_printer_blank}" />
+                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_tools}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="ПРИНТЕРИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                                    <TextBlock Text="ЗАГАЛЬНІ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                                 </StackPanel>
                             </controls:MetroTabItem.Header>
-                            <TextBlock Text="PRINTERS"></TextBlock>
+                            <StackPanel>
+                            <TextBlock Text="APPLICATION SETTINGS"></TextBlock>
+                                <Label Content="{DynamicResource LocaleDescription}"></Label>
+                                <Button Click="testlocale" Width="200">change language</Button>
+                            </StackPanel>
                         </controls:MetroTabItem>
                     </controls:MetroAnimatedTabControl>
                 </controls:MetroTabItem>
@@ -156,9 +175,34 @@
         <Button BorderThickness="2" BorderBrush="White" Height="40" Width="40" Margin="0,6" HorizontalAlignment="Right" VerticalAlignment="Top"
                 Background="{StaticResource ControlBackgroundBrush}" Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding StateCommand}">
         <Rectangle Height="18" Width="18" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Center"> 
-            <Rectangle.Fill>
-                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_arrow_left}" />
-            </Rectangle.Fill>
+ 
+            <Rectangle.Style>
+                    <Style TargetType="{x:Type Rectangle}">
+                        <Style.Resources>
+                            <Storyboard x:Key="flashAnimation" >
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" AutoReverse="True" Duration="0:0:0.5" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </Style.Resources>
+                        <Setter Property="OpacityMask" >
+                            <Setter.Value>
+                                <VisualBrush Visual="{StaticResource appbar_arrow_left}"></VisualBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Fill" Value="White"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ThisWindow,Path=DataContext.PrinterError}" Value="True">
+                                <Setter Property="Fill" Value="OrangeRed"></Setter>
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard Name="flash" Storyboard="{StaticResource flashAnimation}" />
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="flash"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Rectangle.Style>
         </Rectangle>
         </Button>
     </Grid>

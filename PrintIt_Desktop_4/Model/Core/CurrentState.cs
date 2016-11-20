@@ -17,5 +17,6 @@ namespace PrintIt_Desktop_4.Model.Core
         public static UserConfiguration Configuration { get; set; }
         public static List<WebSocketWrapper> WebSocketWrappers { get; set; }
         public static ResourceDictionary LanguageResourceDictionary { get; set; }
+        public static String DefaultPrinterName { get; set; }
     }
 }

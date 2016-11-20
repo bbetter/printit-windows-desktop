@@ -117,6 +117,7 @@ namespace PrintIt_Desktop_4.Model.Configuration
 
             public static String GetServerAddress()
             {
+                //return @"http://a682de04.ngrok.io";
                 return @"http://printz.pp.ua";
             }
 
