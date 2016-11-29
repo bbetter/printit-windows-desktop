@@ -16,7 +16,8 @@ namespace PrintIt_Desktop_4
         void App_Startup(object sender, StartupEventArgs e)
         {
             PreLoader.PerformPreLoad();
-            WindowManager.ShowLoginWindow();        
+            WindowManager.ShowLoginWindow();
+            tray = false;
         }
 
         public void App_Exit(object sender, ExitEventArgs e)
@@ -37,7 +38,7 @@ namespace PrintIt_Desktop_4
             else
             {
                 Finisher.FinishApplication();
-                ni.Dispose();
+                if(ni!=null)ni.Dispose();
                 App.Current.Shutdown();
             }
         }

@@ -61,7 +61,7 @@
                                             </Style.Resources>
                                             <Setter Property="Visibility" Value="Hidden" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Queue.IsInError}" Value="True">
+                                                <DataTrigger Binding="{Binding Error}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                     <DataTrigger.EnterActions>
                                                         <BeginStoryboard Name="flash" Storyboard="{StaticResource flashAnimation}" />
@@ -82,12 +82,12 @@
                                 </Rectangle>
                                 <Label VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Margin="0,0,16,0" HorizontalContentAlignment="Right"
                                         Content="{Binding Queue.NumberOfJobs}"></Label>
-                                <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource VisibilityConverter}}" Fill ="Red">
+                                <Rectangle Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=Connected, Converter={StaticResource VisibilityConverter}}" Fill ="Red">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Visual="{DynamicResource appbar_disconnect}" Stretch="Fill"></VisualBrush>
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                            <Rectangle Height="16" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=WorkOffline, Converter={StaticResource InvertedVisibilityConverter}}" Fill ="Green">
+                            <Rectangle Height="16" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding Path=Connected, Converter={StaticResource InvertedVisibilityConverter}}" Fill ="Green">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Visual="{DynamicResource appbar_check}" Stretch="Fill"></VisualBrush>
                                 </Rectangle.OpacityMask>
@@ -102,7 +102,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Content="Принтер за замовчуванням:"></Label>
+            <Label Content="{DynamicResource Locale//Printers//DefaultPrinter}"></Label>
         <ComboBox ItemsSource="{Binding ElementName=ThisControl, Path=DataContext.Printers}" DataContext="{Binding ElementName=ThisControl, Path=DataContext.Printers}"
                   Width="250" HorizontalAlignment="Left" SelectedItem="{Binding ElementName=ThisControl, Path=DataContext.SelectedPrinter}">
                 <i:Interaction.Triggers>

@@ -5,6 +5,8 @@ using System.Dynamic;
 using System.Linq;
 using System.Printing;
 using System.Text;
+using PrintIt_Desktop_4.Other;
+using PrintIt_Desktop_4.ViewModels;
 
 namespace PrintIt_Desktop_4.Model.Core.Printing
 {

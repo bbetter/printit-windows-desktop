@@ -21,6 +21,7 @@ namespace PrintIt_Desktop_4.ViewModels
         {
             MessageHandler.OnDocumentAdd += AddDocument;
             MessageHandler.OnDocumentProgressChange += ChangeProgress;
+            CurrentState.CurrentQueueChecker.OnQueueJobChanged += ChangeState;
             Documents = new ObservableCollection<Document>();
             PrintCommand = new DelegateCommand(PrintSelected);
             //Documents.Add(new Document() { Name = "Doc1", Progress = 0});
@@ -46,6 +47,38 @@ namespace PrintIt_Desktop_4.ViewModels
             }));
         }
 
+        private void ChangeState(string task, DocumentState state,int count, int done)
+        {
+            CurrentControl.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var document = Documents.First(x => x.Name == task);
+                //var document = Documents.First();
+                if (state == DocumentState.Done)
+                {
+                    if (document.State != DocumentState.Pending)
+                    {
+                        CurrentState.CurrentPrintQueue.Remove(task);
+                        document.State = state;
+                    }
+                }
+                else
+                document.State = state;
+
+                /*
+                try
+                {
+                    var data = new NameValueCollection();
+                    data.Add("status", "queued");
+                    NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                */
+            }));
+        }
+
         public ICommand PrintCommand { get; set; }
         public ICommand CancelCommand { get; set; }
 
@@ -55,19 +88,11 @@ namespace PrintIt_Desktop_4.ViewModels
             {
                 if (document.Selected)
                 {
-                    //PrinterManager.PrintDocument(document.Name,Config.Storage.GetDirectoryLocation()+@"\Docs\"+document.Name,CurrentState.DefaultPrinterName);
-                    document.State = DocumentState.Printing;
+                    //CurrentState.CurrentPrintQueue.Add("Print System Document");
+                    PrinterManager.PrintDocument(document.Name,Config.Storage.GetDirectoryLocation()+@"\Docs\"+document.Name,CurrentState.DefaultPrinterName);
+                    CurrentState.CurrentPrintQueue.Add(document.Name);
                     //MessageBox.Show(document.Url);
-                    try
-                    {
-                        var data =new NameValueCollection();
-                        data.Add("status","printed");
-                        NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    document.Selected = false;
                 }
             }
         }

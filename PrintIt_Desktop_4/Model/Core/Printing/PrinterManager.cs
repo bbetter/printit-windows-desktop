@@ -59,8 +59,8 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
                     if((string)printer["Name"]==printerName.Value)
                     workOffline = (bool)printer["WorkOffline"];
                 }
-                _printers[id].Queue = ParsePrinter(printerName.Value).Queue;
-                _printers[id].Settings = new PrinterSettings() {PrinterName = printerName.Value,};
+                //_printers[id].Queue = ParsePrinter(printerName.Value).Queue;
+                //_printers[id].Settings = new PrinterSettings() {PrinterName = printerName.Value,};
                 _printers[id].WorkOffline = workOffline;
                 id++;
             }
@@ -68,7 +68,8 @@ namespace PrintIt_Desktop_4.Model.Core.Printing
 
         private static Printer ParsePrinter(String name)
         {
-            var printQueue = _printServer.GetPrintQueue(name);
+            //var printQueue = _printServer.GetPrintQueue(name);
+            var printQueue = new PrintServer().GetPrintQueue(name);
             bool workOffline = false;
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Printer");
             foreach (ManagementObject printer in searcher.Get())

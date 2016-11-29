@@ -5,6 +5,8 @@
                       xmlns:userControls="clr-namespace:PrintIt_Desktop_4.UserControls"
                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       xmlns:other="clr-namespace:PrintIt_Desktop_4.Other"
+                      xmlns:converters="clr-namespace:PrintIt_Desktop_4.Converters"
+                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                       Title="{Binding PrintSpotName}"
                       Height="600"
                       Width="900"
@@ -18,7 +20,12 @@
                       x:Name="ThisWindow"
                       TitleCaps="False"
                       Closing="Main_OnClosing"
+                      Icon="../Images/printzt_icon.ico"
+                      ShowIconOnTitleBar="False"
                       >
+    <controls:MetroWindow.Resources>
+        <converters:ModifySizeConverter x:Key="SizeConverter"></converters:ModifySizeConverter>
+    </controls:MetroWindow.Resources>
     <!--
     <i:Interaction.Behaviors>
         <other:CancelCloseWindowBehavior CancelClose="{Binding CancelClose}" />
@@ -32,9 +39,39 @@
     </i:Interaction.Triggers>-->
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
-            <controls:Flyout Theme="Dark" Position="Top" x:Name="FlyoutInfo" Header="Інформація" Height="{Binding ElementName=ThisWindow, Path=Height}">
+            <controls:Flyout Theme="Dark" Position="Top" x:Name="FlyoutInfo" Height="{Binding ElementName=ThisWindow, Path=Height}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton IsChecked="{Binding ElementName=FlyoutInfo, Path=IsOpen}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <ToggleButton.Content>
+                                    <Rectangle Width="14" Height="16" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Visual="{DynamicResource appbar_arrow_up}"></VisualBrush>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <Label Content="{DynamicResource Locale//Info//Information}" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:Flyout.HeaderTemplate>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="-160,70,5,5">
+
+                    <RichTextBox VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="{Binding ElementName=FlyoutInfo, Path=Background}" Foreground="{DynamicResource AccentColorBrush}"
+                                 BorderThickness="0" IsReadOnly="True" other:RichTextBoxHelper.DocumentRtf="{Binding ElementName=ThisWindow, Path=InfoFlowDocument2}" VerticalScrollBarVisibility="Auto"
+                                 >
+                        <RichTextBox.Height>
+                            <Binding ElementName="FlyoutInfo" Path="Height" Converter="{StaticResource SizeConverter}">
+                                <Binding.ConverterParameter>
+                                    <sys:Double>-70</sys:Double>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </RichTextBox.Height>
+                    </RichTextBox>
+                </StackPanel>
             </controls:Flyout>
-            <controls:Flyout Theme="Dark" Position="Right" x:Name="FlyoutState" Header="Стан" Width="500">
+            <controls:Flyout Theme="Dark" Position="Right" x:Name="FlyoutState" Header="{DynamicResource Locale//State//State}" Width="500">
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
@@ -79,18 +116,18 @@
                 <controls:MetroTabItem>
                     <controls:MetroTabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Rectangle Height="30" Width="25" Margin="140,5,5,5" DockPanel.Dock="Left">
+                            <Rectangle Height="30" Width="25" Margin="140,5,5,5">
                                 <Rectangle.Fill>
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_page_text}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="ДОКУМЕНТИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                            <TextBlock Text="{DynamicResource Locale//Documents//Documents}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"/>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
                     <StackPanel Margin="10,0,0,0">
-                        <TextBlock Text="ДОКУМЕНТИ"></TextBlock>
-                        <userControls:DocumentList></userControls:DocumentList>            
-                    </StackPanel>    
+                        <TextBlock Text="{DynamicResource Locale//Documents//DocumentList}"></TextBlock>
+                        <userControls:DocumentList></userControls:DocumentList>
+                    </StackPanel>
                 </controls:MetroTabItem>
                 <controls:MetroTabItem>
                     <controls:MetroTabItem.Header>
@@ -100,12 +137,12 @@
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_printer_blank}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="ПРИНТЕРИ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                            <TextBlock Text="{DynamicResource Locale//Printers//Printers}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
                     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                    <TextBlock Text="УПРАВЛІННЯ ПРИНТЕРАМИ"></TextBlock>
-                    <userControls:PrinterList></userControls:PrinterList>
+                        <TextBlock Text="{DynamicResource Locale//Printers//ManagePrinters}"></TextBlock>
+                        <userControls:PrinterList></userControls:PrinterList>
                     </StackPanel>
 
                 </controls:MetroTabItem>
@@ -117,7 +154,7 @@
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="НАЛАШТУВАННЯ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                            <TextBlock Text="{DynamicResource Locale//Settings//Settings}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                         </StackPanel>
                     </controls:MetroTabItem.Header>
                     <controls:MetroAnimatedTabControl Margin="10,0,0,0" >
@@ -128,12 +165,12 @@
                             </Style>
                             <Style TargetType="{x:Type controls:MetroTabItem}">
                                 <Style.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Opacity" Value="1" />
-                                                </Trigger>
-                                                <Trigger Property="IsSelected" Value="False">
-                                                    <Setter  Property="Opacity" Value="0.5" />
-                                                </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter  Property="Opacity" Value="0.5" />
+                                    </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </controls:MetroAnimatedTabControl.Resources>
@@ -145,10 +182,10 @@
                                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="ОБЛІКОВИЙ ЗАПИС" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                                    <TextBlock Text="{DynamicResource Locale//Settings//Account}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                                 </StackPanel>
                             </controls:MetroTabItem.Header>
-                            <TextBlock Text="ACCOUNT"></TextBlock>
+                            <TextBlock Text="{DynamicResource Locale//Settings//Account}"></TextBlock>
                         </controls:MetroTabItem>
                         <controls:MetroTabItem>
                             <controls:MetroTabItem.Header>
@@ -158,13 +195,13 @@
                                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_tools}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="ЗАГАЛЬНІ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
+                                    <TextBlock Text="{DynamicResource Locale//Settings//General}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                                 </StackPanel>
                             </controls:MetroTabItem.Header>
                             <StackPanel>
-                            <TextBlock Text="APPLICATION SETTINGS"></TextBlock>
+                                <TextBlock Text="{DynamicResource Locale//Settings//Language}"></TextBlock>
                                 <Label Content="{DynamicResource LocaleDescription}"></Label>
-                                <Button Click="testlocale" Width="200">change language</Button>
+                                <Button Click="testlocale" Width="200" Content="{DynamicResource Locale//Settings//ChangeLanguage}"></Button>
                             </StackPanel>
                         </controls:MetroTabItem>
                     </controls:MetroAnimatedTabControl>
@@ -174,9 +211,9 @@
         <Image Source="../Images/logo_RGBA.png" Height="30" Margin="10,10,5,5" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
         <Button BorderThickness="2" BorderBrush="White" Height="40" Width="40" Margin="0,6" HorizontalAlignment="Right" VerticalAlignment="Top"
                 Background="{StaticResource ControlBackgroundBrush}" Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding StateCommand}">
-        <Rectangle Height="18" Width="18" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Center"> 
- 
-            <Rectangle.Style>
+            <Rectangle Height="18" Width="18" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <Rectangle.Style>
                     <Style TargetType="{x:Type Rectangle}">
                         <Style.Resources>
                             <Storyboard x:Key="flashAnimation" >
@@ -203,7 +240,7 @@
                         </Style.Triggers>
                     </Style>
                 </Rectangle.Style>
-        </Rectangle>
+            </Rectangle>
         </Button>
     </Grid>
 </controls:MetroWindow>

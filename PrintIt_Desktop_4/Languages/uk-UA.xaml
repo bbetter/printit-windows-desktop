@@ -15,5 +15,35 @@
     <system:String x:Key="Locale//SignUp//Address">Адреса</system:String>
     <system:String x:Key="Locale//SignUp//Back">Назад</system:String>
     <system:String x:Key="Locale//SignUp//SignUp">Реєстрація</system:String>
+    
     <system:String x:Key="Locale//General//Copyright">Copyright &#169; 2016 PrintZ. Всі права захищені.</system:String>
+
+    <system:String x:Key="Locale//Info//Information">Інформація</system:String>
+
+    <system:String x:Key="Locale//State//State">Стан</system:String>
+
+    <system:String x:Key="Locale//Documents//Documents">ДОКУМЕНТИ</system:String>
+    <system:String x:Key="Locale//Documents//DocumentList">Список документів</system:String>
+    <system:String x:Key="Locale//Documents//Id">ID</system:String>
+    <system:String x:Key="Locale//Documents//Name">НАЗВА</system:String>
+    <system:String x:Key="Locale//Documents//State">СТАН</system:String>
+    <system:String x:Key="Locale//Documents//Date">СТВОРЕНИЙ</system:String>
+    <system:String x:Key="Locale//Documents//Pages">СТОРІНКИ</system:String>
+    <system:String x:Key="Locale//Documents//Price">ЦІНА</system:String>
+    <system:String x:Key="Locale//Documents//Progress">ПРОГРЕС</system:String>
+    <system:String x:Key="Locale//Documents//Print">Друк</system:String>
+    <system:String x:Key="Locale//Documents//Cancel">Відхилити</system:String>
+
+
+    <system:String x:Key="Locale//Printers//Printers">ПРИНТЕРИ</system:String>
+    <system:String x:Key="Locale//Printers//ManagePrinters">Управління принтерами</system:String>
+    <system:String x:Key="Locale//Printers//DefaultPrinter">Принтер за замовчуванням</system:String>
+    
+    <system:String x:Key="Locale//Settings//Settings">НАЛАШТУВАННЯ</system:String>
+    
+    <system:String x:Key="Locale//Settings//General">ЗАГАЛЬНІ</system:String>
+    <system:String x:Key="Locale//Settings//Language">Мова</system:String>
+    <system:String x:Key="Locale//Settings//ChangeLanguage">Змінити мову</system:String>
+    
+    <system:String x:Key="Locale//Settings//Account">ОБЛІКОВИЙ ЗАПИС</system:String>
 </ResourceDictionary>

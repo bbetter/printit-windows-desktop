@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Threading;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
@@ -13,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Model.Core.Networking;
+using PrintIt_Desktop_4.Model.Core.Printing;
 using WebSocketSharp.Net;
 
 namespace PrintIt_Desktop_4.Views
@@ -24,8 +27,23 @@ namespace PrintIt_Desktop_4.Views
     {
         public Main()
         {
+            CurrentState.CurrentQueueChecker = new QueueChecker() { PrinterName = null };
+            CurrentState.CurrentTicker = new Ticker();
+            InfoFlowDocument2 = File.ReadAllText(@"..\Docs\info.rtf");
+
             InitializeComponent();
+            
             DataContext = this;
+            //InfoFlowDocument = new FlowDocument();
+            //TextRange range = new TextRange(InfoFlowDocument.ContentStart,InfoFlowDocument.ContentEnd);
+            //using (var doc =File.Open(@"..\Docs\info.rtf",FileMode.Open,FileAccess.Read))
+            //{
+            //    range.Load(doc,DataFormats.Rtf);
+            //}
+
+            
+
+
             PrintSpotName = "PrintZ - PRINTSPOT NAME GOES HERE";
             InfoCommand = new DelegateCommand(() => { FlyoutInfo.IsOpen = true;});
             StateCommand = new DelegateCommand(() => { FlyoutState.IsOpen = true; });
@@ -38,6 +56,9 @@ namespace PrintIt_Desktop_4.Views
             WhoAmI();
             wsw.Start();
             wsw.SendMessage("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"DocsChannel\\\"}\"}");
+
+
+            
             PrinterError = true;
         }
 
@@ -47,6 +68,9 @@ namespace PrintIt_Desktop_4.Views
         public ICommand ClosingCommand { get; set; }
         public bool PrinterError { get; set; }
         public bool CancelClose { get; set; }
+
+        public FlowDocument InfoFlowDocument { get; set; }
+        public String InfoFlowDocument2 { get; set; }
         private void WhoAmI()
         {
             var values = new NameValueCollection();

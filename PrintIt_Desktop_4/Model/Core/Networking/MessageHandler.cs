@@ -101,10 +101,12 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                 {
                     doc.Url =(string) docJson["attachment"]["url"];
                 }
+                if(OnDocumentAdd!=null)
                 OnDocumentAdd(doc);
                 NetworkManager.DownloadFile(Config.Networking.GetServerAddress() + doc.Url,
                     Config.Storage.GetDirectoryLocation() + @"\Docs\" + doc.Name, (s, args) =>
                     {
+                        if(OnDocumentProgressChange!=null)
                         OnDocumentProgressChange(doc.Id, args.ProgressPercentage);
                     });
             }

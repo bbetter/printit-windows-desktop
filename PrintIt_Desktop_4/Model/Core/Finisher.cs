@@ -15,6 +15,7 @@ namespace PrintIt_Desktop_4.Model.Core
         public static void FinishApplication()
         {
             StopWrappers();
+            StopTimers();
             SaveConfig();
         }
 
@@ -33,6 +34,11 @@ namespace PrintIt_Desktop_4.Model.Core
             {
                 webSocketWrapper.SendMessage(Config.Wrappers.GetStopMessage());
             }
+        }
+
+        private static void StopTimers()
+        {
+           CurrentState.CurrentTicker.Stop();
         }
     }
 }

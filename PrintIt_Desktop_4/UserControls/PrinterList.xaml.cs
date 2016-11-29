@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PrintIt_Desktop_4.ViewModels;
 
 namespace PrintIt_Desktop_4.UserControls
 {
@@ -22,6 +23,7 @@ namespace PrintIt_Desktop_4.UserControls
         public PrinterList()
         {
             InitializeComponent();
+            (DataContext as PrinterListViewModel).CurrentControl = this;
         }
     }
 }

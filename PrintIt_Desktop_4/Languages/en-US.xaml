@@ -15,5 +15,35 @@
     <system:String x:Key="Locale//SignUp//Address">Address</system:String>
     <system:String x:Key="Locale//SignUp//Back">Back</system:String>
     <system:String x:Key="Locale//SignUp//SignUp">Register</system:String>
+    
     <system:String x:Key="Locale//General//Copyright">Copyright &#169; 2016 PrintZ. All rights reserved.</system:String>
+    
+    <system:String x:Key="Locale//Info//Information">Information</system:String>
+
+    <system:String x:Key="Locale//State//State">State</system:String>
+
+    <system:String x:Key="Locale//Documents//Documents">DOCUMENTS</system:String>
+    <system:String x:Key="Locale//Documents//DocumentsList">Document list</system:String>
+    <system:String x:Key="Locale//Documents//Id">ID</system:String>
+    <system:String x:Key="Locale//Documents//Name">NAME</system:String>
+    <system:String x:Key="Locale//Documents//State">STATE</system:String>
+    <system:String x:Key="Locale//Documents//Date">CREATNED</system:String>
+    <system:String x:Key="Locale//Documents//Pages">PAGE COUNT</system:String>
+    <system:String x:Key="Locale//Documents//Price">PRICE</system:String>
+    <system:String x:Key="Locale//Documents//Progress">PROGRESS</system:String>
+    <system:String x:Key="Locale//Documents//Print">Print</system:String>
+    <system:String x:Key="Locale//Documents//Cancel">Abort</system:String>
+
+
+    <system:String x:Key="Locale//Printers//Printers">PRINTERS</system:String>
+    <system:String x:Key="Locale//Printers//ManagePrinters">Printer management</system:String>
+    <system:String x:Key="Locale//Printers//DefaultPrinter">Default printer</system:String>
+
+    <system:String x:Key="Locale//Settings//Settings">SETTINGS</system:String>
+
+    <system:String x:Key="Locale//Settings//General">GENERAL</system:String>
+    <system:String x:Key="Locale//Settings//Language">Language</system:String>
+    <system:String x:Key="Locale//Settings//ChangeLanguage">Change language</system:String>
+
+    <system:String x:Key="Locale//Settings//Account">ACCOUNT</system:String>
 </ResourceDictionary>
