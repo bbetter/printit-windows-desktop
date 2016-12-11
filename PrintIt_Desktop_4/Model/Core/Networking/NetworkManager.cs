@@ -60,14 +60,15 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
 
         public static string SendGetRequest(NameValueCollection data, string page)
         {
-            using (_client = new WebClient())
+            using (_client = new WebClient(){Encoding = Encoding.UTF8})
             {
                 _client.Headers.Add(@"Accept: */*");
+                _client.Headers.Add("Accept-Charset", "ISO-8859-1");
                 if(data.Count>0)
                     _client.QueryString.Add(data);
                     _client.Headers.Add("Authorization", "Token token=" + _token);
                 var response = _client.DownloadData(Config.Networking.GetServerAddress() + page);
-                var responseString = Encoding.Default.GetString(response);
+                var responseString = Encoding.UTF8.GetString(response);
                 return responseString;
             }
         }
@@ -79,7 +80,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                 _client.Headers.Add(@"Accept: */*");
                 _client.Headers.Add("Authorization", "Token token=" + _token);
                 var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "PUT", data);
-                var responseString = Encoding.Default.GetString(response);
+                var responseString = Encoding.UTF8.GetString(response);
                 return responseString;
             }
         }
@@ -90,7 +91,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
             {
                 _client.Headers.Add(@"Accept: */*");
                 var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "POST", data);
-                var responseString = Encoding.Default.GetString(response);
+                var responseString = Encoding.UTF8.GetString(response);
                 return responseString;
             }
         }
@@ -105,7 +106,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                 _client.Headers[HttpRequestHeader.Authorization] = string.Format(
                     "Basic {0}", credentials);
                 var response = _client.UploadValues(Config.Networking.GetServerAddress() + page, "POST", data);
-                var responseString = Encoding.Default.GetString(response);
+                var responseString = Encoding.UTF8.GetString(response);
                 return responseString;
             }
         }

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Model.Core;
 using PrintIt_Desktop_4.Other;
 
@@ -44,7 +48,13 @@ namespace PrintIt_Desktop_4.ViewModels
             PrintSpotAddress = info.PrintSpotAddress;
             Description = info.Description;
             AdditionalInfo = info.AdditionalInfo;
-
+            OwnerName = info.OwnerName;
+            OwnerSoname = info.OwnerSoname;
+            ImageURI = Config.Networking.GetServerAddress() + info.ImageURI;
+            Image = new BitmapImage();
+            if(!String.IsNullOrEmpty(ImageURI))
+                SetupImage();
+            Available = !(info.Status == "offline" || info.Status == "on_maitanance");
         }
 
         public String PrintSpotName { get; set; }
@@ -59,5 +69,40 @@ namespace PrintIt_Desktop_4.ViewModels
         public bool Available { get; set; }
 
         private PrintSpotInfo info;
+        public BitmapImage Image { get; set; }
+
+        private void SetupImage()
+        {
+            try
+            {
+                int BytesToRead = 100;
+
+                WebRequest request = WebRequest.Create(new Uri(ImageURI, UriKind.Absolute));
+                request.Timeout = -1;
+                WebResponse response = request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                BinaryReader reader = new BinaryReader(responseStream);
+                MemoryStream memoryStream = new MemoryStream();
+
+                byte[] bytebuffer = new byte[BytesToRead];
+                int bytesRead = reader.Read(bytebuffer, 0, BytesToRead);
+
+                while (bytesRead > 0)
+                {
+                    memoryStream.Write(bytebuffer, 0, bytesRead);
+                    bytesRead = reader.Read(bytebuffer, 0, BytesToRead);
+                }
+
+                Image.BeginInit();
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                Image.StreamSource = memoryStream;
+                Image.EndInit();
+            }
+            catch (Exception ex)
+            {
+                Image = new BitmapImage(new Uri(@"..\..\Images\printer_RGBA.png",UriKind.RelativeOrAbsolute));
+            }
+        }
     }
 }

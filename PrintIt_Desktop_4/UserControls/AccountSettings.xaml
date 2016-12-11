@@ -6,13 +6,17 @@
              xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="650"
+             d:DesignHeight="400" d:DesignWidth="850"
              x:Name="ThisControl"
              DataContext="{DynamicResource ViewModel}">
     <UserControl.Resources>
         <viewModels:AccountSettingsViewModel x:Key ="ViewModel"></viewModels:AccountSettingsViewModel>
     </UserControl.Resources>
     <Grid>
+        <Border CornerRadius="45" BorderThickness="2" BorderBrush="White" Margin="20,5" Width="240" Height="240" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Image Source="{Binding ElementName=ThisControl, Path=DataContext.Image}" ></Image>
+        </Border>
+        
           <StackPanel Orientation="Vertical" Margin="10,5">
               <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                   <Label Content="Name" Width="150"></Label>

@@ -82,17 +82,21 @@ namespace PrintIt_Desktop_4.Views
                 var res = NetworkManager.SendGetRequest(values, @"/api/v1/users/me");
                 //MessageBox.Show(res);
                 var json = JObject.Parse(res);
-                var id = (string)json["print_spot"]["id"];
-                PrintSpotName = "PrintZ " + (string) json["print_spot"]["name"];
+                var id = (string)json["print_spots"][0]["id"];
+                PrintSpotName = "PrintZ " + (string)json["print_spots"][0]["name"];
                 //MessageBox.Show(id);
 
                 //todo refactor
                 
                 var info = new PrintSpotInfo();
-                info.AdditionalInfo = (string) json["print_spot"]["additional_info"];
-                info.Description = (string)json["print_spot"]["description"];
-                info.PrintSpotName = (string)json["print_spot"]["address"];
-                info.PrintSpotName = (string)json["print_spot"]["name"];
+                info.AdditionalInfo = (string)json["print_spots"][0]["additional_info"];
+                info.Description = (string)json["print_spots"][0]["description"];
+                info.PrintSpotAddress = (string)json["print_spots"][0]["address"];
+                info.PrintSpotName = (string)json["print_spots"][0]["name"];
+                info.Status = (string)json["print_spots"][0]["status"];
+                info.ImageURI = (string)json["print_spots"][0]["photo_url"];
+                info.OwnerName = (string) json["first_name"];
+                info.OwnerSoname = (string)json["last_name"];
                 CurrentState.PrintSpotParameters = info;
                 InitializeComponent();
 
