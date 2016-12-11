@@ -23,5 +23,6 @@ namespace PrintIt_Desktop_4.Model.Core
         public static List<String> CurrentPrintQueue { get; private set; }
         public static QueueChecker CurrentQueueChecker { get; set; }
         public static Ticker CurrentTicker { get; set; }
+        public static PrintSpotInfo PrintSpotParameters { get; set; }
     }
 }

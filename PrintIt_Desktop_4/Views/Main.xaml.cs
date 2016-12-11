@@ -31,7 +31,7 @@ namespace PrintIt_Desktop_4.Views
             CurrentState.CurrentTicker = new Ticker();
             InfoFlowDocument2 = File.ReadAllText(@"..\Docs\info.rtf");
 
-            InitializeComponent();
+            //InitializeComponent();
             
             DataContext = this;
             //InfoFlowDocument = new FlowDocument();
@@ -54,10 +54,12 @@ namespace PrintIt_Desktop_4.Views
 
             CurrentState.WebSocketWrappers.Add(wsw);
             WhoAmI();
+            //InitializeComponent();
+
             wsw.Start();
             wsw.SendMessage("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"DocsChannel\\\"}\"}");
 
-
+            
             
             PrinterError = true;
         }
@@ -78,10 +80,23 @@ namespace PrintIt_Desktop_4.Views
             try
             {
                 var res = NetworkManager.SendGetRequest(values, @"/api/v1/users/me");
+                //MessageBox.Show(res);
                 var json = JObject.Parse(res);
                 var id = (string)json["print_spot"]["id"];
                 PrintSpotName = "PrintZ " + (string) json["print_spot"]["name"];
                 //MessageBox.Show(id);
+
+                //todo refactor
+                
+                var info = new PrintSpotInfo();
+                info.AdditionalInfo = (string) json["print_spot"]["additional_info"];
+                info.Description = (string)json["print_spot"]["description"];
+                info.PrintSpotName = (string)json["print_spot"]["address"];
+                info.PrintSpotName = (string)json["print_spot"]["name"];
+                CurrentState.PrintSpotParameters = info;
+                InitializeComponent();
+
+
                 values = new NameValueCollection();
                 values.Add("print_spot_id",id);
                 var res2 = NetworkManager.SendGetRequest(values, @"/api/v1/docs");

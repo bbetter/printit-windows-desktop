@@ -185,7 +185,12 @@
                                     <TextBlock Text="{DynamicResource Locale//Settings//Account}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Margin="0"></TextBlock>
                                 </StackPanel>
                             </controls:MetroTabItem.Header>
-                            <TextBlock Text="{DynamicResource Locale//Settings//Account}"></TextBlock>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{DynamicResource Locale//Settings//Account}"></TextBlock>
+                                <userControls:AccountSettings></userControls:AccountSettings>
+                            </StackPanel>
+                            
+                            
                         </controls:MetroTabItem>
                         <controls:MetroTabItem>
                             <controls:MetroTabItem.Header>
@@ -210,7 +215,7 @@
         </DockPanel>
         <Image Source="../Images/logo_RGBA.png" Height="30" Margin="10,10,5,5" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
         <Button BorderThickness="2" BorderBrush="White" Height="40" Width="40" Margin="0,6" HorizontalAlignment="Right" VerticalAlignment="Top"
-                Background="{StaticResource ControlBackgroundBrush}" Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding StateCommand}">
+                Background="{StaticResource ControlBackgroundBrush}" Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding StateCommand}" Visibility="Collapsed">
             <Rectangle Height="18" Width="18" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Center">
 
                 <Rectangle.Style>

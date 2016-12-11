@@ -129,6 +129,7 @@
     <Compile Include="Model\Core\Networking\MessageHandler.cs" />
     <Compile Include="Model\Core\PreLoader.cs" />
     <Compile Include="Model\Core\Printing\QueueChecker.cs" />
+    <Compile Include="Model\Core\PrintSpotInfo.cs" />
     <Compile Include="Model\Core\Ticker.cs" />
     <Compile Include="Model\LocalStorage\UserConfiguration.cs" />
     <Compile Include="Model\Abstractions\LoginValidator.cs" />
@@ -155,6 +156,9 @@
     <Compile Include="Other\StoryboardHelper.cs" />
     <Compile Include="Other\StringHelper.cs" />
     <Compile Include="Other\WindowBehavior.cs" />
+    <Compile Include="UserControls\AccountSettings.xaml.cs">
+      <DependentUpon>AccountSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DocumentList.xaml.cs">
       <DependentUpon>DocumentList.xaml</DependentUpon>
     </Compile>
@@ -173,6 +177,7 @@
     <Compile Include="UserControls\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AccountSettingsViewModel.cs" />
     <Compile Include="ViewModels\DocumentListViewModel.cs" />
     <Compile Include="ViewModels\LoadAndLoginViewModel.cs" />
     <Compile Include="ViewModels\LoginScreenViewModel.cs" />
@@ -214,6 +219,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AccountSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DocumentList.xaml">
       <SubType>Designer</SubType>

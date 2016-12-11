@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="PrintIt_Desktop_4.UserControls.AccountSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:PrintIt_Desktop_4.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="650"
+             x:Name="ThisControl"
+             DataContext="{DynamicResource ViewModel}">
+    <UserControl.Resources>
+        <viewModels:AccountSettingsViewModel x:Key ="ViewModel"></viewModels:AccountSettingsViewModel>
+    </UserControl.Resources>
+    <Grid>
+          <StackPanel Orientation="Vertical" Margin="10,5">
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                  <Label Content="Name" Width="150"></Label>
+                  <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.PrintSpotName}"></TextBox>
+              </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="Address" Width="150"></Label>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.PrintSpotAddress}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="Description" Width="150"></Label>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.Description}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="Additional information" Width="150"></Label>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.AdditionalInfo}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="First name" Width="150"></Label>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerName}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="Last name" Width="150"></Label>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerSoname}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="Available" Width="150"></Label>
+                <controls:ToggleSwitch IsChecked="{Binding ElementName=ThisControl, Path=DataContext.Available}">
+                    <controls:ToggleSwitch.Style>
+                        <Style>  
+                            <Setter Property="controls:ToggleSwitch.OffLabel" Value="No"></Setter>
+                            <Setter Property="controls:ToggleSwitch.OnLabel" Value="Yes"></Setter>
+                            <Setter Property="controls:ToggleSwitch.OffSwitchBrush" Value="Red"></Setter>
+                            <Setter Property="controls:ToggleSwitch.OnSwitchBrush" Value="Green"></Setter>
+                        </Style>
+                    </controls:ToggleSwitch.Style>
+                </controls:ToggleSwitch>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Button Width="100" Content="SAVE" Margin="0,0,5,0" Command="{Binding ElementName=ThisControl, Path=DataContext.SaveCommand}"></Button>
+                <Button Width="100" Content="Cancel" Margin="5,0,0,0"  Command="{Binding ElementName=ThisControl, Path=DataContext.CancelCommand}"></Button>
+            </StackPanel>
+        </StackPanel>  
+    </Grid>
+</UserControl>
