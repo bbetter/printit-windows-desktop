@@ -18,5 +18,7 @@ namespace PrintIt_Desktop_4.Model.Core
 
         public String Description { get; set; }
         public String AdditionalInfo { get; set; }
+
+        public String Id { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Model.Core;
+using PrintIt_Desktop_4.Model.Core.Networking;
 using PrintIt_Desktop_4.Other;
 
 namespace PrintIt_Desktop_4.ViewModels
@@ -40,7 +43,14 @@ namespace PrintIt_Desktop_4.ViewModels
 
         private void MapTo()
         {
-
+            info.PrintSpotName = PrintSpotName;
+            info.PrintSpotAddress = PrintSpotAddress;
+            info.Description = Description;
+            info.AdditionalInfo = AdditionalInfo;
+            info.OwnerName = OwnerName;
+            info.OwnerSoname = OwnerSoname;
+            info.Status = (Available?"online":"on_maintenance");
+            Update();
         }
 
         private void MapFrom()
@@ -55,7 +65,7 @@ namespace PrintIt_Desktop_4.ViewModels
             Image = new BitmapImage();
             if(!String.IsNullOrEmpty(ImageURI))
                 SetupImage();
-            Available = !(info.Status == "offline" || info.Status == "on_maitanance");
+            Available = !(info.Status == "offline" || info.Status == "on_maintenance");
         }
 
         public String PrintSpotName { get; set; }
@@ -105,6 +115,27 @@ namespace PrintIt_Desktop_4.ViewModels
             {
                 Image = new BitmapImage(new Uri(@"..\..\Images\printer_RGBA.png",UriKind.RelativeOrAbsolute));
                 //MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Update()
+        {
+            var values = new NameValueCollection();
+            values.Add("print_spot[name]", info.PrintSpotName);
+            values.Add("print_spot[address]", info.PrintSpotAddress);
+            values.Add("print_spot[description]", info.Description);
+            values.Add("print_spot[additional_info]", info.AdditionalInfo);
+            values.Add("print_spot[status]", info.Status);
+            values.Add("first_name", info.OwnerName);
+            values.Add("last_name", info.OwnerSoname);
+            try
+            {
+                var res = NetworkManager.SendPutRequest(values, @"/api/v1/print_spots/" + info.Id);
+                //MessageBox.Show(res);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

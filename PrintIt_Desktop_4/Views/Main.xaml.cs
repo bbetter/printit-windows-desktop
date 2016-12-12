@@ -97,6 +97,7 @@ namespace PrintIt_Desktop_4.Views
                 info.ImageURI = (string)json["print_spots"][0]["photo_url"];
                 info.OwnerName = (string) json["first_name"];
                 info.OwnerSoname = (string)json["last_name"];
+                info.Id = id;
                 CurrentState.PrintSpotParameters = info;
                 InitializeComponent();
 

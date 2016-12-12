@@ -38,11 +38,11 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <Label Content="First name" Width="150"></Label>
-                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerName}"></TextBox>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerName}" IsEnabled="False"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <Label Content="Last name" Width="150"></Label>
-                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerSoname}"></TextBox>
+                <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerSoname}" IsEnabled="False"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <Label Content="Available" Width="150"></Label>
@@ -52,7 +52,7 @@
                             <Setter Property="controls:ToggleSwitch.OffLabel" Value="No"></Setter>
                             <Setter Property="controls:ToggleSwitch.OnLabel" Value="Yes"></Setter>
                             <Setter Property="controls:ToggleSwitch.OffSwitchBrush" Value="Red"></Setter>
-                            <Setter Property="controls:ToggleSwitch.OnSwitchBrush" Value="Green"></Setter>
+                            <Setter Property="controls:ToggleSwitch.OnSwitchBrush" Value="DeepSkyBlue"></Setter>
                         </Style>
                     </controls:ToggleSwitch.Style>
                 </controls:ToggleSwitch>
