@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using PrintIt_Desktop_4.Model.Configuration;
@@ -92,16 +93,18 @@ namespace PrintIt_Desktop_4.ViewModels
                     memoryStream.Write(bytebuffer, 0, bytesRead);
                     bytesRead = reader.Read(bytebuffer, 0, BytesToRead);
                 }
-
-                Image.BeginInit();
+                var image = new BitmapImage();
+                image.BeginInit();
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
-                Image.StreamSource = memoryStream;
-                Image.EndInit();
+                image.StreamSource = memoryStream;
+                image.EndInit();
+                Image = image;
             }
             catch (Exception ex)
             {
                 Image = new BitmapImage(new Uri(@"..\..\Images\printer_RGBA.png",UriKind.RelativeOrAbsolute));
+                //MessageBox.Show(ex.Message);
             }
         }
     }
