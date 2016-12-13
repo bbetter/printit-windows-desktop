@@ -19,38 +19,42 @@
         
           <StackPanel Orientation="Vertical" Margin="10,5">
               <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                  <Label Content="Name" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//Name}" Width="150"></Label>
                   <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.PrintSpotName}"></TextBox>
               </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="Address" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//Address}" Width="150"></Label>
                 <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.PrintSpotAddress}"></TextBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="Description" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//Description}" Width="150"></Label>
                 <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.Description}"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="Additional information" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//Additional}" Width="150"></Label>
                 <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.AdditionalInfo}"></TextBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="First name" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//FName}" Width="150"></Label>
                 <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerName}" IsEnabled="False"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="Last name" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//LName}" Width="150"></Label>
                 <TextBox Width="450" Text="{Binding ElementName=ThisControl, Path=DataContext.OwnerSoname}" IsEnabled="False"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Label Content="Available" Width="150"></Label>
+                <Label Content="{DynamicResource Locale//Settings//Account//Price}" Width="150"></Label>
+                <controls:NumericUpDown Value="{Binding ElementName=ThisControl, Path=DataContext.BasePrice}" Maximum="100" Minimum="0.01" Width="87" HasDecimals="True" Interval="0.01"></controls:NumericUpDown>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Label Content="{DynamicResource Locale//Settings//Account//Available}" Width="150"></Label>
                 <controls:ToggleSwitch IsChecked="{Binding ElementName=ThisControl, Path=DataContext.Available}">
                     <controls:ToggleSwitch.Style>
-                        <Style>  
-                            <Setter Property="controls:ToggleSwitch.OffLabel" Value="No"></Setter>
-                            <Setter Property="controls:ToggleSwitch.OnLabel" Value="Yes"></Setter>
+                        <Style>
+                            <Setter Property="controls:ToggleSwitch.OffLabel" Value="{DynamicResource Locale//Settings//Account//No}"></Setter>
+                            <Setter Property="controls:ToggleSwitch.OnLabel" Value="{DynamicResource Locale//Settings//Account//Yes}"></Setter>
                             <Setter Property="controls:ToggleSwitch.OffSwitchBrush" Value="Red"></Setter>
                             <Setter Property="controls:ToggleSwitch.OnSwitchBrush" Value="DeepSkyBlue"></Setter>
                         </Style>
@@ -58,8 +62,8 @@
                 </controls:ToggleSwitch>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <Button Width="100" Content="SAVE" Margin="0,0,5,0" Command="{Binding ElementName=ThisControl, Path=DataContext.SaveCommand}"></Button>
-                <Button Width="100" Content="Cancel" Margin="5,0,0,0"  Command="{Binding ElementName=ThisControl, Path=DataContext.CancelCommand}"></Button>
+                <Button Width="100" Content="{DynamicResource Locale//Settings//Account//Save}" Margin="0,0,5,0" Command="{Binding ElementName=ThisControl, Path=DataContext.SaveCommand}"></Button>
+                <Button Width="100" Content="{DynamicResource Locale//Settings//Account//Cancel}" Margin="5,0,0,0"  Command="{Binding ElementName=ThisControl, Path=DataContext.CancelCommand}"></Button>
             </StackPanel>
         </StackPanel>  
     </Grid>

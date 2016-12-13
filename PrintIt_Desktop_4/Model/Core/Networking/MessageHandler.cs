@@ -120,7 +120,8 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
         private static DocumentState HandleStateString(string data)
         {
             if (data == null) return DocumentState.Pending;
-            //todo handle other
+            if(data == "canceled") return DocumentState.Canceled;
+            if (data == "done") return DocumentState.Done;
             return DocumentState.Pending;
         }
 

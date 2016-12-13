@@ -20,5 +20,6 @@ namespace PrintIt_Desktop_4.Model.Core
         public String AdditionalInfo { get; set; }
 
         public String Id { get; set; }
+        public double BasePrice { get; set; }
     }
 }

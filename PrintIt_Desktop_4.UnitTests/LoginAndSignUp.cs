@@ -31,11 +31,11 @@ namespace PrintIt_Desktop_4.UnitTests
             var tooLong = PasswordValidationState.TooLong;
             var tooShort = PasswordValidationState.TooShort;
             var valid = PasswordValidationState.Valid;
-            Assert.AreEqual(validator.Validate(@"12345")[0], valid);
-            Assert.AreEqual(validator.Validate(@"123456")[0], valid);
+            Assert.AreEqual(validator.Validate(@"12345678")[0], valid);
+            Assert.AreEqual(validator.Validate(@"123456789")[0], valid);
             Assert.AreEqual(validator.Validate(@"1234567890123456789012345")[0], valid);
             Assert.AreEqual(validator.Validate(@"1234")[0], tooShort);
-            Assert.AreEqual(validator.Validate(@"12345678901234567890123456")[0], tooLong);
+            Assert.AreEqual(validator.Validate(@"123456789012345678901234567890123")[0], tooLong);
         }
     }
 }

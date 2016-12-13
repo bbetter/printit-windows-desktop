@@ -117,12 +117,13 @@ namespace PrintIt_Desktop_4.Model.Configuration
 
             public static String GetServerAddress()
             {
-                //return @"http://a682de04.ngrok.io";
+                //return @"http://196a9f51.ngrok.io";
                 return @"http://printz.pp.ua";
             }
 
             public static String GetServerName()
             {
+                //return @"196a9f51.ngrok.io";
                 return @"printz.pp.ua";
             }
             public static String GetWebSocketAddress()

@@ -46,4 +46,17 @@
     <system:String x:Key="Locale//Settings//ChangeLanguage">Змінити мову</system:String>
     
     <system:String x:Key="Locale//Settings//Account">ОБЛІКОВИЙ ЗАПИС</system:String>
+
+    <system:String x:Key="Locale//Settings//Account//Name">Назва</system:String>
+    <system:String x:Key="Locale//Settings//Account//Address">Адреса</system:String>
+    <system:String x:Key="Locale//Settings//Account//Description">Опис</system:String>
+    <system:String x:Key="Locale//Settings//Account//Additional">Додаткова інформація</system:String>
+    <system:String x:Key="Locale//Settings//Account//FName">Ім'я</system:String>
+    <system:String x:Key="Locale//Settings//Account//LName">Прізвище</system:String>
+    <system:String x:Key="Locale//Settings//Account//Price">Ціна сторінки</system:String>
+    <system:String x:Key="Locale//Settings//Account//Available">Точка доступна</system:String>
+    <system:String x:Key="Locale//Settings//Account//Yes">Так</system:String>
+    <system:String x:Key="Locale//Settings//Account//No">Ні</system:String>
+    <system:String x:Key="Locale//Settings//Account//Save">Зберегти</system:String>
+    <system:String x:Key="Locale//Settings//Account//Cancel">Відмінити</system:String>
 </ResourceDictionary>

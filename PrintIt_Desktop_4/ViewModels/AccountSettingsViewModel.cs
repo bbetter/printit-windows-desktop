@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -50,6 +51,7 @@ namespace PrintIt_Desktop_4.ViewModels
             info.OwnerName = OwnerName;
             info.OwnerSoname = OwnerSoname;
             info.Status = (Available?"online":"on_maintenance");
+            info.BasePrice = BasePrice;
             Update();
         }
 
@@ -66,6 +68,7 @@ namespace PrintIt_Desktop_4.ViewModels
             if(!String.IsNullOrEmpty(ImageURI))
                 SetupImage();
             Available = !(info.Status == "offline" || info.Status == "on_maintenance");
+            BasePrice = info.BasePrice;
         }
 
         public String PrintSpotName { get; set; }
@@ -81,6 +84,7 @@ namespace PrintIt_Desktop_4.ViewModels
 
         private PrintSpotInfo info;
         public BitmapImage Image { get; set; }
+        public double BasePrice { get; set; }
 
         private void SetupImage()
         {
@@ -128,6 +132,10 @@ namespace PrintIt_Desktop_4.ViewModels
             values.Add("print_spot[status]", info.Status);
             values.Add("first_name", info.OwnerName);
             values.Add("last_name", info.OwnerSoname);
+            values.Add("print_spot[preferences][]format", "a4");
+            var nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            values.Add("print_spot[preferences][]price", info.BasePrice.ToString(nfi));
             try
             {
                 var res = NetworkManager.SendPutRequest(values, @"/api/v1/print_spots/" + info.Id);

@@ -46,4 +46,17 @@
     <system:String x:Key="Locale//Settings//ChangeLanguage">Change language</system:String>
 
     <system:String x:Key="Locale//Settings//Account">ACCOUNT</system:String>
+    
+    <system:String x:Key="Locale//Settings//Account//Name">Print spot name</system:String>
+    <system:String x:Key="Locale//Settings//Account//Address">Address</system:String>
+    <system:String x:Key="Locale//Settings//Account//Description">Description</system:String>
+    <system:String x:Key="Locale//Settings//Account//Additional">Additional information</system:String>
+    <system:String x:Key="Locale//Settings//Account//FName">First name</system:String>
+    <system:String x:Key="Locale//Settings//Account//LName">Last name</system:String>
+    <system:String x:Key="Locale//Settings//Account//Price">Page price</system:String>
+    <system:String x:Key="Locale//Settings//Account//Available">Available</system:String>
+    <system:String x:Key="Locale//Settings//Account//Yes">Yes</system:String>
+    <system:String x:Key="Locale//Settings//Account//No">No</system:String>
+    <system:String x:Key="Locale//Settings//Account//Save">Save</system:String>
+    <system:String x:Key="Locale//Settings//Account//Cancel">Cancel</system:String>
 </ResourceDictionary>

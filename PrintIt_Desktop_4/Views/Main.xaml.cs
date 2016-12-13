@@ -97,10 +97,19 @@ namespace PrintIt_Desktop_4.Views
                 info.ImageURI = (string)json["print_spots"][0]["photo_url"];
                 info.OwnerName = (string) json["first_name"];
                 info.OwnerSoname = (string)json["last_name"];
+                if(json["print_spots"][0]["preferences"].HasValues)
+                info.BasePrice = (double) json["print_spots"][0]["preferences"][0]["price"];
+                else
+                {
+                    info.BasePrice = 0.5d; 
+                }
                 info.Id = id;
+                //
+                
                 CurrentState.PrintSpotParameters = info;
                 InitializeComponent();
 
+               // MessageBox.Show(json["print_spots"][0]["preferences"].ToString());
 
                 values = new NameValueCollection();
                 values.Add("print_spot_id",id);

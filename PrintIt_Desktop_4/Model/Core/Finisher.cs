@@ -38,6 +38,7 @@ namespace PrintIt_Desktop_4.Model.Core
 
         private static void StopTimers()
         {
+            if (CurrentState.CurrentTicker !=null)
            CurrentState.CurrentTicker.Stop();
         }
     }

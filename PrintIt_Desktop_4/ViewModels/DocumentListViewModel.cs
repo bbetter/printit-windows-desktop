@@ -24,6 +24,7 @@ namespace PrintIt_Desktop_4.ViewModels
             CurrentState.CurrentQueueChecker.OnQueueJobChanged += ChangeState;
             Documents = new ObservableCollection<Document>();
             PrintCommand = new DelegateCommand(PrintSelected);
+            CancelCommand = new DelegateCommand(CancelSelected);
             //Documents.Add(new Document() { Name = "Doc1", Progress = 0});
             //Documents.Add(new Document() { Name = "Doc2", Progress = 25 });
             //Documents.Add(new Document() { Name = "Doc3", Progress = 50 });
@@ -63,19 +64,17 @@ namespace PrintIt_Desktop_4.ViewModels
                 }
                 else
                 document.State = state;
-
-                /*
+                //MessageBox.Show(document.State.ToString());
                 try
                 {
                     var data = new NameValueCollection();
-                    data.Add("status", "queued");
+                    data.Add("status", document.State.ToString().ToLower());
                     NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                */
             }));
         }
 
@@ -93,6 +92,27 @@ namespace PrintIt_Desktop_4.ViewModels
                     CurrentState.CurrentPrintQueue.Add(document.Name);
                     //MessageBox.Show(document.Url);
                     document.Selected = false;
+                }
+            }
+        }
+
+        private void CancelSelected()
+        {
+            foreach (var document in Documents)
+            {
+                if (document.Selected)
+                {
+                    document.State = DocumentState.Canceled;
+                    try
+                    {
+                        var data = new NameValueCollection();
+                        data.Add("status", "canceled");
+                        NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
