@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Windows.Forms;
 using MahApps.Metro.Converters;
 using Newtonsoft.Json.Linq;
 using PrintIt_Desktop_4.Model.Configuration;
 using PrintIt_Desktop_4.Model.Enums;
 using PrintIt_Desktop_4.Other;
 using WebSocketSharp;
+using MessageBox = System.Windows.MessageBox;
 
 namespace PrintIt_Desktop_4.Model.Core.Networking
 {
@@ -96,6 +97,11 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
                     OrientedDateMax = (string) docJson["oriented_date_max"],
                     CreatedAt = (string) docJson["created_at"]
                 };
+                if (doc.State == DocumentState.Done || doc.State == DocumentState.Canceled)
+                {
+                    //ignore done and canceled
+                    return;
+                }
                 //quick fix for broken json
                 if (String.IsNullOrEmpty(doc.Url))
                 {
@@ -121,7 +127,7 @@ namespace PrintIt_Desktop_4.Model.Core.Networking
         {
             if (data == null) return DocumentState.Pending;
             if(data == "canceled") return DocumentState.Canceled;
-            if (data == "done") return DocumentState.Done;
+            if (data == "printed") return DocumentState.Done;
             return DocumentState.Pending;
         }
 

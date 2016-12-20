@@ -68,7 +68,7 @@ namespace PrintIt_Desktop_4.ViewModels
                 try
                 {
                     var data = new NameValueCollection();
-                    data.Add("status", document.State.ToString().ToLower());
+                    data.Add("status", document.State.ToString().ToLower() == "done" ? "printed" : document.State.ToString().ToLower());
                     NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
                 }
                 catch (Exception ex)
@@ -87,11 +87,13 @@ namespace PrintIt_Desktop_4.ViewModels
             {
                 if (document.Selected)
                 {
+                    document.Selected = false;
+                    if(document.State!=DocumentState.Pending) continue;
                     //CurrentState.CurrentPrintQueue.Add("Print System Document");
                     PrinterManager.PrintDocument(document.Name,Config.Storage.GetDirectoryLocation()+@"\Docs\"+document.Name,CurrentState.DefaultPrinterName);
                     CurrentState.CurrentPrintQueue.Add(document.Name);
                     //MessageBox.Show(document.Url);
-                    document.Selected = false;
+                   
                 }
             }
         }
@@ -102,12 +104,14 @@ namespace PrintIt_Desktop_4.ViewModels
             {
                 if (document.Selected)
                 {
+                    document.Selected = false;
+                    if(document.State!=DocumentState.Pending) continue;
                     document.State = DocumentState.Canceled;
                     try
                     {
                         var data = new NameValueCollection();
                         data.Add("status", "canceled");
-                        NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));
+                        NetworkManager.SendPutRequest(data, document.Url.Replace(@"download/", String.Empty));                 
                     }
                     catch (Exception ex)
                     {

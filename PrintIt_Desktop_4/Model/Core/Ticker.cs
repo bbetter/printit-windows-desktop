@@ -20,7 +20,7 @@ namespace PrintIt_Desktop_4.Model.Core
 
         public Ticker()
         {
-            Interval = new TimeSpan(0,0,0,2);
+            Interval = new TimeSpan(0,0,0,5);
             _timer = new Timer(PerformTick, null, Interval, Interval);
         }
 
