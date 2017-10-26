@@ -1,0 +1,42 @@
+﻿<controls:MetroWindow x:Class="PrintIt_Desktop_4.Views.SplashScreen"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:myControls="clr-namespace:PrintIt_Desktop_4.UserControls"
+                      xmlns:utils="clr-namespace:PrintIt_Desktop_4.Other"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+                      xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      Title="PrintZ"
+                      Height="350"
+                      Width="525"
+                      WindowStartupLocation="CenterScreen"
+                      Background="Black"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
+                      ShowCloseButton="True"
+                      TitleForeground="Black"
+                      GlowBrush="DarkGray"
+                      Icon="../Images/printzt_icon.ico"
+                      ShowIconOnTitleBar="False"
+                      BorderThickness="0"
+                      ResizeMode="NoResize"
+                      WindowCloseButtonStyle="{DynamicResource DarkCloseWindowButtonStyle}"
+                      x:Name="ThisWindow" 
+                      WindowStyle="None"
+                      WindowTitleBrush="Black"
+                      NonActiveWindowTitleBrush="Black"
+                      TitlebarHeight="0">
+    <Grid Margin="0,20,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="3*" x:Name="Row2"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Source="../Images/logo_RGBA.png" Margin="40,10" Grid.Row="0"></Image>
+        <Label Grid.Row="2" Margin="10" HorizontalContentAlignment="Center" Content="{DynamicResource Locale//General//Copyright}"></Label>
+        <myControls:LoadingRing Grid.Row="1" x:Name="LoadingRing1" Margin="10" Active="{Binding ElementName=ThisWindow, Path=DataContext.ProgressRingActive}"></myControls:LoadingRing>
+        <Label Grid.Row="1" Margin="10" HorizontalContentAlignment="Center" VerticalAlignment="Center" Content="{Binding ElementName=ThisWindow, Path=DataContext.Progress}"
+               ContentStringFormat=" {0}% " FontSize="16"></Label>
+    </Grid>
+</controls:MetroWindow>

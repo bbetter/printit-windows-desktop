@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Forms;
+using PrintIt_Desktop_4.Controllers.Views;
 using PrintIt_Desktop_4.Model.Core;
 using Application = System.Windows.Application;
 
@@ -15,13 +16,22 @@ namespace PrintIt_Desktop_4
         private NotifyIcon ni;
         void App_Startup(object sender, StartupEventArgs e)
         {
+            /*
             PreLoader.PerformPreLoad();
             WindowManager.ShowLoginWindow();
             tray = false;
+             */
+            PreLoader.PerformPreLoad();
+            var start = new SplashScreenController();
+            start.Init();
+            start.Show();
+            start.ProgressRingActive = true;
         }
 
         public void App_Exit(object sender, ExitEventArgs e)
         {
+            Finisher.FinishApplication();
+            /*
             if (tray)
             {
                 ni = new NotifyIcon();
@@ -41,6 +51,7 @@ namespace PrintIt_Desktop_4
                 if(ni!=null)ni.Dispose();
                 App.Current.Shutdown();
             }
+             */
         }
     }
 }
